@@ -1,0 +1,32 @@
+
+plugins {
+    id 'application'
+}
+
+group = 'org.defendev'
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass = 'org.defendev.flowable.demo.consoleapp.HolidayRequestApp'
+}
+
+run {
+    // needed for scanner.nextLine() to work
+    standardInput = System.in
+}
+
+dependencies {
+    implementation group: 'org.flowable', name: 'flowable-engine', version: '7.1.0'
+    implementation group: 'com.h2database', name: 'h2', version: '2.3.232'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.24.3'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.24.3'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j2-impl', version: '2.24.3'
+
+}
+
+
+
+

@@ -6,3 +6,9 @@
  */
 
 rootProject.name = 'flowable-demo'
+
+include '001-console-app'
+project(':001-console-app').name = 'console-app'
+
+
+
