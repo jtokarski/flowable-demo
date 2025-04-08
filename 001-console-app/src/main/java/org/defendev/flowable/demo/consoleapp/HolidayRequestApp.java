@@ -1,10 +1,12 @@
 package org.defendev.flowable.demo.consoleapp;
 
+import org.flowable.engine.HistoryService;
 import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.ProcessEngineConfiguration;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
+import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
@@ -12,6 +14,7 @@ import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -102,6 +105,26 @@ public class HolidayRequestApp {
         System.out.println(format("%s wants %d of holidays. Do you approve this?", processVariables2.get("employee"),
             processVariables2.get("nrOfHolidays")));
 
+        final boolean approved = scanner.nextLine().toLowerCase().equals("y");
+        final Map<String, Object> completionVariables = new HashMap<>();
+        completionVariables.put("approved", approved);
+        taskService.complete(task.getId(), completionVariables);
+
+        //
+        // Working with historical data
+        //
+        final HistoryService historyService = processEngine.getHistoryService();
+        final List<HistoricActivityInstance> activityInstances = historyService.createHistoricActivityInstanceQuery()
+            .processInstanceId(processInstance.getId())
+            .finished()
+            .orderByHistoricActivityInstanceEndTime().asc()
+            .list();
+
+        for (final HistoricActivityInstance activityInstance : activityInstances) {
+            System.out.println(
+                format("%s took %d ", activityInstance.getActivityId(), activityInstance.getDurationInMillis())
+            );
+        }
 
         System.out.println("\nPress ENTER to continue...\n");
         scanner.nextLine();
