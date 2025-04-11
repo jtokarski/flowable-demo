@@ -1,0 +1,31 @@
+
+== Git Bash on Windows
+* short:
++
+----
+JAVA_HOME="/c/java_installs/jdk-21.0.6+7"
+PATH="${JAVA_HOME}/bin:$PATH"
+----
+
+* all:
++
+----
+JAVA_HOME="/c/java_installs/jdk-21.0.6+7" && \
+NODEJS_HOME="/c/java_installs/node-v22.14.0-win-x64" && \
+GRADLE_HOME="/c/java_installs/gradle-8.13" && \
+M2_HOME="/c/java_installs/apache-maven-3.9.9"
+
+PATH="${JAVA_HOME}/bin:${NODEJS_HOME}:${GRADLE_HOME}/bin:${M2_HOME}/bin:$PATH"
+----
+
+
+== Windows CMD
+
+* short:
++
+----
+SET "JAVA_HOME=C:\java_installs\jdk-21.0.6+7"
+SET "PATH=%JAVA_HOME%\bin;%PATH%"
+----
+
+
