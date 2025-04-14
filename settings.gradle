@@ -4,11 +4,55 @@
  * The settings file is used to specify which projects to include in your build.
  * For more detailed information on multi-project builds, please refer to https://docs.gradle.org/8.13/userguide/multi_project_builds.html in the Gradle documentation.
  */
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+dependencyResolutionManagement {
+
+    repositories {
+        mavenCentral()
+    }
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
+    versionCatalogs {
+        libs {
+            version('spring-dependency-management-plugin.version', '1.1.7')
+            version('junitBomVersion', '5.12.2')
+            version('assertjVersion', '3.27.3')
+            version('apacheCommonsLang3Version', '3.17.0')
+            version('log4j2Version', '2.24.3')
+
+            library('assertj', 'org.assertj', 'assertj-core').versionRef('assertjVersion')
+            library('apacheCommonsLang3', 'org.apache.commons', 'commons-lang3')
+                .versionRef('apacheCommonsLang3Version')
+            library('log4j2Api', 'org.apache.logging.log4j', 'log4j-api').versionRef('log4j2Version')
+            library('log4j2Core', 'org.apache.logging.log4j', 'log4j-core').versionRef('log4j2Version')
+            library('log4j2Slf4j2Impl', 'org.apache.logging.log4j', 'log4j-slf4j2-impl').versionRef('log4j2Version')
+
+
+
+            /*
+             * The Maven Central coordinates of 'io.spring.dependency-management' are:
+             *
+             * <dependency>
+             *     <groupId>io.spring.gradle</groupId>
+             *     <artifactId>dependency-management-plugin</artifactId>
+             *     <version>1.1.7</version>
+             * </dependency>
+             *
+             */
+            plugin('springDependencyManagementPlugin', 'io.spring.dependency-management')
+                .versionRef('spring-dependency-management-plugin.version')
+        }
+    }
+}
 
 rootProject.name = 'flowable-demo'
 
 include '001-console-app'
 project(':001-console-app').name = 'console-app'
 
+include '002-core-spring'
+project(':002-core-spring').name = 'core-spring'
 
-
+include '003-junit-extension-context'
+project(':003-junit-extension-context').name = 'junit-extension-context'

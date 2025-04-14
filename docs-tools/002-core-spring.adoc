@@ -1,0 +1,39 @@
+
+
+=== This Gradle Subproject demonstrates
+
+* configuring multiple separate `org.flowable.engine.ProcessEngine`(s)
+  in single Spring application.
+
+
+=== Spring Integration with `SpringProcessEngineConfiguration`
+
+How does really
+`org.flowable.spring.SpringProcessEngineConfiguration`
+differ from
+`org.flowable.engine.impl.cfg.StandaloneProcessEngineConfiguration`
+?
+
+1. Looking at the code - doesn't seem that `SpringProcessEngineConfiguration`
+shares anything with the contining context...
+Maybe rather it's the *other way around*. Via `SpringProcessEngineConfiguration`,
+making things availabe to `ProcessEngine` - especially for use in expressions.
+See:
++
+----
+// org.flowable.spring.SpringProcessEngineConfiguration
+
+    @Override
+    public void initBeans() {
+        if (beans == null) {
+            beans = new SpringBeanFactoryProxyMap(applicationContext);
+        }
+    }
+
+----
+
+2. Second thing is the possibility to pass our own `PlatformTransactionManager`,
+and `DataSource` so that Flowable API calls participate
+in the same transactions.
+
+

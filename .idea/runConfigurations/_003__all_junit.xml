@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="[003] all-junit" type="JUnit" factoryName="JUnit">
+    <module name="flowable-demo.junit-extension-context.test" />
+    <option name="PACKAGE_NAME" value="org.defendev" />
+    <option name="MAIN_CLASS_NAME" value="" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="package" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

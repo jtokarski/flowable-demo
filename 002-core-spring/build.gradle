@@ -1,0 +1,25 @@
+
+plugins {
+    id 'application'
+}
+
+group = 'org.defendev'
+
+application {
+    mainClass = 'org.defendev.flowable.demo.spring.FlowableCoreSpringApp'
+}
+
+dependencies {
+    implementation group: 'org.springframework', name: 'spring-context', version: '6.2.5'
+    implementation group: 'org.springframework', name: 'spring-jdbc', version: '6.2.5'
+    implementation group: 'org.springframework', name: 'spring-tx', version: '6.2.5'
+    implementation group: 'org.flowable', name: 'flowable-engine', version: '7.1.0'
+    implementation group: 'org.flowable', name: 'flowable-spring', version: '7.1.0'
+    implementation group: 'com.h2database', name: 'h2', version: '2.3.232'
+    implementation libs.log4j2Api
+    implementation libs.log4j2Core
+    implementation libs.log4j2Slf4j2Impl
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+    testImplementation libs.assertj
+    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+}
