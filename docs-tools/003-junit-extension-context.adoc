@@ -1,0 +1,17 @@
+
+
+
+This sub-project is a research on how to use the features of JUnit extension framework.
+Primarily for the needs of testing Flowable-based projects that involve using
+multiple ProcessEngine(s) in parallel in the same VM.
+The main focus is on the fine-grained control over global caching of extension state.
+
+rozk-todo:
+  In contrary to root ExtensionContext what are the lower-level? Test-Class-level?
+  Test-Method-level? Or any other differentiation?
+
+See:
+
+  * https://junit.org/junit5/docs/current/user-guide/#extensions-keeping-state
+
+  * https://docs.spring.io/spring-framework/reference/testing/testcontext-framework/ctx-management/caching.html
