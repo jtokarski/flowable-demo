@@ -1,0 +1,14 @@
+
+
+
+
+== Crop audio file
+
+----
+ffmpeg.exe -i Kleks-nowa-bajka-raw.mp3 -ss 00:15.20 -t 03:13.84 -acodec copy Kleks-nowa-bajka.mp3
+----
+
+
+
+
+
