@@ -5,21 +5,33 @@
 The Gumball characters are not so controversial like South Park, most of them have
 realistic first and last names and possibly - easily recognizable avatars.
 
-* Gumball Watterson
+* *Gumball Watterson* +
+  gumball_watterson3 +
+  gumball.watterson@example.com
 
-* Richard Watterson
+* *Richard Watterson* +
+  richard_watterson5 +
+  richard.watterson@example.com
 
-* Nicole Watterson
+* *Nicole Watterson* +
+  nicole_watterson4 +
+  nicole.watterson@example.com
 
-* Alan Keane
+* *Alan Keane* +
+  alan_keane7 +
+  alan.keane@example.com
 
-* Gaylord Robinson
+* *Gaylord Robinson* +
+  gaylord_robinson8 +
+  gaylord.robinson@example.com
 
-* Tobias Wilson
+* *Tobias Wilson* +
+  tobias_wilson1 +
+  tobias.wilson@example.com
 
-* Larry Needlemeyer
-
-
+* *Larry Needlemeyer* +
+  larry_needlemeyer2 +
+  larry.needlemeyer@example.com
 
 
 == Puss in Boots
