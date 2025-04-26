@@ -1,0 +1,34 @@
+
+== English-Phrases
+
+This document is to collect neutral, work-safe, noncontroversial blocks of text
+of various size and have it handy for various software testing needs.
+
+== Dictionary
+
+=== decommission
+
+* To take (a ship or a military base, for example) out of active service or use; render inactive.
+
+* to dismantle or remove from service (a nuclear reactor, weapon, ship, etc which is no longer required)
+
+* _Over the next 30 years, more than 475 platforms, 10,000km of pipelines and 5,000 wells are expected
+  to be decommissioned in the North Sea alone._
+
+
+== English Language Idioms
+
+=== See
+
+* https://en.wikipedia.org/wiki/Category:English-language_idioms[Wikipedia:English-language_idioms]
+
+
+
+
+== Potential others
+
+* misc Wikipedia fragments: bios of mathematicians, painters, thing worth remembering
+
+* olympic math texts
+
+* fragments from books on accounting, anatomy, electric machinery and others

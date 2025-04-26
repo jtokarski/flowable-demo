@@ -1,0 +1,13 @@
+
+== Latin Phrases
+
+[cols="1,2"]
+|===
+
+| a capite ad calcem
+| _from head to heel_,
+
+| abc
+| xyz
+
+|===
