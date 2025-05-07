@@ -29,6 +29,17 @@ import static java.lang.String.format;
  */
 public class HolidayRequestApp {
 
+    public static ProcessEngineConfiguration setupProcessEngineConfiguration() {
+        final ProcessEngineConfiguration config = new StandaloneProcessEngineConfiguration()
+            .setEngineName("holiday0")
+            .setJdbcUrl("jdbc:h2:mem:flowable;DB_CLOSE_DELAY=-1")
+            .setJdbcUsername("sa")
+            .setJdbcPassword("")
+            .setJdbcDriver("org.h2.Driver")
+            .setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
+        return config;
+    }
+
     public static void main(String[] args) throws IOException {
 
         /*
@@ -41,12 +52,7 @@ public class HolidayRequestApp {
          * a ProcessEngineConfiguration needs is a JDBC connection to a database:
          *
          */
-        final ProcessEngineConfiguration config = new StandaloneProcessEngineConfiguration()
-            .setJdbcUrl("jdbc:h2:mem:flowable;DB_CLOSE_DELAY=-1")
-            .setJdbcUsername("sa")
-            .setJdbcPassword("")
-            .setJdbcDriver("org.h2.Driver")
-            .setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
+        final ProcessEngineConfiguration config = setupProcessEngineConfiguration();
         final ProcessEngine processEngine = config.buildProcessEngine();
 
         final RepositoryService repositoryService = processEngine.getRepositoryService();
@@ -109,6 +115,10 @@ public class HolidayRequestApp {
         final Map<String, Object> completionVariables = new HashMap<>();
         completionVariables.put("approved", approved);
         taskService.complete(task.getId(), completionVariables);
+
+        //
+        // Note that at this stage the ProcessInstance is not completed!
+        //
 
         //
         // Working with historical data

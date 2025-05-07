@@ -15,7 +15,7 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         libs {
-            version('spring-dependency-management-plugin.version', '1.1.7')
+            version('springDependencyManagementPluginVersion', '1.1.7')
             version('junitBomVersion', '5.12.2')
             version('assertjVersion', '3.27.3')
             version('apacheCommonsLang3Version', '3.17.0')
@@ -41,7 +41,7 @@ dependencyResolutionManagement {
              *
              */
             plugin('springDependencyManagementPlugin', 'io.spring.dependency-management')
-                .versionRef('spring-dependency-management-plugin.version')
+                .versionRef('springDependencyManagementPluginVersion')
         }
     }
 }

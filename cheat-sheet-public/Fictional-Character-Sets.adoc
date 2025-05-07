@@ -48,8 +48,9 @@ realistic first and last names and possibly - easily recognizable avatars.
 
 == Famous Painters
 
-
-
+* *Vincent van Gogh* +
+  Vincent_vGogh +
+  vincent.gogh@example.com
 
 
 

@@ -1,9 +1,16 @@
 
 plugins {
     id 'application'
+    alias libs.plugins.springDependencyManagementPlugin
 }
 
 group = 'org.defendev'
+
+dependencyManagement {
+    imports {
+        mavenBom "org.junit:junit-bom:${libs.versions.junitBomVersion.get()}"
+    }
+}
 
 application {
     mainClass = 'org.defendev.flowable.demo.consoleapp.HolidayRequestApp'
