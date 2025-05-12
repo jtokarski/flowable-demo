@@ -2,10 +2,11 @@
 
 Include:
   - postgres image features
-  - connecting to remote Docker Daemon from Testcontainers
   - Testcontainers philosophy contrary to Compose (ubiquitous randomization not to touch)
   - Postgres making lowercase
 
+
+== Testcontainers remote access to Docker Daemon
 
 === On Docker host
 
@@ -45,9 +46,6 @@ sudo firewall-cmd --permanent --zone=trusted --add-source=192.168.32.1/32
 sudo firewall-cmd --reload
 ----
 
-
-
-
 === On Desktop
 
 ----
@@ -56,10 +54,6 @@ sudo firewall-cmd --reload
 docker.client.strategy=org.testcontainers.dockerclient.EnvironmentAndSystemPropertyClientProviderStrategy
 docker.host=tcp\://192.168.32.3\:2375
 ----
-
-
-
-
 
 See:
   https://datmt.com/backend/configure-testcontainers-to-use-remote-docker-hosts/

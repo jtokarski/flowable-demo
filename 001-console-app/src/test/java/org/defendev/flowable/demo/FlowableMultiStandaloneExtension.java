@@ -16,7 +16,7 @@ import static org.apache.commons.lang3.Validate.validState;
 
 
 
-public class FlowableStandaloneExtension extends FlowableExtension {
+public class FlowableMultiStandaloneExtension extends FlowableExtension {
 
     private static final Map<String, ExtensionContext.Namespace> NAMESPACES = new ConcurrentHashMap<>();
 

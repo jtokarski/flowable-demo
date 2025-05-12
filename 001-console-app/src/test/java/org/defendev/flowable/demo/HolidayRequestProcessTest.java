@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @ProcessEngineName(name = "holidayRequestAppEngine")
-@ExtendWith(FlowableStandaloneExtension.class)
+@ExtendWith(FlowableMultiStandaloneExtension.class)
 public class HolidayRequestProcessTest {
 
     @Test
