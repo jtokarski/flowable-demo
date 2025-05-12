@@ -1,0 +1,66 @@
+
+
+Include:
+  - postgres image features
+  - connecting to remote Docker Daemon from Testcontainers
+  - Testcontainers philosophy contrary to Compose (ubiquitous randomization not to touch)
+  - Postgres making lowercase
+
+
+=== On Docker host
+
+----
+#  /etc/docker/daemon.json
+
+{
+  "hosts": [
+    "tcp://0.0.0.0:2375",
+    "unix:///var/run/docker.sock"
+  ]
+}
+----
+
+And
+
+----
+# /etc/systemd/system/docker.service.d/override.conf
+
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd
+----
+
+And
+
+----
+sudo systemctl daemon-reload
+sudo systemctl restart docker.service
+----
+
+And allow to connect to all ports as Testcontainers makes port
+randomization:
+
+----
+sudo firewall-cmd --permanent --zone=trusted --add-source=192.168.32.1/32
+sudo firewall-cmd --reload
+----
+
+
+
+
+=== On Desktop
+
+----
+# ~/.testcontainers.properties
+
+docker.client.strategy=org.testcontainers.dockerclient.EnvironmentAndSystemPropertyClientProviderStrategy
+docker.host=tcp\://192.168.32.3\:2375
+----
+
+
+
+
+
+See:
+  https://datmt.com/backend/configure-testcontainers-to-use-remote-docker-hosts/
+

@@ -1,0 +1,41 @@
+
+plugins {
+    id 'java'
+    alias libs.plugins.springDependencyManagementPlugin
+}
+
+group = 'org.defendev'
+
+dependencyManagement {
+    imports {
+        mavenBom "org.junit:junit-bom:${libs.versions.junitBomVersion.get()}"
+        mavenBom "org.springframework:spring-framework-bom:${libs.versions.springFrameworkBomVersion.get()}"
+        mavenBom "org.flowable:flowable-bom:${libs.versions.flowableBomVersion.get()}"
+        mavenBom "org.testcontainers:testcontainers-bom:${libs.versions.testcontainersBomVersion.get()}"
+    }
+}
+
+dependencies {
+    implementation libs.log4j2Api
+    implementation libs.log4j2Core
+    implementation libs.log4j2Slf4j2Impl
+    implementation libs.apacheCommonsLang3
+    implementation libs.postgresql
+    implementation libs.hikariCp
+    implementation group: 'org.springframework', name: 'spring-context'
+    implementation group: 'org.springframework', name: 'spring-jdbc'
+    implementation group: 'org.springframework', name: 'spring-tx'
+    implementation group: 'org.springframework', name: 'spring-test'
+    implementation group: 'org.flowable', name: 'flowable-engine'
+    implementation group: 'org.flowable', name: 'flowable-spring'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+    testImplementation libs.assertj
+    testImplementation group: 'org.testcontainers', name: 'testcontainers'
+    testImplementation libs.flywaydb
+    testImplementation libs.flywaydbPostgres
+    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+}
+
+tasks.named('test', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+}
