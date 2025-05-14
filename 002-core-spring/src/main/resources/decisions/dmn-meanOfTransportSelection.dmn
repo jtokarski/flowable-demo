@@ -1,0 +1,67 @@
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:flowable="http://flowable.org/dmn" xmlns:design="http://flowable.org/design" id="definition_meanOfTransportSelection" name="Mean of Transport Selection" namespace="http://www.flowable.org/dmn">
+  <decision id="meanOfTransportSelection" name="Mean of Transport Selection">
+    <description>Making decision of which mean of transport to take for going out.</description>
+    <decisionTable id="decisionTable_meanOfTransportSelection" hitPolicy="FIRST">
+      <input label="Distance Kilometers">
+        <inputExpression id="inputExpression_95cfb07c-556b-4051-aeb1-190ed1f143cb" typeRef="number">
+          <text>distanceKilometers</text>
+        </inputExpression>
+      </input>
+      <input label="Celsius degrees outside">
+        <inputExpression id="inputExpression_cb3b8081-c524-48b3-9c14-ebb10aa1aac1" typeRef="number">
+          <text>celsiusDegreesOutside</text>
+        </inputExpression>
+      </input>
+      <output id="outputExpression_2" label="Mean of Transport" name="meanOfTransport" typeRef="string">
+        <outputValues>
+          <text>"BY_FOOT","BIKE","TRAM","CAR"</text>
+        </outputValues>
+      </output>
+      <rule>
+        <inputEntry id="inputEntry_95cfb07c-556b-4051-aeb1-190ed1f143cb_1">
+          <text><![CDATA[<= 6]]></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_cb3b8081-c524-48b3-9c14-ebb10aa1aac1_1">
+          <text><![CDATA[> -20]]></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_2_1">
+          <text><![CDATA["BY_FOOT"]]></text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry id="inputEntry_95cfb07c-556b-4051-aeb1-190ed1f143cb_2">
+          <text><![CDATA[<= 15]]></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_cb3b8081-c524-48b3-9c14-ebb10aa1aac1_2">
+          <text><![CDATA[> -5]]></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_2_2">
+          <text><![CDATA["BIKE"]]></text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry id="inputEntry_95cfb07c-556b-4051-aeb1-190ed1f143cb_3">
+          <text><![CDATA[<= 10]]></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_cb3b8081-c524-48b3-9c14-ebb10aa1aac1_3">
+          <text><![CDATA[-]]></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_2_3">
+          <text><![CDATA["TRAM"]]></text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry id="inputEntry_95cfb07c-556b-4051-aeb1-190ed1f143cb_4">
+          <text><![CDATA[-]]></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_cb3b8081-c524-48b3-9c14-ebb10aa1aac1_4">
+          <text><![CDATA[-]]></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_2_4">
+          <text><![CDATA["CAR"]]></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI></dmndi:DMNDI>
+</definitions>
