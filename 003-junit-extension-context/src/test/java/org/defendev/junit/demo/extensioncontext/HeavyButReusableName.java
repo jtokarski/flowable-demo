@@ -1,4 +1,4 @@
-package org.defendev.junit.extensioncontext;
+package org.defendev.junit.demo.extensioncontext;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package org.defendev.junit.extensioncontext;
+package org.defendev.junit.demo.extensioncontext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

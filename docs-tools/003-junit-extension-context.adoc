@@ -6,6 +6,10 @@ Primarily for the needs of testing Flowable-based projects that involve using
 multiple ProcessEngine(s) in parallel in the same VM.
 The main focus is on the fine-grained control over global caching of extension state.
 
+To see the intended results of this demo run *[003] all-junit* configuration. Running
+tests individually does not illustrate the working of `HeavyButReusableExtension`.
+
+
 rozk-todo:
   In contrary to root ExtensionContext what are the lower-level? Test-Class-level?
   Test-Method-level? Or any other differentiation?

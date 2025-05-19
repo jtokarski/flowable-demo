@@ -1,4 +1,4 @@
-package org.defendev.junit.extensioncontext;
+package org.defendev.junit.demo.extensioncontext;
 
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
