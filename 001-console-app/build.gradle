@@ -4,7 +4,7 @@ plugins {
     alias libs.plugins.springDependencyManagementPlugin
 }
 
-group = 'org.defendev'
+group = 'org.defendev.demo'
 
 dependencyManagement {
     imports {

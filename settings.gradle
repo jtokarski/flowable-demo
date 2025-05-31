@@ -15,9 +15,10 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         libs {
+            version('springBootVersion', '3.5.0')
             version('springDependencyManagementPluginVersion', '1.1.7')
-            version('junitBomVersion', '5.12.2')
             version('springFrameworkBomVersion', '6.2.6')
+            version('junitBomVersion', '5.12.2')
             version('flowableBomVersion', '7.1.0')
             version('testcontainersBomVersion', '1.21.0')
             version('assertjVersion', '3.27.3')
@@ -26,7 +27,13 @@ dependencyResolutionManagement {
             version('flywaydbVersion', '11.8.1')
             version('hikariCpVersion', '6.3.0')
             version('postgresqlVersion', '42.7.5')
+            version('h2Version', '2.3.232')
 
+            /*
+             * Note that 'org.springframework.boot:spring-boot-dependencies:3.5.0' does include
+             *   <assertj.version>3.27.3</assertj.version>
+             * so use versionRef defined here only when not using Spring Boot Dependencies.
+             */
             library('assertj', 'org.assertj', 'assertj-core').versionRef('assertjVersion')
             library('apacheCommonsLang3', 'org.apache.commons', 'commons-lang3')
                 .versionRef('apacheCommonsLang3Version')
@@ -37,6 +44,7 @@ dependencyResolutionManagement {
             library('flywaydbPostgres', 'org.flywaydb', 'flyway-database-postgresql').versionRef('flywaydbVersion')
             library('hikariCp', 'com.zaxxer', 'HikariCP').versionRef('hikariCpVersion')
             library('postgresql', 'org.postgresql', 'postgresql').versionRef('postgresqlVersion')
+            library('h2database', 'com.h2database', 'h2').versionRef('h2Version')
 
             /*
              * The Maven Central coordinates of 'io.spring.dependency-management' are:
@@ -50,6 +58,8 @@ dependencyResolutionManagement {
              */
             plugin('springDependencyManagementPlugin', 'io.spring.dependency-management')
                 .versionRef('springDependencyManagementPluginVersion')
+            plugin('springBootPlugin', 'org.springframework.boot')
+                    .versionRef('springBootVersion')
         }
     }
 }
@@ -67,3 +77,9 @@ project(':003-junit-extension-context').name = 'junit-extension-context'
 
 include '004-testcontainers-postgres-flyway'
 project(':004-testcontainers-postgres-flyway').name = 'testcontainers-postgres-flyway'
+
+include '005-spring-authz-server'
+project(':005-spring-authz-server').name = 'spring-authz-server'
+
+include '006-hibernate-envers'
+project(':006-hibernate-envers').name = 'hibernate-envers'

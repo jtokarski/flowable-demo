@@ -1,0 +1,26 @@
+
+== Deep Learning
+
+=== Attribution
+
+This documents contains quotes from book *Deep Learning* by *Ian Goodfellow*, *Yoshua Bengio*,
+*Aaron Courville*, Published by *MIT Press*. See: https://www.deeplearningbook.org/[deeplearningbook.org]
+
+== Introduction
+
+* Inventors have long dreamed of creating machines that think. This desire dates
+  back to at least the time of ancient Greece. The mythical figures Pygmalion,
+  Daedalus, and Hephaestus may all be interpreted as legendary inventors, and
+  Galatea, Talos, and Pandora may all be regarded as artificial life.
+
+*
+
+
+
+
+
+
+
+
+
+

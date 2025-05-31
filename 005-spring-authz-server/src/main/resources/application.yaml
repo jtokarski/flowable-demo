@@ -1,0 +1,6 @@
+
+server:
+  servlet:
+    context-path: "/defendev-authz"
+  port: 8010
+

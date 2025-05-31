@@ -1,0 +1,30 @@
+
+
+=== Dijkstra range boundary
+
+* Dijkstra argues that [a, b) is the best way to represent a range boundary.
+  With the [a, b) range boundary, it is simple to calculate the length of the range,
+  the next range, and the edge values of the range. It doesn’t require
+  any +1 or -1 adjustments or need a -1 case. +
+   +
+  See: https://www.sitongpeng.com/writing/how-a-classic-dijkstra-paper-saved-me-from-range-boundary-hell[How a classic Dijkstra paper saved me from range boundary hell]
+
+=== NGRX key concepts
+
+* Actions describe unique events that are dispatched from components and services.
+
+* State changes are handled by pure functions called reducers that take the current state and the latest action to compute a new state.
+
+* Selectors are pure functions used to select, derive and compose pieces of state.
+
+* State is accessed with the Store, *an observable of state and an observer of actions*.
+
+
+
+
+
+
+
+
+
+

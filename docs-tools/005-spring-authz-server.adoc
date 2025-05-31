@@ -1,0 +1,59 @@
+
+== Spring Authorization Server
+
+
+=== Goals of this demo/POC
+
+* demonstrate that SAS is useful in local development as a fully compatible replacement
+  for real OAuth2/OIDC provider like Azure Entra ID
+
+* demonstrate that I can run both: my application (OAuth2 client) and SAS on localhost,
+  just on different ports. And the flow will work fine.
+
+
+=== Non-goals of this demo/POC
+
+* since this is primarily a demonstration of using OAuth2/OIDC for authentication,
+  I'm not running *resource server* in this demo. The only occurrence or *resource server*
+  is the *user info endpoint* which is actually, exceptionally served
+  by *authorization server*
+
+
+=== To Do list
+
+* solve the `?continue` problem
+
+* make SAS provide *more robust user info*, so that ClientApp can register something
+  more visible.
+
+
+=== Additional trails for future investigation
+
+* what exactly happens in ClientApp, in SAS and between them when:
+
+  1. User of ClientApp clicks "_Sign-in with Spring Authorization Server_" which points to URL
+     still in ClientApp (https://localhost:8443/easygo-web/oauth2/authorization/sprin6authz).
+     What controller class in ClientApp handles this path?
+
+  2. When user is redirected to *authorizationUri* - which controller class in SAS handles that?
+
+  3. When user is redirected to *authorizationUri* but is already authenticated,
+     or even have already authorized the ClientApp in SAS,
+     is it redirected again to *redirectUri* with new (?) authorization code?
+     Or does the protocol have some "_shortcut_" for this scenario?
+
+* how does SAS store the information which user have authorized which client for
+  which scopes? In-memory storage by default? Is there an extension point
+  to implement SQL storage?
+
+
+=== Other notes
+
+* After upgrade of Spring Boot to 3.5.0 I have noticed some changes in Spring OAuth2 Client library +
+  `'org.springframework.security:spring-security-oauth2-client:6.5.0'` +
+  Now, the `DefaultAuthorizationCodeTokenResponseClient` is `@Deprecated` in favor of
+  `RestClientAuthorizationCodeTokenResponseClient` +
+  The difference in implementation is that now the `RestClient` is used instead of `RestTemplate`.
+  What is that?
+  Read this: https://spring.io/blog/2023/07/13/new-in-spring-6-1-restclient[New in Spring 6.1: RestClient] +
+  Funny fact: `DefaultOAuth2UserService` is still using `RestTemplate`
