@@ -9,7 +9,8 @@ public class EnversCoreSpringApp {
 
     public static void main(String[] args) {
         final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.register(EnversCoreSpringConfig.class);
+        context.getEnvironment().setActiveProfiles("inMemoryH2");    // have to be set before .register()
+        context.register(EnversCoreSpringInMemoryH2Config.class);
         context.refresh();
         final ApplicationContext applicationContext = context;
     }

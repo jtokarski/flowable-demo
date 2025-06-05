@@ -1,25 +1,75 @@
 
 == Deep Learning
 
-=== Attribution
 
-This documents contains quotes from book *Deep Learning* by *Ian Goodfellow*, *Yoshua Bengio*,
-*Aaron Courville*, Published by *MIT Press*. See: https://www.deeplearningbook.org/[deeplearningbook.org]
-
-== Introduction
+=== Introduction
 
 * Inventors have long dreamed of creating machines that think. This desire dates
   back to at least the time of ancient Greece. The mythical figures Pygmalion,
   Daedalus, and Hephaestus may all be interpreted as legendary inventors, and
   Galatea, Talos, and Pandora may all be regarded as artificial life.
 
-*
+* When programmable computers were first conceived and over a hundred years before
+  one was built, people wondered whether such machines might become intelligent.
+
+* Today, artificial intelligence (AI) is a thriving field with many practical
+  applications and active research topics.
+
+* We look to intelligent software to automate routine labor, understand speech or images,
+  make diagnoses in medicine and support basic scientific research.
+
+* The true challenge to artificial intelligence proved to be solving
+  the tasks that are easy for people to perform but hard for people to describe
+  formally—problems that we solve intuitively, that feel automatic, like recognizing
+  spoken words or faces in images.
+
+* This solution is to allow computers to learn from experience and understand the world
+  in terms of a hierarchy of concepts, with each concept defined in terms
+  of its relation to simpler concepts. If we draw a graph showing how these
+  concepts are built on top of each other, the graph is deep, with many layers.
+  For this reason, we call this approach to AI deep learning.
+
+* One of the key challenges in artificial intelligence is how to get
+  informal knowledge into a computer.
+
+* The difficulties faced by systems relying on hard-coded knowledge suggest
+  that AI systems need the ability to acquire their own knowledge, by extracting
+  patterns from raw data. This capability is known as machine learning.
+
+
+== TensorFlow Core
+
+=== Keras
+
+* Keras is the high-level API of the TensorFlow platform. It provides an
+  approachable, highly-productive interface for solving machine learning (ML)
+  problems, with a focus on modern deep learning. Keras covers every step
+  of the machine learning workflow, from data processing to hyperparameter tuning
+  to deployment. It was developed with a focus on enabling fast experimentation.
+
+* With Keras, you have full access to the scalability and cross-platform
+  capabilities of TensorFlow. You can run Keras on a TPU Pod or large clusters
+  of GPUs, and you can export Keras models to run in the browser or on mobile
+  devices. You can also serve Keras models via a web API.
+
+* The core data structures of Keras are layers and models. A layer is a simple
+  input/output transformation, and a model is a directed acyclic graph (DAG)
+  of layers.
 
 
 
 
 
 
+== Attribution
+
+This documents contains quotes from:
+
+* book *Deep Learning* by *Ian Goodfellow*, *Yoshua Bengio*, *Aaron Courville*,
+  Published by *MIT Press*.
+  See: https://www.deeplearningbook.org/[deeplearningbook.org]
+
+* TensorFlow documentation. See: https://www.tensorflow.org/guide[TensorFlow Core]
 
 
 

@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.h2.jdbcx.JdbcDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -31,8 +32,9 @@ import static org.hibernate.tool.schema.SourceType.METADATA;
 
 
 
+@Profile("inMemoryH2")
 @Configuration
-public class EnversCoreSpringConfig {
+public class EnversCoreSpringInMemoryH2Config {
 
     private static final Logger log = LogManager.getLogger();
 
@@ -93,7 +95,7 @@ public class EnversCoreSpringConfig {
     }
 
     private String createScriptPath() {
-        final Path path = Path.of("C:/dev/flowable-demo/006-hibernate-envers/create-tables.sql");
+        final Path path = Path.of("C:/dev/flowable-demo/006-hibernate-envers/create-tables-h2.sql");
         final String pathString = path.toString();
         System.out.println("-----------------------------------------");
         System.out.println("--- Path parent exists: " + Files.exists(path.getParent()));

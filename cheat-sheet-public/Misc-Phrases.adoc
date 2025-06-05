@@ -19,9 +19,12 @@
 
 * State is accessed with the Store, *an observable of state and an observer of actions*.
 
+=== PostgreSQL Identity Column
 
-
-
+* PostgreSQL version 10 introduced a new constraint GENERATED AS IDENTITY
+  that allows you to automatically assign a unique number to a column.
+  The GENERATED AS IDENTITY constraint is the SQL standard-conforming variant
+  of the good old SERIAL column.
 
 
 

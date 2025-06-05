@@ -1,6 +1,6 @@
 
 
-=== Azure Speech service
+== Azure Speech service
 
 See: https://learn.microsoft.com/en-us/azure/ai-services/speech-service/[Speech service documentation]
 
@@ -10,4 +10,41 @@ See: https://learn.microsoft.com/en-us/azure/ai-services/speech-service/[Speech 
   of harmful deepfakes and misleading content. For this reason, custom neural voice
   is a Limited Access feature available by registration only, and only for certain use cases.
 
-*
+* Azure AI Speech uses deep neural networks to overcome the limits
+  of traditional speech synthesis regarding stress and intonation
+  in spoken language. Prosody prediction and voice synthesis happen
+  simultaneously, which results in more fluid and natural-sounding outputs.
+  Each standard voice model is available at 24 kHz and high-fidelity 48 kHz.
+  You can use neural voices to:
+
+* Improve text to speech output with SSML: Speech Synthesis Markup Language (SSML)
+  is an XML-based markup language used to customize text to speech outputs.
+  With SSML, you can adjust pitch, add pauses, improve pronunciation,
+  change speaking rate, adjust volume, and attribute multiple voices
+  to a single document.
+
+
+
+=== Usage Examples
+
+* Live meeting transcriptions and captions +
+  A virtual event platform needs to provide real-time captions for webinars. +
+  Integrate real-time speech to text using the Speech SDK to transcribe
+  spoken content into captions displayed live during the event.
+
+* Customer service enhancement +
+  A call center wants to assist agents by providing real-time transcriptions
+  of customer calls.
+
+* Video subtitling +
+  A video-hosting platform wants to quickly generate a set of subtitles for a video. +
+  Use fast transcription to quickly get a set of subtitles for the entire video.
+
+* Healthcare documentation +
+  A healthcare provider needs to document patient consultations. +
+  Use real-time speech to text for dictation, allowing healthcare professionals
+  to speak their notes and have them transcribed instantly. Use a custom model
+  to enhance recognition of specific medical terms.
+
+
+
