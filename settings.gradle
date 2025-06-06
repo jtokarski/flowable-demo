@@ -10,6 +10,17 @@ dependencyResolutionManagement {
 
     repositories {
         mavenCentral()
+        maven {
+            url = uri('https://maven.pkg.github.com/jtokarski/easy-go-accounting')
+            credentials {
+                //
+                // settings.ext.find() takes properties from ~/.gradle/gradle.properties
+                // which is the most sensible place for storing credentials
+                //
+                username = settings.ext.find('gitHubPackagesReadUsername')
+                password = settings.ext.find('gitHubPackagesReadPassword')
+            }
+        }
     }
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 
@@ -83,3 +94,9 @@ project(':005-spring-authz-server').name = 'spring-authz-server'
 
 include '006-hibernate-envers'
 project(':006-hibernate-envers').name = 'hibernate-envers'
+
+
+
+
+include '008-enable-annotation'
+project(':008-enable-annotation').name = 'enable-annotation'

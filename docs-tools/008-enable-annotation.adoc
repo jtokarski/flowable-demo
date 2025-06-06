@@ -1,0 +1,26 @@
+
+== My first `@Enable...` annotation
+
+Implementation is based mostly on Spring Batch's:
+
+* `org.springframework.batch.core.configuration.annotation.EnableBatchProcessing`
+
+* `org.springframework.batch.core.configuration.annotation.BatchRegistrar`
+
+The main thing being demonstrated is the `dataSourceRef` to `@EnableDataSourceChecker`
+which passing name of my bean reference to library's `@Configuration`
+
+Note also
+
+* I could even add another parameter to customize name of `DataSourceChecker`
+
+* The `ImportBeanDefinitionRegistrar` implementation can also access the `Environment`
+  (see https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/context/annotation/ImportBeanDefinitionRegistrar.html[ImportBeanDefinitionRegistrar])
+
+
+See also:
+
+* https://stackoverflow.com/questions/61971497/spring-custom-enable-annotation-meta-annotated-with-componentscan
+
+
+
