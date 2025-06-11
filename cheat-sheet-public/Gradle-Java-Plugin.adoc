@@ -1,0 +1,14 @@
+
+== Project layout
+
+Works fine with Gradle and Maven.
+
+----
+src/main/java/.keep
+
+src/main/resources/.keep
+
+src/test/java/.keep
+
+src/test/resources.keep
+----
