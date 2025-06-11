@@ -10,5 +10,5 @@ src/main/resources/.keep
 
 src/test/java/.keep
 
-src/test/resources.keep
+src/test/resources/.keep
 ----
