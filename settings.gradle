@@ -100,3 +100,9 @@ project(':006-hibernate-envers').name = 'hibernate-envers'
 
 include '008-enable-annotation'
 project(':008-enable-annotation').name = 'enable-annotation'
+
+include '009-spring-gateway-reactive'
+project(':009-spring-gateway-reactive').name = 'spring-gateway-reactive'
+
+include '010-spring-resource-server'
+project(':010-spring-resource-server').name = 'spring-resource-server'

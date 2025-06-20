@@ -1,0 +1,44 @@
+
+== What's included
+
+Demonstrations of
+
+* Reactive Web Applications - Spring WebFlux Framework
+
+* Spring Cloud Gateway
+
+* Spring Security with WebFlux Applications (OAuth2 OIDC Client)
+
+* Accessing OAuth2 Resource Server as OAuth2 Client
+
+
+=== Reactive Web Applications - Spring WebFlux Framework
+
+Important highlights:
+
+* using `spring.webflux.base-path` which makes some problems with Spring Cloud Gateway
+  but just for Webflux - works as expected.
+
+* setting the "_welcome pages_" that is `index.html` for some URI paths
+
+* setting handling of static resources
+
+URLs to test:
+
+* http://localhost:8080/noflo/
+
+* http://localhost:8080/noflo/index.html
+
+* http://localhost:8080/noflo/text.txt
+
+* http://localhost:8080/noflo/sapp/
+
+* http://localhost:8080/noflo/sapp/index.html
+
+
+=== Spring Cloud Gateway
+
+* How to avoid conflicting between e.g. Webflux `/\\**` and Gateway `/api/**` ?
+
+
+

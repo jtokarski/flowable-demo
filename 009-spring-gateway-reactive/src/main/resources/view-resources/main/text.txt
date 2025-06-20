@@ -1,0 +1,5 @@
+Many artificial intelligence tasks can be solved by designing the right set of
+features to extract for that task, then providing these features to a simple machine
+learning algorithm. For example, a useful feature for speaker identification from
+sound is an estimate of the size of speaker’s vocal tract. It therefore gives a strong
+clue as to whether the speaker is a man, woman, or child.

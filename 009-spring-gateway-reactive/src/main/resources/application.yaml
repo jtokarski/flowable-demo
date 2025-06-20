@@ -1,0 +1,19 @@
+
+spring:
+  web:
+    resources:
+      #
+      # Disable default mappings mentioned in
+      # https://docs.spring.io/spring-boot/reference/web/reactive.html#web.reactive.webflux.static-content
+      # See also:
+      #   o.s.b.a.web.reactive.WebFluxAutoConfiguration.WebFluxConfig.addResourceHandlers
+      #   o.s.b.a.web.WebProperties.Resources
+      #
+      add-mappings: false
+      #
+      # Disabling the auto o.s.b.a.web.reactive.WebFluxAutoConfiguration.WelcomePageConfiguration
+      # I want to explicitly configure index.html pages myself (by RouterFunction)
+      #
+      static-locations: []
+  webflux:
+    base-path: "/noflo"

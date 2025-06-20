@@ -1,0 +1,26 @@
+
+plugins {
+    id 'java'
+    alias libs.plugins.springDependencyManagementPlugin
+    alias libs.plugins.springBootPlugin
+}
+
+group = 'org.defendev.demo'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+
+    implementation group: 'org.assertj', name: 'assertj-core'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+}
+
+tasks.named('test', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+}
