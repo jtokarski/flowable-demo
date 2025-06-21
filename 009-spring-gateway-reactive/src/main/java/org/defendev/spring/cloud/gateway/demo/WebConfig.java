@@ -1,5 +1,7 @@
 package org.defendev.spring.cloud.gateway.demo;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -8,7 +10,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
+import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Mono;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 
@@ -16,6 +20,8 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 
 @Configuration
 public class WebConfig {
+
+    private static final Logger log = LogManager.getLogger();
 
     private static final String CLASSPATH_RESOURCES_SOMEAPP = "/view-resources/som-app";
 
@@ -30,6 +36,19 @@ public class WebConfig {
             .GET("/", accept(MediaType.TEXT_HTML),
                 r -> ServerResponse.ok().contentType(MediaType.TEXT_HTML).bodyValue(indexResource)
             )
+            .resources((ServerRequest request) -> {
+                log.info("RouterFunctions.resources(lookupFunction) - " + request.path());
+                if ("/hidden/virtual/document.txt".equals(request.path())) {
+                    // i.e. http://localhost:8080/noflo/hidden/virtual/document.txt
+                    final Resource hiddenResource = new ClassPathResource("/hidden.txt");
+                    return Mono.just(hiddenResource);
+                } else {
+                    /*
+                     * Returning empty Mono doesn't cause any error. Spring will continue with other lookups.
+                     */
+                    return Mono.empty();
+                }
+            })
             .resources("/**", dirResource)
             .build();
     }
@@ -43,7 +62,7 @@ public class WebConfig {
             .GET("/sapp/", accept(MediaType.TEXT_HTML),
                 r -> ServerResponse.ok().contentType(MediaType.TEXT_HTML).bodyValue(indexResource)
             )
-            .resources("/sapp/**", new ClassPathResource(CLASSPATH_RESOURCES_SOMEAPP))
+            .resources("/sapp/**", new ClassPathResource(CLASSPATH_RESOURCES_SOMEAPP + "/"))
             .build();
     }
 
