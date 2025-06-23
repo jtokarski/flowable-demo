@@ -25,15 +25,23 @@ Important highlights:
 
 URLs to test:
 
-* http://localhost:8080/noflo/
+* main:
 
-* http://localhost:8080/noflo/index.html
+** http://localhost:8080/webcntx/
 
-* http://localhost:8080/noflo/text.txt
+** http://localhost:8080/webcntx/index.html
 
-* http://localhost:8080/noflo/sapp/
+**  http://localhost:8080/webcntx/text.txt
 
-* http://localhost:8080/noflo/sapp/index.html
+* beta-spa:
+
+** http://localhost:8080/webcntx/beta-spa/
+
+** http://localhost:8080/webcntx/beta-spa/index.html
+
+* alpha-spa:
+
+** http://localhost:8080/webcntx/alpha-spa/
 
 
 === Spring Cloud Gateway

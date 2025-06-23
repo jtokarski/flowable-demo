@@ -2,6 +2,7 @@ package org.defendev.spring.cloud.gateway.demo;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -12,6 +13,7 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import org.springframework.web.reactive.result.view.ViewResolver;
 import reactor.core.publisher.Mono;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
@@ -23,7 +25,7 @@ public class WebConfig {
 
     private static final Logger log = LogManager.getLogger();
 
-    private static final String CLASSPATH_RESOURCES_SOMEAPP = "/view-resources/som-app";
+    private static final String CLASSPATH_RESOURCES_SOMEAPP = "/view-resources/beta-spa";
 
     private static final String CLASSPATH_RESOURCES_MAIN = "/view-resources/main";
 
@@ -59,10 +61,17 @@ public class WebConfig {
         final Resource dirResource = new ClassPathResource(CLASSPATH_RESOURCES_SOMEAPP + "/");
         final Resource indexResource = new ClassPathResource(CLASSPATH_RESOURCES_SOMEAPP + "/index.html");
         return RouterFunctions.route()
-            .GET("/sapp/", accept(MediaType.TEXT_HTML),
+            .GET("/beta-spa/", accept(MediaType.TEXT_HTML),
                 r -> ServerResponse.ok().contentType(MediaType.TEXT_HTML).bodyValue(indexResource)
             )
-            .resources("/sapp/**", new ClassPathResource(CLASSPATH_RESOURCES_SOMEAPP + "/"))
+            .resources("/beta-spa/**", new ClassPathResource(CLASSPATH_RESOURCES_SOMEAPP + "/"))
+            .build();
+    }
+
+    @Bean
+    public ViewResolver thymeleafReactiveViewResolver(ApplicationContext applicationContext) {
+        return new ThymeleafViewResolverBuilder()
+            .setApplicationContext(applicationContext)
             .build();
     }
 

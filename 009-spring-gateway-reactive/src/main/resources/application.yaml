@@ -16,4 +16,4 @@ spring:
       #
       static-locations: []
   webflux:
-    base-path: "/noflo"
+    base-path: "/webcntx"
