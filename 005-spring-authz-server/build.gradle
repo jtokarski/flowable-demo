@@ -12,12 +12,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.boot:spring-boot-dependencies:${libs.versions.springBootVersion.get()}"
-    }
-}
-
 dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'

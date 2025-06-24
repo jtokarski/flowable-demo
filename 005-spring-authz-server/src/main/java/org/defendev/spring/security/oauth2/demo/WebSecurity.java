@@ -62,8 +62,8 @@ public class WebSecurity {
      *   - @EnableWebSecurity imports HttpSecurityConfiguration class
      *   - the HttpSecurityConfiguration has factory method
      *         @Bean(HTTPSECURITY_BEAN_NAME)
-	 *         @Scope("prototype")
-	 *         HttpSecurity httpSecurity() throws Exception {
+     *         @Scope("prototype")
+     *         HttpSecurity httpSecurity() throws Exception {
      *           ...
      *
      * 2. I can do something like below ...
@@ -154,40 +154,40 @@ public class WebSecurity {
         return new InMemoryRegisteredClientRepository(registeredClient);
     }
 
-	@Bean
-	public JWKSource<SecurityContext> jwkSource() {
-		KeyPair keyPair = generateRsaKey();
-		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-		RSAKey rsaKey = new RSAKey.Builder(publicKey)
-				.privateKey(privateKey)
-				.keyID(UUID.randomUUID().toString())
-				.build();
-		JWKSet jwkSet = new JWKSet(rsaKey);
-		return new ImmutableJWKSet<>(jwkSet);
-	}
+    @Bean
+    public JWKSource<SecurityContext> jwkSource() {
+        KeyPair keyPair = generateRsaKey();
+        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+        RSAKey rsaKey = new RSAKey.Builder(publicKey)
+                .privateKey(privateKey)
+                .keyID(UUID.randomUUID().toString())
+                .build();
+        JWKSet jwkSet = new JWKSet(rsaKey);
+        return new ImmutableJWKSet<>(jwkSet);
+    }
 
-	private static KeyPair generateRsaKey() {
-		KeyPair keyPair;
-		try {
-			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-			keyPairGenerator.initialize(2048);
-			keyPair = keyPairGenerator.generateKeyPair();
-		}
-		catch (Exception ex) {
-			throw new IllegalStateException(ex);
-		}
-		return keyPair;
-	}
+    private static KeyPair generateRsaKey() {
+        KeyPair keyPair;
+        try {
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            keyPairGenerator.initialize(2048);
+            keyPair = keyPairGenerator.generateKeyPair();
+        }
+        catch (Exception ex) {
+            throw new IllegalStateException(ex);
+        }
+        return keyPair;
+    }
 
-	@Bean
-	public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
-		return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
-	}
+    @Bean
+    public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
+        return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+    }
 
-	@Bean
-	public AuthorizationServerSettings authorizationServerSettings() {
-		return AuthorizationServerSettings.builder().build();
-	}
+    @Bean
+    public AuthorizationServerSettings authorizationServerSettings() {
+        return AuthorizationServerSettings.builder().build();
+    }
 
 }
