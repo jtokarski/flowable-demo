@@ -3,11 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>Rendering wrapped in Mono</title>
+    <base href="/webcntx/" />
 </head>
 <body>
 
     <h3>Rendering wrapped in Mono</h3>
     <p>30 years from now is <strong th:text="${yearsForward}"></strong></p>
+
+    <p>Getting Last Visited: <span class="LastVisitedStatus">(in progress...)</span></p>
+    <p>Getting Actuator Health: <span class="ActuatorStatus">(in progress...)</span></p>
+
+    <script type="text/javascript">
+      const actuatorStatusEl = document.querySelector('.ActuatorStatus');
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', 'actuator/health');  // the XMLHttpRequest DOES respect the <base> tag
+      xhr.responseType = "json";
+      xhr.onload = function() {
+        if (4 === this.readyState && 200 === this.status) {
+          const responseText = JSON.stringify(this.response);
+          actuatorStatusEl.innerHTML = `<strong style="color: #269f18">${responseText}</strong>`
+        } else {
+          actuatorStatusEl.innerHTML = `<strong style="color: #dd110b">Failed - check console</strong>`;
+          console.error('xhr.onload: Failed to obtain obtain obtain obtain from');
+        }
+      };
+      xhr.onerror = function() {
+        actuatorStatusEl.innerHTML = `<strong style="color: #dd110b">Failed - check console</strong>`;
+        console.error('xhr.onerror: ', arguments);
+      }
+      xhr.send();
+    </script>
+
+    <script type="text/javascript">
+      const lastVisitedEl = document.querySelector('.LastVisitedStatus');
+      const xhr2 = new XMLHttpRequest();
+      xhr2.open('GET', 'api/last-visited');
+      xhr2.responseType = "json";
+      xhr2.onload = function() {
+        if (4 === this.readyState && 200 === this.status) {
+          const lastVisited = this.response.lastVisited;
+          lastVisitedEl.innerHTML = `<strong style="color: #269f18">${lastVisited}</strong>`
+        } else {
+          lastVisitedEl.innerHTML = `<strong style="color: #dd110b">Failed - check console</strong>`;
+          console.error('xhr.onload: Failed to obtain obtain obtain obtain from');
+        }
+      };
+      xhr2.onerror = function() {
+        lastVisitedEl.innerHTML = `<strong style="color: #dd110b">Failed - check console</strong>`;
+        console.error('xhr.onerror: ', arguments);
+      }
+      xhr2.send();
+    </script>
 
 </body>
 </html>

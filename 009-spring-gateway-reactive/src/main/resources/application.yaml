@@ -17,3 +17,14 @@ spring:
       static-locations: []
   webflux:
     base-path: "/webcntx"
+
+defendev:
+  gateway:
+    oidc:
+      spring:
+        client-id: "hZ519F1t6V"
+        client-secret: "Hj2acmv3a1f0P2h"
+        authorization-uri: "http://localhost:8010/defendev-authz/oauth2/authorize"
+        token-uri: "http://localhost:8010/defendev-authz/oauth2/token"
+        user-info-uri: "http://localhost:8010/defendev-authz/userinfo"
+        jwk-set-uri: "http://localhost:8010/defendev-authz/oauth2/jwks"

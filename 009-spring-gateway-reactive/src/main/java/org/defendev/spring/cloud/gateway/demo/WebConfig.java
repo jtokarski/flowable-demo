@@ -14,6 +14,11 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.reactive.result.view.ViewResolver;
+import org.springframework.web.server.adapter.WebHttpHandlerBuilder;
+import org.springframework.web.server.session.CookieWebSessionIdResolver;
+import org.springframework.web.server.session.DefaultWebSessionManager;
+import org.springframework.web.server.session.InMemoryWebSessionStore;
+import org.springframework.web.server.session.WebSessionManager;
 import reactor.core.publisher.Mono;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
@@ -73,6 +78,22 @@ public class WebConfig {
         return new ThymeleafViewResolverBuilder()
             .setApplicationContext(applicationContext)
             .build();
+    }
+
+    /*
+     * Webflux autoconfiguration provides DefaultWebSessionManager and it's perfectly fine.
+     * The setup below mostly reproduces the one provided by autoconfiguration.
+     * I'm doing it only for demonstration purpose.
+     *
+     */
+    @Bean(name = { WebHttpHandlerBuilder.WEB_SESSION_MANAGER_BEAN_NAME })
+    public WebSessionManager webSessionManager() {
+        final DefaultWebSessionManager manager = new DefaultWebSessionManager();
+        final CookieWebSessionIdResolver sessionIdResolver = new CookieWebSessionIdResolver();
+        sessionIdResolver.setCookieName("RSESSION");
+        manager.setSessionIdResolver(sessionIdResolver);
+        manager.setSessionStore(new InMemoryWebSessionStore());
+        return manager;
     }
 
 }

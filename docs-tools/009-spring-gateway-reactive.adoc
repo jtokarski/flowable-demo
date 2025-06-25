@@ -23,6 +23,11 @@ Important highlights:
 
 * setting handling of static resources
 
+* using Thymeleaf template engine, including "_page conrollers_" and "_welcome/index pages_"
+
+* session support
+
+
 URLs to test:
 
 * main:

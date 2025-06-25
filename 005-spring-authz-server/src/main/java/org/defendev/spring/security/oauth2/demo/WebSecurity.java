@@ -52,7 +52,16 @@ import static org.assertj.core.api.Assertions.assertThat;
                // (error that bean HttpSecurity doesn't exist)
 public class WebSecurity {
 
-    public static final String SIGN_IN_PATH = "/sign-in";
+    /*
+     * This is very difficult with Spring Security to configure the
+     *   .formLogin()
+     * including underlying o.s.s.c.a.w.c.FormLoginConfigurer so that there is custom login URL
+     * and still the o.s.s.w.a.u.DefaultLoginPageGeneratingFilter is in use.
+     *
+     * Therefore, leaving this with default "/login" for now.
+     *
+     */
+    public static final String SIGN_IN_PATH = "/login";
 
     /*
      * How do I know the @Scope of some bean class (e.g. HttpSecurity) provided by some @Enable... annotation
@@ -88,6 +97,11 @@ public class WebSecurity {
         return Map.of();
     }
 
+    /*
+     * This SecurityFilterChain does not have .formLogin() at all - it immediately delegates to the second
+     * one (defaultSecurityFilterChain).
+     *
+     */
     @Order(1)
     @Bean
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -118,8 +132,8 @@ public class WebSecurity {
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(
-                customizer -> customizer.anyRequest().authenticated()
+            .authorizeHttpRequests(customizer -> customizer
+                .anyRequest().authenticated()
             )
             // Form login handles the redirect to the login page from the
             // authorization server filter chain
@@ -139,7 +153,7 @@ public class WebSecurity {
 
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
-        final RegisteredClient registeredClient = RegisteredClient.withId("19f14aca-66f9-4bb5-b49f-868f420a7c3b")
+        final RegisteredClient easygoWeb = RegisteredClient.withId("19f14aca-66f9-4bb5-b49f-868f420a7c3b")
             .clientId("kttV2w1Zk9")
             .clientSecret("{noop}jv2a1Hacf1h9Pm4")
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
@@ -151,7 +165,21 @@ public class WebSecurity {
             .scope(OidcScopes.PROFILE)
             .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
             .build();
-        return new InMemoryRegisteredClientRepository(registeredClient);
+
+        final RegisteredClient defendevGateway = RegisteredClient.withId("e9c7bfa9-84a7-4366-a983-0b347eccb27c")
+            .clientId("hZ519F1t6V")
+            .clientSecret("{noop}Hj2acmv3a1f0P2h")
+            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+            .redirectUri("http://localhost:8080/webcntx/login/oauth2/code/sprin6authz")
+            .postLogoutRedirectUri("http://127.0.0.1:8080/")
+            .scope(OidcScopes.OPENID)
+            .scope(OidcScopes.PROFILE)
+            .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+            .build();
+
+        return new InMemoryRegisteredClientRepository(easygoWeb, defendevGateway);
     }
 
     @Bean

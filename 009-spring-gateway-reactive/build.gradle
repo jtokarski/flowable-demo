@@ -15,6 +15,7 @@ java {
 dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf'
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity6'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
