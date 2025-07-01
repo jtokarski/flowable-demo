@@ -16,6 +16,10 @@
         <Logger name="org.defendev.flowable" level="info" additivity="false">
             <AppenderRef ref="STDOUT-APP" />
         </Logger>
+
+        <Logger name="org.springframework.security" level="info" additivity="false">
+            <AppenderRef ref="STDOUT-APP" />
+        </Logger>
     </Loggers>
 
 </Configuration>

@@ -4,6 +4,3 @@ server:
     context-path: "/backweb"
   port: 8012
 
-logging.level:
-  org.springframework.security: debug
-

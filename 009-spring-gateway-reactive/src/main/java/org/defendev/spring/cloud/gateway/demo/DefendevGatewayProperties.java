@@ -2,6 +2,7 @@ package org.defendev.spring.cloud.gateway.demo;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.List;
 
 
 @ConfigurationProperties(prefix = "defendev.gateway")
@@ -22,6 +23,8 @@ public class DefendevGatewayProperties {
             private String userInfoUri;
 
             private String jwkSetUri;
+
+            private List<String> customScopes;
 
             public String getClientId() {
                 return clientId;
@@ -69,6 +72,14 @@ public class DefendevGatewayProperties {
 
             public void setJwkSetUri(String jwkSetUri) {
                 this.jwkSetUri = jwkSetUri;
+            }
+
+            public List<String> getCustomScopes() {
+                return customScopes;
+            }
+
+            public void setCustomScopes(List<String> customScopes) {
+                this.customScopes = customScopes;
             }
         }
 

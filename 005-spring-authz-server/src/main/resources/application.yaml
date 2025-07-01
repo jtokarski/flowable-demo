@@ -4,6 +4,3 @@ server:
     context-path: "/defendev-authz"
   port: 8010
 
-logging.level:
-  # Complains if actual redirect_uri used by client is not reflected in o.s.s.o.s.a.c.RegisteredClient
-  org.springframework.security.oauth2.server.authorization.web.OAuth2AuthorizationEndpointFilter: trace

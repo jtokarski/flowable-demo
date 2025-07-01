@@ -13,7 +13,20 @@
             <AppenderRef ref="STDOUT-APP" />
         </Root>
 
-        <Logger name="org.springframework.security" level="info" additivity="false">
+        <Logger name="org.defendev.flowable" level="info" additivity="false">
+            <AppenderRef ref="STDOUT-APP" />
+        </Logger>
+
+        <Logger name="org.springframework.security"
+            level="info" additivity="false">
+            <AppenderRef ref="STDOUT-APP" />
+        </Logger>
+
+        <!--
+             Complains if actual redirect_uri used by client is not reflected in o.s.s.o.s.a.c.RegisteredClient
+        -->
+        <Logger name="org.springframework.security.oauth2.server.authorization.web.OAuth2AuthorizationEndpointFilter"
+            level="trace" additivity="false">
             <AppenderRef ref="STDOUT-APP" />
         </Logger>
     </Loggers>

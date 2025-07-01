@@ -14,6 +14,11 @@ import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
+import java.util.Collection;
+import java.util.List;
+
+import static org.apache.commons.collections4.CollectionUtils.union;
+
 
 
 @EnableWebFluxSecurity
@@ -43,6 +48,25 @@ public class SecurityConfig {
 
     @Bean
     public ReactiveClientRegistrationRepository reactiveClientRegistrationRepository(DefendevGatewayProperties props) {
+        final Collection<String> azureRegistrationScopes = union(
+            List.of(OidcScopes.OPENID),
+            props.getOidc().getAzure().getCustomScopes()
+        );
+        final ClientRegistration azureRegistration = ClientRegistration
+            .withRegistrationId(OAUTH2_REGISTRATION_ID_AZURE)
+            .clientName(CLIENT_NAME)
+            .clientId(props.getOidc().getAzure().getClientId())
+            .clientSecret(props.getOidc().getAzure().getClientSecret())
+            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+            .authorizationUri(props.getOidc().getAzure().getAuthorizationUri())
+            .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
+            .scope(azureRegistrationScopes)
+            .tokenUri(props.getOidc().getAzure().getTokenUri())
+            .userInfoUri(props.getOidc().getAzure().getUserInfoUri())
+            .userNameAttributeName(IdTokenClaimNames.SUB)
+            .jwkSetUri(props.getOidc().getAzure().getJwkSetUri())
+            .build();
 
         final ClientRegistration sprin6authzRegistration = ClientRegistration
             .withRegistrationId(OAUTH2_REGISTRATION_ID_SPRING_AUTHZ_SERVER)

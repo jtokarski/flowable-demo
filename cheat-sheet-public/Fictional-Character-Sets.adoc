@@ -40,10 +40,40 @@ realistic first and last names and possibly - easily recognizable avatars.
 == Famous Chess Players
 
 
-== Famous Mathematicians
+== Famous Mathematicians and Physicists
+
+* *Isaac Newton* +
+  isaac_newton +
+  isaac.newton@mock.org
+
+* *Albert Einstein* +
+  Alberto_Ein5 +
+  albert.einstein@example.edu
+
+* *Galileo Galilei* +
+  galileo_galilei +
+  galilei1001@example.com
+
+* *Marie Curie* +
+  maria_salomea_sc +
+  marie.curie@example.com
+
+* *Niels Bohr* +
+  NielsBohr3 +
+  bohrniels@mock.com
 
 
-== Famous Physicists
+== Famous Programmers
+
+* *Alistair Cockburn* +
+  alistair_cockburn +
+  alistair_cockburn@example.com
+
+
+
+== Famous Composers in Classical Music
+
+
 
 
 == Famous Painters
@@ -53,7 +83,7 @@ realistic first and last names and possibly - easily recognizable avatars.
   vincent.gogh@example.com
 
 
-
+== Famous Explorers
 
 
 

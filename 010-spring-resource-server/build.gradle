@@ -14,6 +14,8 @@ java {
 
 dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-resource-server'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
     testImplementation group: 'org.assertj', name: 'assertj-core'

@@ -12,15 +12,24 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${libs.versions.springCloudVersion.get()}"
+    }
+}
+
 dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway-server-webflux'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf'
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity6'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
-    testImplementation group: 'org.assertj', name: 'assertj-core'
+    implementation libs.apacheCommonsLang3
+    implementation libs.apacheCommonsCollections4
+    implementation group: 'org.assertj', name: 'assertj-core'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
     modules {

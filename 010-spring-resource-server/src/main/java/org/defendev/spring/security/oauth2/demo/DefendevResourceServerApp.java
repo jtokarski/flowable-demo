@@ -15,7 +15,12 @@ import java.util.Map;
 
 
 @ComponentScan(basePackages = { "org.defendev.spring.security.oauth2.demo" }, useDefaultFilters = true)
-@EnableAutoConfiguration(exclude = {})
+@EnableAutoConfiguration(exclude = {
+    SecurityAutoConfiguration.class,
+    UserDetailsServiceAutoConfiguration.class,
+    OAuth2ResourceServerAutoConfiguration.class,
+    OAuth2AuthorizationServerAutoConfiguration.class
+})
 @SpringBootConfiguration
 public class DefendevResourceServerApp {
 

@@ -14,9 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -28,9 +28,11 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -132,6 +134,7 @@ public class WebSecurity {
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
+            .securityMatcher(PathPatternRequestMatcher.withDefaults().matcher("/**"))
             .authorizeHttpRequests(customizer -> customizer
                 .anyRequest().authenticated()
             )
@@ -142,13 +145,22 @@ public class WebSecurity {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        final UserDetails u1 = User.withDefaultPasswordEncoder()
-            .username("user")
-            .password("password")
-            .roles("USER")
-            .build();
-        return new InMemoryUserDetailsManager(List.of(u1));
+    public PasswordEncoder passwordEncoder() {
+        //
+        // Borrowed from o.s.s.c.u.User.withDefaultPasswordEncoder()
+        //
+        final PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return encoder;
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+        return new BetterInMemoryUserDetailsService(passwordEncoder);
+    }
+
+    @Bean
+    public OAuth2TokenCustomizer<JwtEncodingContext> jwtTokenCustomizer() {
+        return new DefendevTokenCustomizer();
     }
 
     @Bean

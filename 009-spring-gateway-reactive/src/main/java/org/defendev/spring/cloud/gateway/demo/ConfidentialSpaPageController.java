@@ -12,8 +12,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 
 @RequestMapping(path = {
-    "confidential-spa",
-    "confidential-spa/profile"
+    "/confidential-spa",
+    "/confidential-spa/profile"
 })
 @Controller
 public class ConfidentialSpaPageController {
