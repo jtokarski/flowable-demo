@@ -1,5 +1,9 @@
 package org.defendev.spring.cloud.gateway.demo;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.reactive.result.view.Rendering;
@@ -7,6 +11,7 @@ import org.springframework.web.reactive.result.view.Rendering;
 import java.time.ZonedDateTime;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
+import static org.defendev.spring.cloud.gateway.demo.ClassNameAbbreviation.abbreviatedFqcn;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 
@@ -19,10 +24,25 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class ConfidentialSpaPageController {
 
     @RequestMapping(method = GET, path = "/")
-    public Rendering confidentialMainPage() {
+    public Rendering confidentialMainPage(@CurrentSecurityContext SecurityContext securityContext) {
+        final Authentication authentication = securityContext.getAuthentication();
+        final Object principal = authentication.getPrincipal();
+
+        final String authenticationClass = abbreviatedFqcn(authentication);
+        final String principalClass = abbreviatedFqcn(principal);
+        final String subject;
+        if (principal instanceof DefaultOidcUser oidcUser) {
+            subject = oidcUser.getSubject();
+        } else {
+            subject = "-";
+        }
+
         return Rendering
             .view("confidential-spa/index.th")
             .modelAttribute("weekAgo", ZonedDateTime.now().minusWeeks(1).format(ISO_LOCAL_DATE))
+            .modelAttribute("authenticationClass", authenticationClass)
+            .modelAttribute("principalClass", principalClass)
+            .modelAttribute("subject", subject)
             .build();
     }
 

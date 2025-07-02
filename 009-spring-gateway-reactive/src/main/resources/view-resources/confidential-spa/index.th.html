@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Confidential Single Page Application</title>
@@ -7,5 +7,19 @@
 <body>
   <h3>Confidential Spa index page</h3>
   <p>Something dynamic: a week ago was <strong style="color: blue;" th:text="${weekAgo}"></strong></p>
+
+  <br />
+
+  <div sec:authorize="isAuthenticated()">
+      <p>The user is <strong>authenticated</strong></p>
+      <p>authentication class: <strong th:text="${authenticationClass}"></strong></p>
+      <p>principalClass: <strong th:text="${principalClass}"></strong></p>
+      <p>subject: <strong th:text="${subject}"></strong></p>
+
+  </div>
+  <div sec:authorize="isAnonymous()">
+      <p>The user is <strong>anonymous</strong></p>
+  </div>
+
 </body>
 </html>
