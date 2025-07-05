@@ -1,0 +1,2 @@
+
+Main goal of this demo is to prove that full REST support is part of Flowable Open Source.
