@@ -28,6 +28,8 @@ public class GatewayConfig {
             .route(predicateSpec -> predicateSpec.path("/confidential-spa/api/deep/**")
                 .filters(filterSpec -> filterSpec
                     .tokenRelay()
+                    .removeRequestHeader("Cookie")
+                    .removeRequestHeader("User-Agent")
                     .filter((exchange, chain) -> {
                         final String resourceServerPath = "/backweb" + substringAfter(
                             exchange.getRequest().getPath().value(),

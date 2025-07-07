@@ -25,8 +25,6 @@ import static org.apache.commons.collections4.CollectionUtils.union;
 @Configuration
 public class SecurityConfig {
 
-    public static final String CLIENT_NAME = "defendev-gateway";
-
     public static final String OAUTH2_REGISTRATION_ID_GOOGLE = "google";
 
     public static final String OAUTH2_REGISTRATION_ID_AZURE = "azure";
@@ -54,7 +52,7 @@ public class SecurityConfig {
         );
         final ClientRegistration azureRegistration = ClientRegistration
             .withRegistrationId(OAUTH2_REGISTRATION_ID_AZURE)
-            .clientName(CLIENT_NAME)
+            .clientName("defendev-gateway at azure")
             .clientId(props.getOidc().getAzure().getClientId())
             .clientSecret(props.getOidc().getAzure().getClientSecret())
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
@@ -70,7 +68,7 @@ public class SecurityConfig {
 
         final ClientRegistration sprin6authzRegistration = ClientRegistration
             .withRegistrationId(OAUTH2_REGISTRATION_ID_SPRING_AUTHZ_SERVER)
-            .clientName(CLIENT_NAME)
+            .clientName("defendev-gateway at sprin6authz")
             .clientId(props.getOidc().getSpring().getClientId())
             .clientSecret(props.getOidc().getSpring().getClientSecret())
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
@@ -90,7 +88,7 @@ public class SecurityConfig {
             .jwkSetUri(props.getOidc().getSpring().getJwkSetUri())
             .build();
 
-        return new InMemoryReactiveClientRegistrationRepository(sprin6authzRegistration);
+        return new InMemoryReactiveClientRegistrationRepository(azureRegistration, sprin6authzRegistration);
     }
 
 }
