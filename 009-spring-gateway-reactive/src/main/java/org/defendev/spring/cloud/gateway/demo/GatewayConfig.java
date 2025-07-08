@@ -10,6 +10,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import static org.apache.commons.lang3.StringUtils.substringAfter;
+import static org.springframework.http.HttpHeaders.COOKIE;
+import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 
 
@@ -28,8 +30,8 @@ public class GatewayConfig {
             .route(predicateSpec -> predicateSpec.path("/confidential-spa/api/deep/**")
                 .filters(filterSpec -> filterSpec
                     .tokenRelay()
-                    .removeRequestHeader("Cookie")
-                    .removeRequestHeader("User-Agent")
+                    .removeRequestHeader(COOKIE)
+                    .removeRequestHeader(USER_AGENT)
                     .filter((exchange, chain) -> {
                         final String resourceServerPath = "/backweb" + substringAfter(
                             exchange.getRequest().getPath().value(),

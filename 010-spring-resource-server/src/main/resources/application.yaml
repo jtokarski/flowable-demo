@@ -3,4 +3,10 @@ server:
   servlet:
     context-path: "/backweb"
   port: 8012
+  #
+  # Setting explicitly to the default value of 8KB. In production scenario with Entra Id the token
+  # size may exceed this limit (e.g. when security groups are included) and would require adjustment.
+  #
+  max-http-request-header-size: 8KB
+
 
