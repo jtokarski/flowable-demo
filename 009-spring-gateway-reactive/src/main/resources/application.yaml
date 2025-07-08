@@ -11,10 +11,11 @@ spring:
       #
       add-mappings: false
       #
-      # Disabling the auto o.s.b.a.web.reactive.WebFluxAutoConfiguration.WelcomePageConfiguration
+      # Limiting the auto o.s.b.a.web.reactive.WebFluxAutoConfiguration.WelcomePageConfiguration
+      # to error pages only.
       # I want to explicitly configure index.html pages myself (by RouterFunction)
       #
-      static-locations: []
+      static-locations: ["classpath:/view-errors/"]
   webflux:
     base-path: "/webcntx"
 
