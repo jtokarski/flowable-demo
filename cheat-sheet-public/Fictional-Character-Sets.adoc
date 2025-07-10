@@ -76,11 +76,116 @@ realistic first and last names and possibly - easily recognizable avatars.
 
 
 
-== Famous Painters
+== Famous Painters and Sculptors
 
 * *Vincent van Gogh* +
   Vincent_vGogh +
   vincent.gogh@example.com
+
+* *Claude Monet* +
+  ClaudeMonet +
+  claude.monet@example.com
+
+* *Raphael Sanzio* +
+  Raphael_Sanzio +
+  raphael.sanzio@example.com
+
+* *Pablo Picasso* +
+  Pablo_Picasso +
+  pablo.picasso@example.com
+
+* *Sandro Botticelli* +
+  Sandro_Botticelli +
+  sandro.botticelli@example.com
+
+* *Henri Matisse* +
+  Henri_Matisse +
+  henri.matisse@example.com
+
+* *Salvador Dali* +
+  Salvador_Dali +
+  salvador.dali@example.com
+
+* *Peter Rubens* +
+  Peter_Rubens +
+  peter.rubens@example.com
+
+* *Albrecht Dürer* +
+  Albrecht_Duerer +
+  albrecht.duerer@example.com
+
+* *Andy Warhol* +
+  Andy_Warhol +
+  andy.warhol@example.com
+
+* *Frida Kahlo* +
+  Frida_Kahlo +
+  frida.kahlo@example.com
+
+* *Paul Cézanne* +
+  Paul_Cezanne +
+  paul.cezanne@example.com
+
+* *Michelangelo Buonarroti* +
+  Michelangelo_Buonarroti +
+  michelangelo.buonarroti@example.com
+
+* *Antonio Canova* +
+  Antonio_Canova +
+  antonio.canova@example.com
+
+* *Ai Weiwei* +
+  Ai_Weiwei +
+  ai.weiwei@example.com
+
+* *Louise Bourgeois* +
+  Louise_Bourgeois +
+  louise.bourgeois@example.com
+
+* *Donatello Bardi* +
+  Donatello_Bardi +
+  donatello.bardi@example.com
+
+* *Leiko Ikemura* +
+  Leiko_Ikemura +
+  leiko.ikemura@example.com
+
+* *Gustav Klimt* +
+  Gustav_Klimt +
+  gustav.klimt@example.com
+
+* *Hieronymus Bosch* +
+  Hieronymus_Bosch +
+  hieronymus.bosch@example.com
+
+* *Leonardo da Vinci* +
+  Leonardo_da_Vinci +
+  leonardo.vinci@example.com
+
+* *Johannes Vermeer* +
+  Johannes_Vermeer +
+  johannes.vermeer@example.com
+
+* *Edvard Munch* +
+  Edvard_Munch +
+  edvard.munch@example.com
+
+* *Wassily Kandinsky* +
+  Wassily_Kandinsky +
+  wassily.kandinsky@example.com
+
+* *Francisco Goya* +
+  Francisco_Goya +
+  francisco.goya@example.com
+
+* *Diego Velázquez* +
+  Diego_Velazquez +
+  diego.velazquez@example.com
+
+* *Gustave Courbet* +
+  Gustave_Courbet +
+  gustave.courbet@example.com
+
 
 
 == Famous Explorers
