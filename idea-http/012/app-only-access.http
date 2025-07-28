@@ -10,9 +10,23 @@ client_secret = {{clientSecret}} &
 grant_type = client_credentials
 
 
+
 ###
 # @name List users
-GET  https://graph.microsoft.com/v1.0/users
+GET https://graph.microsoft.com/v1.0/users
+Authorization: Bearer eyJ0eX...a3YuCgk
+
+
+
+###
+# For list of properties available for $select see:
+# https://learn.microsoft.com/en-us/graph/api/resources/user?view=graph-rest-1.0#properties
+#
+# @name List users with query parameters
+GET https://graph.microsoft.com/v1.0/users?
+  $select=id,givenName,surname&
+  $filter=startsWith(givenName, 'lu') OR startsWith(surname, 'lu')&
+  $top=500
 Authorization: Bearer eyJ0eX...a3YuCgk
 
 

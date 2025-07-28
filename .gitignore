@@ -3,3 +3,8 @@
 
 # Ignore Gradle build output directory
 build
+
+/idea-http/http-client.private.env.json
+
+
+
