@@ -1,0 +1,22 @@
+
+###
+# @name Request an access token
+POST https://login.microsoftonline.com/{{tenantId}}/oauth2/v2.0/token HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+client_id = {{clientId}} &
+scope = https%3A%2F%2Fgraph.microsoft.com%2F.default &
+client_secret = {{clientSecret}} &
+grant_type = client_credentials
+
+
+###
+# @name List users
+GET  https://graph.microsoft.com/v1.0/users
+Authorization: Bearer eyJ0eX...a3YuCgk
+
+
+
+
+
+
