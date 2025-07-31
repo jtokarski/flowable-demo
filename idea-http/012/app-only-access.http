@@ -1,7 +1,7 @@
 
 ###
 # @name Request an access token
-POST https://login.microsoftonline.com/{{tenantId}}/oauth2/v2.0/token HTTP/1.1
+POST https://login.microsoftonline.com/{{tenantId}}/oauth2/v2.0/token
 Content-Type: application/x-www-form-urlencoded
 
 client_id = {{clientId}} &
