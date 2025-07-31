@@ -1,0 +1,24 @@
+
+== Accessing Microsoft Graph APIs with SDK
+
+Based on those manuals:
+
+* https://learn.microsoft.com/en-us/graph/sdks/sdk-installation
+
+* https://learn.microsoft.com/en-us/graph/sdks/choose-authentication-providers?tabs=java - btw.
+  note the various kinds of providers beyond `ClientCertificateCredential`, including
+  *Integrated Windows provider* which seems to be analogous to using `az login` from CLI.
+
+* https://learn.microsoft.com/pl-pl/graph/sdks/customize-client?tabs=java - on adding
+  logging.
+
+It turns out that all the JARs with SDK take over 50MB. It's big because it offers
+full functionality of graph manipulation.
+
+But it doesn't seem reasonable to add this to my web application only to fetch
+simple list of users.
+
+But maybe it's *worth keeping for reference*, for example to, build some request with
+fluent APIs of SDK and then translate it to request URL/headers. For that I need to be able
+to log the details of request that GraphServiceClient is doing.
+

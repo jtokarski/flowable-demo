@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" strict="true">
+
+    <Appenders>
+        <Appender type="Console" name="STDOUT-APP">
+            <!-- https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLocation -->
+            <Layout type="PatternLayout" pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level{length=5} %logger{1.} : %notEmpty{[%markerSimpleName]} %message%n%throwable" />
+        </Appender>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="STDOUT-APP" />
+        </Root>
+    </Loggers>
+
+</Configuration>

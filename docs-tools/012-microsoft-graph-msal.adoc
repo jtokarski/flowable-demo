@@ -1,0 +1,14 @@
+
+== Accessing Microsoft Graph APIs with `RestClient`
+
+Based on those manuals:
+
+* https://learn.microsoft.com/en-us/graph/auth-v2-service?tabs=http
+
+* https://learn.microsoft.com/en-us/entra/identity-platform/sample-v2-code?tabs=apptype#service--daemon
+
+* https://github.com/Azure-Samples/ms-identity-msal-java-samples/tree/main/1-server-side/msal-client-credential-secret
+
+Intending minimal use of additional libraries. The only one we use is the ...msal...
+as it offers *access token caching*. Since we obtain the access token, then we use
+Spring `RestClient` to call Microsoft Graph REST APIs.

@@ -42,25 +42,245 @@ realistic first and last names and possibly - easily recognizable avatars.
 
 == Famous Mathematicians and Physicists
 
-* *Isaac Newton* +
+* *Isaac* +
+  *Newton* +
   isaac_newton +
-  isaac.newton@mock.org
+  \isaac.newton@mock.org
 
-* *Albert Einstein* +
+* *Albert* +
+  *Einstein* +
   Alberto_Ein5 +
-  albert.einstein@example.edu
+  \albert.einstein@example.edu
 
-* *Galileo Galilei* +
+* *Galileo* +
+  *Galilei* +
   galileo_galilei +
-  galilei1001@example.com
+  \galilei1001@example.com
 
-* *Marie Curie* +
+* *Marie* +
+  *Curie* +
   maria_salomea_sc +
-  marie.curie@example.com
+  \marie.curie@example.com
 
-* *Niels Bohr* +
+* *Niels* +
+  *Bohr* +
   NielsBohr3 +
-  bohrniels@mock.com
+  \bohrniels@mock.com
+
+* *Leonardo* +
+  *Fibonacci* +
+  leo_fibonacci +
+  \lfibonacci@example.com
+
+* *Ada* +
+  *Lovelace* +
+  ada_lovelace +
+  \ada.lovelace@example.com
+
+* *Euclid* +
+  *of Alexandria* +
+  Euclid300 +
+  \euclid-of-alexandria@example.com
+
+* *Thales* +
+  *of Miletus* +
+  thales_of_miletus +
+  \thales-of-miletus@example.com
+
+* *René* +
+  *Descartes* +
+  ReneDescartes +
+  \descartes.rene@example.com
+
+* *Daniel* +
+  *Bernoulli* +
+  daniel_bernoulli +
+  \daniel.bernoulli@example.com
+
+* *Bernhard* +
+  *Riemann* +
+  bernhard_riemann +
+  \bernhard.riemann@example.com
+
+* *Alan* +
+  *Turing* +
+  alan_turing +
+  \alanturin9@example.com
+
+* *Srinivasa* +
+  *Ramanujan* +
+  srinivasa_ramanujan +
+  \srinivasa.ramanujan@example.com
+
+* *John* +
+  *von Neumann* +
+  john_vneumann +
+  \john.neumann@example.com
+
+* *Blaise* +
+  *Pascal* +
+  blaise_pascal +
+  \blaise_pascal@example.com
+
+* *Omar* +
+  *Khayyam* +
+  omar_khayyam +
+  \omar.khayyam@example.com
+
+* *Ernest* +
+  *Rutherford* +
+  ernest_rutherford +
+  \ernest.rutherford@example.com
+
+* *Johannes* +
+  *Kepler* +
+  johannes_kepler +
+  \johan.kepler@example.com
+
+* *Michael* +
+  *Faraday* +
+  michael_faraday +
+  \michael.faraday@example.com
+
+* *John* +
+  *Dalton* +
+  john_dalton +
+  \john.dalton@example.com
+
+* *Werner* +
+  *Heisenberg* +
+  werner_heisenberg +
+  \werner.heisenberg@example.com
+
+* *Carl* +
+  *Friedrich* +
+  *Gauss* +
+  crl_gauss +
+  \carl.f.gauss@example.com
+
+* *André-Marie* +
+  *Ampère* +
+  Ampere_a +
+  \andre_marie_ampere@example.com
+
+* *Luigi* +
+  *Galvani* +
+  luigi_galvani +
+  \luigi-galvani@example.com
+
+* *John* +
+  *Ambrose* +
+  *Fleming* +
+  john_a_fleming +
+  \john.fleming@example.com
+
+* *Alessandro* +
+  *Volta* +
+  alessandro_volta +
+  \alessandro_volta@example.com
+
+* *Wilhelm* +
+  *Röntgen* +
+  wilhelm_roentgen +
+  \wilhelm.roentgen@example.com
+
+* *Louis* +
+  *Pasteur* +
+  lpasteur +
+  \louis.pasteur@example.com
+
+* *Alfred* +
+  *Nobel* +
+  alfred_nobel +
+  \alfred_nobel@example.com
+
+* *Linus* +
+  *Pauling* +
+  LinusPauling +
+  \linus_pauling@example.com
+
+* *Dmitrij* +
+  *Mendelejew* +
+  dmitrij_mendelejew +
+  \dmitrij_mendelejew@example.com
+
+* *James* +
+  *Watt* +
+  james_watt +
+  \j.watt@example.com
+
+* *Nikolaus* +
+  *Otto* +
+  nikolaus_otto +
+  \niko-otto@example.com
+
+* *Rudolf* +
+  *Christian* +
+  *Diesel* +
+  RudolfDiesel +
+  \r.c.diesel@example.com
+
+* *James* +
+  *Atkinson* +
+  james_atkinson +
+  \james_atkinson@example.com
+
+* *Georg* +
+  *Ohm* +
+  georg_ohm +
+  \ohm-georg@example.com
+
+* *Richard* +
+  *Feynman* +
+  richard_feynman +
+  \richard_feynman@example.com
+
+* *Paul* +
+  *Dirac* +
+  paul_dirac +
+  \pdirac@example.com
+
+* *Anders* +
+  *Celsius* +
+  anders_celsius +
+  \Anders-Celsius@example.com
+
+* *Joseph* +
+  *Fourier* +
+  joseph_fourier +
+  \fourier_j@example.com
+
+* *Nikola* +
+  *Tesla* +
+  ntesla +
+  \nikola.tesla@example.com
+
+* *Nicolaus* +
+  *Copernicus* +
+  copernicus_nico +
+  \nicolaus-copernicus@example.com
+
+* *Claudius* +
+  *Ptolemy* +
+  claudius_ptolemy +
+  \c.ptolemy@example.com
+
+* *Edwin* +
+  *Hubble* +
+  edwin_hubble +
+  \hubble.ed@example.com
+
+* *Edmond* +
+  *Halley* +
+  edmond_halley +
+  \halley1@example.com
+
+* *Giovanni* +
+  *Domenico* +
+  *Cassini* +
+  CassiniGiDo +
+  \giovanni_cassini@example.com
+
 
 
 == Famous Programmers
@@ -78,119 +298,146 @@ realistic first and last names and possibly - easily recognizable avatars.
 
 == Famous Painters and Sculptors
 
-* *Vincent van Gogh* +
+* *Vincent* +
+  *van Gogh* +
   Vincent_vGogh +
-  vincent.gogh@example.com
+  \vincent.gogh@example.com
 
-* *Claude Monet* +
+* *Claude* +
+  *Monet* +
   ClaudeMonet +
-  claude.monet@example.com
+  \claude.monet@example.com
 
-* *Raphael Sanzio* +
+* *Raphael* +
+  *Sanzio* +
   Raphael_Sanzio +
-  raphael.sanzio@example.com
+  \raphael.sanzio@example.com
 
-* *Pablo Picasso* +
+* *Pablo* +
+  *Picasso* +
   Pablo_Picasso +
-  pablo.picasso@example.com
+  \pablo.picasso@example.com
 
-* *Sandro Botticelli* +
+* *Sandro* +
+  *Botticelli* +
   Sandro_Botticelli +
-  sandro.botticelli@example.com
+  \sandro.botticelli@example.com
 
-* *Henri Matisse* +
+* *Henri* +
+  *Matisse* +
   Henri_Matisse +
-  henri.matisse@example.com
+  \henri.matisse@example.com
 
-* *Salvador Dali* +
+* *Salvador* +
+  *Dali* +
   Salvador_Dali +
-  salvador.dali@example.com
+  \salvador.dali@example.com
 
-* *Peter Rubens* +
+* *Peter* +
+  *Rubens* +
   Peter_Rubens +
-  peter.rubens@example.com
+  \peter.rubens@example.com
 
-* *Albrecht Dürer* +
+* *Albrecht* +
+  *Dürer* +
   Albrecht_Duerer +
-  albrecht.duerer@example.com
+  \albrecht.duerer@example.com
 
-* *Andy Warhol* +
+* *Andy* +
+  *Warhol* +
   Andy_Warhol +
-  andy.warhol@example.com
+  \andy.warhol@example.com
 
-* *Frida Kahlo* +
+* *Frida* +
+  *Kahlo* +
   Frida_Kahlo +
-  frida.kahlo@example.com
+  \frida.kahlo@example.com
 
-* *Paul Cézanne* +
+* *Paul* +
+  *Cézanne* +
   Paul_Cezanne +
-  paul.cezanne@example.com
+  \paul.cezanne@example.com
 
-* *Michelangelo Buonarroti* +
+* *Michelangelo* +
+  *Buonarroti* +
   Michelangelo_Buonarroti +
-  michelangelo.buonarroti@example.com
+  \michelangelo.buonarroti@example.com
 
-* *Antonio Canova* +
+* *Antonio* +
+  *Canova* +
   Antonio_Canova +
-  antonio.canova@example.com
+  \antonio.canova@example.com
 
-* *Ai Weiwei* +
+* *Ai* +
+  *Weiwei* +
   Ai_Weiwei +
-  ai.weiwei@example.com
+  \ai.weiwei@example.com
 
-* *Louise Bourgeois* +
+* *Louise* +
+  *Bourgeois* +
   Louise_Bourgeois +
-  louise.bourgeois@example.com
+  \louise.bourgeois@example.com
 
-* *Donatello Bardi* +
+* *Donatello* +
+  *Bardi* +
   Donatello_Bardi +
-  donatello.bardi@example.com
+  \donatello.bardi@example.com
 
-* *Leiko Ikemura* +
+* *Leiko* +
+  *Ikemura* +
   Leiko_Ikemura +
-  leiko.ikemura@example.com
+  \leiko.ikemura@example.com
 
-* *Gustav Klimt* +
+* *Gustav* +
+  *Klimt* +
   Gustav_Klimt +
-  gustav.klimt@example.com
+  \gustav.klimt@example.com
 
-* *Hieronymus Bosch* +
+* *Hieronymus* +
+  *Bosch* +
   Hieronymus_Bosch +
-  hieronymus.bosch@example.com
+  \hieronymus.bosch@example.com
 
-* *Leonardo da Vinci* +
+* *Leonardo* +
+  *da Vinci* +
   Leonardo_da_Vinci +
-  leonardo.vinci@example.com
+  \leonardo.vinci@example.com
 
-* *Johannes Vermeer* +
+* *Johannes* +
+  *Vermeer* +
   Johannes_Vermeer +
-  johannes.vermeer@example.com
+  \johannes.vermeer@example.com
 
-* *Edvard Munch* +
+* *Edvard* +
+  *Munch* +
   Edvard_Munch +
-  edvard.munch@example.com
+  \edvard.munch@example.com
 
-* *Wassily Kandinsky* +
+* *Wassily* +
+  *Kandinsky* +
   Wassily_Kandinsky +
-  wassily.kandinsky@example.com
+  \wassily.kandinsky@example.com
 
-* *Francisco Goya* +
+* *Francisco* +
+  *Goya* +
   Francisco_Goya +
-  francisco.goya@example.com
+  \francisco.goya@example.com
 
-* *Diego Velázquez* +
+* *Diego* +
+  *Velázquez* +
   Diego_Velazquez +
-  diego.velazquez@example.com
+  \diego.velazquez@example.com
 
-* *Gustave Courbet* +
+* *Gustave* +
+  *Courbet* +
   Gustave_Courbet +
-  gustave.courbet@example.com
+  \gustave.courbet@example.com
 
 
 
 == Famous Explorers
 
-
+== Famous Entrepreneurs
 
 
 

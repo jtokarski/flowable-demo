@@ -110,3 +110,12 @@ project(':009-spring-gateway-reactive').name = 'spring-gateway-reactive'
 
 include '010-spring-resource-server'
 project(':010-spring-resource-server').name = 'spring-resource-server'
+
+
+
+
+include '012-microsoft-graph-msal'
+project(':012-microsoft-graph-msal').name = 'microsoft-graph-msal'
+
+include '013-microsoft-graph-sdk'
+project(':013-microsoft-graph-sdk').name = 'microsoft-graph-sdk'
