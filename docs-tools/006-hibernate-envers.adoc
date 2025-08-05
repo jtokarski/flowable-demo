@@ -13,6 +13,8 @@
   I will know that in real projects I can write DDLs manually and use Hibernate+Envers schema validation
   as guardrail (rather than generator).
 
+
+
 === Use case of Hibernate Envers
 
 I realize, that for my use of Envers is implementing the *maker-checker* process, which
@@ -24,6 +26,25 @@ is not the original purpose of Envers. This comes with some major consequences:
 * it's questionable if it still makes sense have `@CreatedDate` / `@LastModifiedDate` on the `@Entity`.
   They seem redundant because Envers already tracks the same information in `@RevisionEntity`
   and audit tables.
+
+I recall following issues with Envers-based maker-checker implemented for Ycorpo project:
+
+* an `@Entity` was always in state of most recent update, which may be live or pending change.
+  Therefore, querying, listing, sorting, pagination of live version involved revision queries.
+
+* the *reject changes* functionality involved restoring previous revision, which
+  wasn't trivial to find and apply the diff. It also felt a little unreliable - instead
+  of just discarding changes we were really reproducing recent live state. It would be better
+  if a live `@Entity` wasn't touched at all.
+
+* in case of editing `@Entity` - only one working copy is possible
+
+* showing approved changes (diff) in audit view was not trivial
+
+* multiple changes between live versions created multi-revision gaps. We needed to handle this complexity.
+
+* and above it all - the dynamic attribute concept with some design mistake introduced additional complexity
+
 
 
 === Thoughts on approach
