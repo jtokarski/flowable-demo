@@ -1,0 +1,14 @@
+
+=== Foreword
+
+* initially I wanted to import dependency of `org.defendev.easygo:database` to this project and make
+  research starting with pre-existing tables. But since I've discovered that Hibernate schema tooling
+  offers possibility to *write DDL to script* instead of making live update, I decided to only use this.
+  See `JAKARTA_HBM2DDL_SCRIPTS_ACTION` / `jakarta.persistence.schema-generation.scripts.action`
+
+
+
+
+
+
+
