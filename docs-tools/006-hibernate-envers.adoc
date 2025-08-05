@@ -6,9 +6,18 @@
   offers possibility to *write DDL to script* instead of making live update, I decided to only use this.
   See `JAKARTA_HBM2DDL_SCRIPTS_ACTION` / `jakarta.persistence.schema-generation.scripts.action`
 
+* so the main focus is *generating DDLs* from Java `@Entity` classes
+
+* validating the database schema is secondary focus. The only goal here is to prove that
+  *Envers adds its own comprehensive validations* on top of pure-Hibernate validations. When that's confirmed,
+  I will know that in real projects I can write DDLs manually and use Hibernate+Envers schema validation
+  as guardrail (rather than generator).
 
 
 
 
+=== Thoughts on approach
+
+* write multiple persistence units with isolated configuration in this single Gradle subproject
 
 
