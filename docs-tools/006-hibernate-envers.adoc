@@ -13,11 +13,26 @@
   I will know that in real projects I can write DDLs manually and use Hibernate+Envers schema validation
   as guardrail (rather than generator).
 
+=== Use case of Hibernate Envers
 
+I realize, that for my use of Envers is implementing the *maker-checker* process, which
+is not the original purpose of Envers. This comes with some major consequences:
+
+* the normal querying for entities *goes obsolete*. Now for all tables where I show live-version data
+  for the user I have to use `AuditReader` / `AuditQuery`
+
+* it's questionable if it still makes sense have `@CreatedDate` / `@LastModifiedDate` on the `@Entity`.
+  They seem redundant because Envers already tracks the same information in `@RevisionEntity`
+  and audit tables.
 
 
 === Thoughts on approach
 
 * write multiple persistence units with isolated configuration in this single Gradle subproject
+
+* I would like to risk to go without `@CreatedDate` / `@LastModifiedDate` fields on the `@Entity`
+  and personally experience potential consequences.
+
+
 
 
