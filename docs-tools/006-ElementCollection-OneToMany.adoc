@@ -1,0 +1,22 @@
+
+== Research on replacing `@ElementCollection` with `@OneToMany`
+
+=== Motivation
+
+I have two reasons for `@ElementCollection` with `@OneToMany`:
+
+* `@ElementCollection` has performance issues with limited possibility to optimize, as described
+  by Vlad Mihalcea:  https://vladmihalcea.com/how-to-optimize-unidirectional-collections-with-jpa-and-hibernate/
+
+* `@ElementCollection` feels obscure and over-abstracted. It's not intuitively clear how this should behave
+  when using Envers
+
+So, even though this example doesn't involve use of Envers, it's still targeted toward effective use of Envers.
+
+
+
+
+
+
+
+
