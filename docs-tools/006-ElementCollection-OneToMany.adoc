@@ -13,6 +13,18 @@ I have two reasons for `@ElementCollection` with `@OneToMany`:
 
 So, even though this example doesn't involve use of Envers, it's still targeted toward effective use of Envers.
 
+=== Challenges
+
+* `@OneToMany` not only can be placed on List but also on Set. So we need to be able to ensure
+  proper persistence when manipulating Set.
+
+* we may need to deal with `@Entity` that doesn't have business key which could be used for
+  `equals()`/`hashCode()` and has to rely on surrogate key.
+
+=== Implementation checklist
+
+
+
 
 
 
