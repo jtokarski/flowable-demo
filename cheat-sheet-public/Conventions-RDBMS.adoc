@@ -1,7 +1,78 @@
 
 
+== Identifiers
+
+* *table names* written in `UpperCamelCase`
+
+* *column names* written in `lowerCamelCase`
+
+* *primary key constraint* written as `PK_{TableName}` +
+  e.g. `PK_FinancialTransaction` +
+  Since a table can only have one primary key, there's no need for the identifier to be more specific.
+
+* *foreign key constraint* written as `FK_{ReferencingTableName}_{ReferencedTableName}_{number}` +
+  e.g. `FK_FinancialTransaction_Document_1` +
+  The number starts with 1 and is per-table counter of *foreign key* (other constraint types should
+  have separate counter).
+
+* *unique key constraint* written as `IX_{TableName}_{number}` +
+  e.g. `IX_JoinGquestionGtag_1`
+  The number starts with 1 and is per-table counter of *unique key* (other constraint types should
+  have separate counter).
+
+* *default value constraint* written as `DF_{TableName}_{columnName}` +
+  Probably applies only to Microsoft SQL Server
+
+* *check constraint* - Don't use check constraints at all. To simulate enum use pattern of
+  *foreign key to dictionary table*. It's effective, simple and very portable across various
+  RDBMs engines.
++
+----
+CREATE TABLE "PrivilegeKey" (
+  "id"           VARCHAR2(255 BYTE),
+  CONSTRAINT PK_PrivilegeKey PRIMARY KEY ("id")
+);
+INSERT ALL
+  INTO "PrivilegeKey"("id") VALUES ('preview')
+  INTO "PrivilegeKey"("id") VALUES ('read')
+  INTO "PrivilegeKey"("id") VALUES ('write')
+  INTO "PrivilegeKey"("id") VALUES ('own')
+  SELECT 1 FROM DUAL;
+
+CREATE TABLE "CommonPrivilege" (
+  ...
+  "privilegeKey" VARCHAR2(255 BYTE) NOT NULL,
+  ...
+  CONSTRAINT FK_CommonPrivilege_PrivilegeKey_1 FOREIGN KEY ("privilegeKey")
+    REFERENCES "${schemaNameIAM}"."PrivilegeKey" ("id"),
+  ...
+);
+----
++
+In the example above not the `Key` suffix in referencing column name
+`"CommonPrivilege"."privilegeKey"`
 
 
+
+== Naming of `foreign key` coulumns
+
+The pattern is `idOf{TableName}`.
+
+Examples `idOfPerson`, `idOfTopic`.
+
+With this convention, by looking on just the beginning of a column name (often I don't even see
+full name when using various UI tools) I can immediately tell that this is a foreign key,
+that is - something to join on.
+
+
+
+== Rationale
+
+=== Why not `snake_case` for table names?
+
+If underscore (`\_`) separator is used in both - table names and constraint names, it becomes unclear
+what are the separated parts. By using capital letter as separator in table names and underscore
+in constraint names, it's much clearer what the constraint name is made of.
 
 
 
@@ -9,10 +80,7 @@
 
 Unify
 
-* Convention: GQ Id 519
-
 * coding-standards.txt - here also some
-
 
 
 
