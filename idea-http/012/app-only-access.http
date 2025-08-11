@@ -31,6 +31,15 @@ Authorization: Bearer eyJ0eX...a3YuCgk
 
 
 
+###
+#
+# @name List users with $search query parameter
+GET https://graph.microsoft.com/v1.0/users?
+  $select=id,givenName,surname&
+  $search="givenName:veru" OR "surname:veru"&
+  $top=500
+Authorization: Bearer eyJ0eX...a3YuCgk
+ConsistencyLevel: eventual
 
 
 
