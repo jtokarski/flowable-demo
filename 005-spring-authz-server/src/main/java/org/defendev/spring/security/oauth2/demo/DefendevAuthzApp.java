@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.O
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
+import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -19,7 +20,8 @@ import java.util.Map;
     SecurityAutoConfiguration.class,
     UserDetailsServiceAutoConfiguration.class,
     OAuth2ResourceServerAutoConfiguration.class,
-    OAuth2AuthorizationServerAutoConfiguration.class
+    OAuth2AuthorizationServerAutoConfiguration.class,
+    ThymeleafAutoConfiguration.class
 })
 @SpringBootConfiguration
 public class DefendevAuthzApp {

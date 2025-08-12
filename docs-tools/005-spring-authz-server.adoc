@@ -57,3 +57,13 @@
   What is that?
   Read this: https://spring.io/blog/2023/07/13/new-in-spring-6-1-restclient[New in Spring 6.1: RestClient] +
   Funny fact: `DefaultOAuth2UserService` is still using `RestTemplate`
+
+* in practice, be prepared that the client application will still need to get more information
+  about logged-in user, about some arbitrary user even will need the ability to search
+  for list of users of some kind. With Azure this might mean accessing
+  the `\https://graph.microsoft.com/v1.0/users` Microsoft Graph endpoint.
+  So think about providing some mock version of this endpoint in the same application as SAS,
+  as this seems the most appropriate place (as it allows providing mock login form
+  with freetext user properties, not just presets).
+
+

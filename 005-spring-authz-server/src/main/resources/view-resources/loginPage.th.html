@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>SSO Login to sprin6authz</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="loginPage.js"></script>
+</head>
+<body>
+  <h3>SSO Login - sprin6authz</h3>
+
+  <p th:if="${loginError}" class="LoginError">error: <span th:text="${loginError}"></span></p>
+
+  <form id="legitimateLoginForm" th:action="@{${signInPath}}" method="post">
+    <p>
+      <label for="legitimateUsername">user name:</label>
+      <input id="legitimateUsername" name="username" type="text" placeholder="user name" />
+    </p>
+    <p>
+      <label for="legitimatePassword">password:</label>
+      <input id="legitimatePassword" name="password" type="password" />
+    </p>
+    <p>
+      <button type="submit">sign in</button>
+    </p>
+  </form>
+
+  <p>
+    <button type="button" class="LegitimateUserBtn" data-username="isaac_newton" data-password="password"></button>
+  </p>
+  <p>
+    <button type="button" class="LegitimateUserBtn" data-username="Alberto_Ein5" data-password="password2"></button>
+  </p>
+
+</body>
+</html>

@@ -10,6 +10,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,6 +33,7 @@ import org.springframework.security.oauth2.server.authorization.token.JwtEncodin
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -55,15 +57,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class WebSecurity {
 
     /*
-     * This is very difficult with Spring Security to configure the
-     *   .formLogin()
-     * including underlying o.s.s.c.a.w.c.FormLoginConfigurer so that there is custom login URL
-     * and still the o.s.s.w.a.u.DefaultLoginPageGeneratingFilter is in use.
+     * This turned out very difficult with Spring Security to configure the login URL to be "/sign-in"
+     * and still use o.s.s.w.a.u.DefaultLoginPageGeneratingFilter as the "/login"
+     * is too strongly hardcoded (see o.s.s.c.a.w.c.FormLoginConfigurer,
+     *   o.s.s.c.a.w.c.AbstractAuthenticationFilterConfigurer)
      *
-     * Therefore, leaving this with default "/login" for now.
+     * The change was only possible after implementing my own loginPage.th.html.
      *
      */
-    public static final String SIGN_IN_PATH = "/login";
+    public static final String SIGN_IN_PATH = "/sign-in";
 
     /*
      * How do I know the @Scope of some bean class (e.g. HttpSecurity) provided by some @Enable... annotation
@@ -136,11 +138,29 @@ public class WebSecurity {
         http
             .securityMatcher(PathPatternRequestMatcher.withDefaults().matcher("/**"))
             .authorizeHttpRequests(customizer -> customizer
+                .requestMatchers(HttpMethod.GET, "/info/").permitAll()
+                .requestMatchers(HttpMethod.GET, "/logout-success/").permitAll()
+                .requestMatchers(HttpMethod.GET, SIGN_IN_PATH).permitAll()
+                .requestMatchers(HttpMethod.POST, SIGN_IN_PATH).permitAll()
+                .requestMatchers(HttpMethod.GET, "styles.css", "loginPage.js").permitAll()
                 .anyRequest().authenticated()
             )
             // Form login handles the redirect to the login page from the
             // authorization server filter chain
-            .formLogin(Customizer.withDefaults());
+            .exceptionHandling(customizer -> customizer
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(SIGN_IN_PATH))
+            )
+            .formLogin(customizer -> customizer
+                .loginProcessingUrl(SIGN_IN_PATH)
+                /*
+                 * Why not .successHandler(new SimpleUrlAuthenticationSuccessHandler("/dashboard/")) ?
+                 * Because it would break the Authorization Code flow.
+                 *
+                 */
+                .defaultSuccessUrl("/dashboard/")
+                .failureHandler(new SimpleUrlAuthenticationFailureHandler(SIGN_IN_PATH))
+            )
+            .logout(Customizer.withDefaults());
         return http.build();
     }
 
