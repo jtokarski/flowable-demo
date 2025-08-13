@@ -25,11 +25,11 @@
     </p>
   </form>
 
-  <p>
-    <button type="button" class="LegitimateUserBtn" data-username="isaac_newton" data-password="password"></button>
-  </p>
-  <p>
-    <button type="button" class="LegitimateUserBtn" data-username="Alberto_Ein5" data-password="password2"></button>
+  <p th:each="imaginaryUser: ${imaginaryUsers}">
+    <button type="button" class="LegitimateUserBtn"
+      th:data-username="${imaginaryUser.username}"
+      th:data-password="${imaginaryUser.plaintextPassword}"
+    ></button>
   </p>
 
 </body>

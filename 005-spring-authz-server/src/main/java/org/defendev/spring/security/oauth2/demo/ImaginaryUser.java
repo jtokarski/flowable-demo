@@ -15,12 +15,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ImaginaryUser extends User implements CredentialsContainer {
 
+    private final String plaintextPassword;
+
     private final AccessTokenClaims accessTokenClaims;
 
-    public ImaginaryUser(String username, String password,
+    public ImaginaryUser(String username, String plaintextPassword, String encodedPassword,
                          Collection<? extends GrantedAuthority> authorities, AccessTokenClaims accessTokenClaims) {
-        super(username, password, authorities);
+        super(username, encodedPassword, authorities);
+        this.plaintextPassword = plaintextPassword;
         this.accessTokenClaims = accessTokenClaims;
+    }
+
+    public String getPlaintextPassword() {
+        return plaintextPassword;
     }
 
     public AccessTokenClaims getAccessTokenClaims() {
@@ -30,7 +37,7 @@ public class ImaginaryUser extends User implements CredentialsContainer {
     public ImaginaryUser copy() {
         final List<GrantedAuthority> authoritiesCopy = new ArrayList<>();
         authoritiesCopy.addAll(getAuthorities());
-        return new ImaginaryUser(getUsername(), getPassword(), authoritiesCopy, accessTokenClaims);
+        return new ImaginaryUser(getUsername(), plaintextPassword, getPassword(), authoritiesCopy, accessTokenClaims);
     }
 
     public record AccessTokenClaims(
@@ -87,9 +94,9 @@ public class ImaginaryUser extends User implements CredentialsContainer {
 
 		private String username;
 
-		private String password;
+        private String plaintextPassword;
 
-		private List<GrantedAuthority> authorities = new ArrayList<>();
+        private List<GrantedAuthority> authorities = new ArrayList<>();
 
         private Function<String, String> passwordEncoder;
 
@@ -100,8 +107,8 @@ public class ImaginaryUser extends User implements CredentialsContainer {
             return this;
         }
 
-        public ImaginaryUserBuilder setPassword(String password) {
-            this.password = password;
+        public ImaginaryUserBuilder setPlaintextPassword(String plaintextPassword) {
+            this.plaintextPassword = plaintextPassword;
             return this;
         }
 
@@ -128,8 +135,9 @@ public class ImaginaryUser extends User implements CredentialsContainer {
             assertThat(accessTokenClaims.familyName).as("Azure requires accessTokenClaims.familyName").isNotNull();
             assertThat(accessTokenClaims.groups).as("Azure requires accessTokenClaims.groups").isNotNull();
 
-			final String encodedPassword = this.passwordEncoder.apply(this.password);
-            return new ImaginaryUser(this.username, encodedPassword, this.authorities, this.accessTokenClaims);
+			final String encodedPassword = this.passwordEncoder.apply(this.plaintextPassword);
+            return new ImaginaryUser(this.username, plaintextPassword, encodedPassword, this.authorities,
+                this.accessTokenClaims);
         }
     }
 

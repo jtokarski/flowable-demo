@@ -174,8 +174,13 @@ public class WebSecurity {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        return new BetterInMemoryUserDetailsService(passwordEncoder);
+    public ImaginaryUserService imaginaryUserService(PasswordEncoder passwordEncoder) {
+        return new ImaginaryUserService(passwordEncoder);
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(ImaginaryUserService imaginaryUserService) {
+        return new BetterInMemoryUserDetailsService(imaginaryUserService);
     }
 
     @Bean

@@ -3,10 +3,6 @@ package org.defendev.spring.security.oauth2.demo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 
@@ -20,48 +16,15 @@ import java.util.List;
  */
 public class BetterInMemoryUserDetailsService implements UserDetailsService {
 
-    private final PasswordEncoder passwordEncoder;
+    private final ImaginaryUserService imaginaryUserService;
 
-    private final List<ImaginaryUser> users;
-
-    public BetterInMemoryUserDetailsService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-
-        users = new ArrayList<>();
-
-        users.add(new ImaginaryUser.ImaginaryUserBuilder()
-            .setUsername("isaac_newton")
-            .setPassword("password")
-            .setPasswordEncoder(passwordEncoder::encode)
-            .setAccessTokenClaims(new ImaginaryUser.AccessTokenClaimsBuilder()
-                .setOid("9eef4ff3-19cb-4ebd-821d-80019f6b42e1")
-                .setUpn("isaac.newton@mock.org")
-                .setGivenName("Isaac")
-                .setFamilyName("Newton")
-                .setGroups(List.of())
-                .build()
-            )
-            .buildAzureCompatible()
-        );
-        users.add(new ImaginaryUser.ImaginaryUserBuilder()
-            .setUsername("Alberto_Ein5")
-            .setPassword("password2")
-            .setPasswordEncoder(passwordEncoder::encode)
-            .setAccessTokenClaims(new ImaginaryUser.AccessTokenClaimsBuilder()
-                .setOid("e779211d-3e93-4ddf-86d1-f513075b0e4e")
-                .setUpn("albert.einstein@example.edu")
-                .setGivenName("Albert")
-                .setFamilyName("Einstein")
-                .setGroups(List.of())
-                .build()
-            )
-            .buildAzureCompatible()
-        );
+    public BetterInMemoryUserDetailsService(ImaginaryUserService imaginaryUserService) {
+        this.imaginaryUserService = imaginaryUserService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return users.stream()
+        return imaginaryUserService.getUsers().stream()
             .filter(u -> u.getUsername().equals(username))
             /*
              * Copy must be created because password is being o.s.s.c.CredentialsContainer.eraseCredentials()
