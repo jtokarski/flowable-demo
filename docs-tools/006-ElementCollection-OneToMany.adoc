@@ -21,14 +21,33 @@ So, even though this example doesn't involve use of Envers, it's still targeted 
 * we may need to deal with `@Entity` that doesn't have business key which could be used for
   `equals()`/`hashCode()` and has to rely on surrogate key.
 
-=== Implementation checklist
+=== Implementation checklist - crucial parts
+
+* in database, the `FOREIGN KEY` column `"GeneralLedgerPosting"."idOfFinancialTransaction"`
+  has to be `NOT NULL`. This way we make sure that it's impossible to persist
+  a `GeneralLedgerPosting` entity, after the `financialTransaction` is set to `null`
 
 
 
+=== Implementation checklist - supplementary parts
 
+* In `GeneralLedgerPosting` class +
++
+----
+@JoinColumn(..., nullable = false)
+private FinancialTransaction financialTransaction;
+----
+The `nullable` attribute is only used as a hint for schema generation. Could
+be used also for *schema validation*, but I've checked and it's not. Even
+when adjusting `hibernate.check_nullability` and `hibernate.validator.apply_to_ddl`
+properties. See: https://stackoverflow.com/questions/3331907/what-is-the-difference-between-manytooneoptional-false-vs-columnnullable-f[SO-3331907]
 
-
-
-
-
+* In `GeneralLedgerPosting` class +
++
+----
+@ManyToOne(optional = false)
+private FinancialTransaction financialTransaction;
+----
+The `optional` attribute is runtime hint and affects optimization of SQL queries
+related to lazy loading. See: https://stackoverflow.com/questions/3331907/what-is-the-difference-between-manytooneoptional-false-vs-columnnullable-f[SO-3331907]
 
