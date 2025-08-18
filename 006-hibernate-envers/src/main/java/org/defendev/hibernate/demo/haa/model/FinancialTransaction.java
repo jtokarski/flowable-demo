@@ -1,5 +1,6 @@
 package org.defendev.hibernate.demo.haa.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,6 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -41,8 +43,8 @@ public class FinancialTransaction {
     @Enumerated(EnumType.STRING)
     private LifecycleStatus lifecycleStatus;
 
-    @OneToMany(mappedBy = "financialTransaction", orphanRemoval = true)
-    private Set<GeneralLedgerPosting> generalLedgerPostings;
+    @OneToMany(mappedBy = "financialTransaction", orphanRemoval = true, cascade = {CascadeType.PERSIST})
+    private Set<GeneralLedgerPosting> generalLedgerPostings = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -84,4 +86,11 @@ public class FinancialTransaction {
         this.lifecycleStatus = lifecycleStatus;
     }
 
+    public Set<GeneralLedgerPosting> getGeneralLedgerPostings() {
+        return generalLedgerPostings;
+    }
+
+    public void setGeneralLedgerPostings(Set<GeneralLedgerPosting> generalLedgerPostings) {
+        this.generalLedgerPostings = generalLedgerPostings;
+    }
 }

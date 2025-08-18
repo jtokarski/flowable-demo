@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.Month;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -28,9 +32,17 @@ public class HaaTest {
 
     @Test
     public void orphanRemovalInAction(
-        @Autowired CreateFinancialTransactionService createService
-    ) {
-        assertThat(createService).isNotNull();
+        @Autowired CreateFinancialTransactionService createService,
+        @Autowired AddFinancialTransactionPostingService addPostingService,
+        @Autowired ClearFinancialTransactionPostingsService clearPostingsService
+    ) throws InterruptedException {
+        final Long transactionId = createService.execute("gumball_watterson3", "Bought chairs and shelves",
+            LocalDateTime.of(2025, Month.AUGUST, 16, 11, 54));
+
+        addPostingService.execute(transactionId, "1520", "d", new BigDecimal("3000.00"));
+        addPostingService.execute(transactionId, "1000", "c", new BigDecimal("3000.00"));
+
+        clearPostingsService.execute(transactionId);
     }
 
 }

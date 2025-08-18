@@ -1,0 +1,8 @@
+
+
+=== Single operation `@Service`(s)
+
+* support hexagonal architecture as the _facades_ get thin
+
+* feels more readable when defining private ad-hoc records for passing tuple, triple, quadruple, ... (e.g. `TaskAndUser`) over steps of stream processing.
+

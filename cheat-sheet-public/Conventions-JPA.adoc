@@ -1,0 +1,5 @@
+
+
+* Favor `@OneToMany` over `@ElementCollection`.
+
+

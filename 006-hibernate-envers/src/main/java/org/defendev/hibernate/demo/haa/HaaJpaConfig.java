@@ -1,5 +1,6 @@
 package org.defendev.hibernate.demo.haa;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.h2.jdbcx.JdbcDataSource;
 import org.h2.tools.Server;
@@ -10,8 +11,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.SharedEntityManagerCreator;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -27,6 +30,7 @@ import static org.hibernate.tool.schema.Action.ACTION_VALIDATE;
 
 
 
+@EnableTransactionManagement
 @Configuration
 public class HaaJpaConfig {
 
@@ -34,8 +38,8 @@ public class HaaJpaConfig {
     public DataSource dataSource() {
         final JdbcDataSource h2 = new JdbcDataSource();
         h2.setURL("jdbc:h2:mem:haa;DB_CLOSE_DELAY=-1");
-        h2.setUser("sa");
-        h2.setPassword("sa");
+        h2.setUser("haa");
+        h2.setPassword("haa");
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(new ClassPathResource("haa/schema-h2.sql"));
         populator.execute(h2);
@@ -46,6 +50,12 @@ public class HaaJpaConfig {
     @Bean
     public Server h2TcpServer(DataSource dataSource) throws SQLException {
         return H2Util.createH2TcpServer();
+    }
+
+    @Lazy(false)
+    @Bean
+    public Server h2WebServer(DataSource dataSource) throws SQLException {
+        return H2Util.createH2WebServer();
     }
 
     @Bean
@@ -66,6 +76,11 @@ public class HaaJpaConfig {
         emfFactoryBean.setJpaProperties(jpaProperties);
         emfFactoryBean.afterPropertiesSet();
         return emfFactoryBean.getObject();
+    }
+
+    @Bean
+    public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
+        return SharedEntityManagerCreator.createSharedEntityManager(entityManagerFactory);
     }
 
     @Bean
