@@ -116,7 +116,9 @@ public class WebSecurity {
             .securityMatcher(protocolEndpointsMatcher)
             .with(
                 authorizationServerConfigurer,
-                (authorizationServer) -> authorizationServer.oidc(Customizer.withDefaults())  // Enable OpenID Connect 1.0
+                (authorizationServer) -> authorizationServer
+                    .oidc(Customizer.withDefaults())  // Enable OpenID Connect 1.0
+                    .authorizationConsentService(new LaxOAuth2AuthorizationConsentService())
             )
             .authorizeHttpRequests(
                 customizer -> customizer.anyRequest().authenticated()

@@ -100,6 +100,12 @@ public class FlowableCoreSpringConfig {
         springConfig.setDataSource(accountingBpmDataSource);
         springConfig.setTransactionManager(accountingBpmTransactionManager);
         springConfig.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE);
+        /*
+         * SpringProcessEngineConfiguration.setCreateDiagramOnDeploy(false)
+         * to avoid exceptions related with AWT fonts when executing of thin JDK container images
+         *
+         */
+        springConfig.setCreateDiagramOnDeploy(false);
         final ProcessEngineConfiguration config = springConfig;
         return config.buildProcessEngine();
     }
