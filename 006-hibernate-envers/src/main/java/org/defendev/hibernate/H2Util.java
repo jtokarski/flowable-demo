@@ -1,4 +1,4 @@
-package org.defendev.hibernate.demo.haa;
+package org.defendev.hibernate;
 
 import org.h2.tools.Server;
 

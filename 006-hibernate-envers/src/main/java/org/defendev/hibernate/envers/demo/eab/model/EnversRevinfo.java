@@ -1,4 +1,4 @@
-package org.defendev.hibernate.envers.demo.model;
+package org.defendev.hibernate.envers.demo.eab.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
