@@ -56,6 +56,16 @@ I recall following issues with Envers-based maker-checker implemented for Ycorpo
 
 == Observed features
 
+=== General Envers principle
+
+As described in `Hibernate_User_Guide.html`, adding Envers does not affect:
+
+* schema of "_main_" tables
+
+* the data persisted in "_main_" tables
+
+I would like to catch any deviations from this principles.
+
 === Classpath dependency
 
 The first step in introducing Envers to the project is adding the
