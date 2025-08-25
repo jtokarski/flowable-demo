@@ -1,4 +1,6 @@
 
+== Background
+
 === Foreword
 
 * initially I wanted to import dependency of `org.defendev.easygo:database` to this project and make
@@ -12,8 +14,6 @@
   *Envers adds its own comprehensive validations* on top of pure-Hibernate validations. When that's confirmed,
   I will know that in real projects I can write DDLs manually and use Hibernate+Envers schema validation
   as guardrail (rather than generator).
-
-
 
 === Use case of Hibernate Envers
 
@@ -45,8 +45,6 @@ I recall following issues with Envers-based maker-checker implemented for Ycorpo
 
 * and above it all - the dynamic attribute concept with some design mistake introduced additional complexity
 
-
-
 === Thoughts on approach
 
 * write multiple persistence units with isolated configuration in this single Gradle subproject
@@ -56,4 +54,29 @@ I recall following issues with Envers-based maker-checker implemented for Ycorpo
 
 
 
+== Observed features
+
+=== Classpath dependency
+
+The first step in introducing Envers to the project is adding the
+`hibernate-envers` jar to classpath. Fortunately, version *is* defined
+in Spring Boot Dependencies. For example:
+
+`pom.xml` of `org.springframework.boot:spring-boot-dependencies:3.5.5`:
+
+----
+  <properties>
+    ...
+    <hibernate.version>6.6.26.Final</hibernate.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      ...
+      <dependency>
+        <groupId>org.hibernate.orm</groupId>
+        <artifactId>hibernate-envers</artifactId>
+        <version>${hibernate.version}</version>
+      </dependency>
+----
 
