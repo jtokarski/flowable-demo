@@ -90,3 +90,13 @@ in Spring Boot Dependencies. For example:
       </dependency>
 ----
 
+=== Indicate what to audit - using `@Audited`
+
+Whether we want to annotate **whole class** and audit all properties
+**or** annotate **only some** persistent properties:
+
+* we use **the same** annotation - `org.hibernate.envers.Audited`.
+
+* the `@Id` property will always be included in audit table, even if not indicated.
+
+
