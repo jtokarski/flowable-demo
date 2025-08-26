@@ -1,0 +1,30 @@
+
+== Implementation
+
+=== Why custom `@RevisionEntity`?
+
+There was additonal field - `userId` that was filled by dedicated listener
+(implementation of `org.hibernate.envers.RevisionListener`). This listener was
+using `SecurityContextHolder` to get the value. **No other reason**
+
+
+
+== Issues with Hibernate Envers
+
+I recall following issues with Envers-based maker-checker implemented for Ycorpo project:
+
+* an `@Entity` was always in state of most recent update, which may be live or pending change.
+  Therefore, querying, listing, sorting, pagination of live version involved revision queries.
+
+* the *reject changes* functionality involved restoring previous revision, which
+  wasn't trivial to find and apply the diff. It also felt a little unreliable - instead
+  of just discarding changes we were really reproducing recent live state. It would be better
+  if a live `@Entity` wasn't touched at all.
+
+* in case of editing `@Entity` - only one working copy is possible
+
+* showing approved changes (diff) in audit view was not trivial
+
+* multiple changes between live versions created multi-revision gaps. We needed to handle this complexity.
+
+* and above it all - the dynamic attribute concept with some design mistake introduced additional complexity
