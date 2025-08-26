@@ -83,4 +83,41 @@ Whether we want to annotate **whole class** and audit all properties
 
 * the `@Id` property will always be included in audit table, even if not indicated.
 
+=== Custom `@RevisionEntity` a.k.a Revision Log
 
+Justification:
+
+* makes it possible to have additional columns for example with `userId` filled
+  by some `RevisionListener` from `SecurityContextHolder`
+
+* makes it possible to add `@Transient` getter for converting the `Long` unix epoch timestamp
+  to `Instant` or `ZonedDateTime`
+
+* makes it possible to adjust table name and its column names
+
+Implementation:
+
+* the class annotated with `@RevisionEntity` must also be annotated as `@Entity` - otherwise it's ignored
+
+* the `@RevisionTimestamp` property have to be have to be unix epoch `Long` as specified
+  in User Guide as well as `org.hibernate.envers.RevisionEntity` Javadoc. Live with it.
+
+* following settings are made irrelevant (get ignored):
+
+** `EnversSettings.USE_REVISION_ENTITY_WITH_NATIVE_ID`
+
+
+
+== Reference of Envers fields
+
+=== `@RevisionEntity` a.k.a Revision Log table
+
+* `@RevisionEntity` table name (mandatory), default name **REVINFO**, modified by `@Table` annotation
+
+* `@RevisionNumber` property (mandatory), default name **REV**, modified by `@Column` annotation
+
+* `@RevisionTimestamp` property (mandatory), default name **REVTSTMP**, modified by `@Column` annotation
+
+=== audit tables
+
+=== `@ModifiedEntityNames` table
