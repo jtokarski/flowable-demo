@@ -16,9 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
-    EaaJpaConfig.class
+    EaaScriptJpaConfig.class
 })
-public class EaaTest {
+public class EaaScriptTest {
 
     @Test
     public void contextStarts() {

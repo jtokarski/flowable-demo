@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import org.hibernate.envers.Audited;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -42,6 +43,9 @@ public class FinancialTransaction {
     @Column(name = "lifecycleStatus")
     @Enumerated(EnumType.STRING)
     private LifecycleStatus lifecycleStatus;
+
+    @OneToMany(mappedBy = "financialTransaction", orphanRemoval = true, cascade = {CascadeType.PERSIST})
+    private Set<GeneralLedgerPosting> generalLedgerPostings = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -81,5 +85,13 @@ public class FinancialTransaction {
 
     public void setLifecycleStatus(LifecycleStatus lifecycleStatus) {
         this.lifecycleStatus = lifecycleStatus;
+    }
+
+    public Set<GeneralLedgerPosting> getGeneralLedgerPostings() {
+        return generalLedgerPostings;
+    }
+
+    public void setGeneralLedgerPostings(Set<GeneralLedgerPosting> generalLedgerPostings) {
+        this.generalLedgerPostings = generalLedgerPostings;
     }
 }

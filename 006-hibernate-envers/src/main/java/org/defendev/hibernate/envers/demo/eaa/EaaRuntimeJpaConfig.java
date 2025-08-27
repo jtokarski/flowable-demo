@@ -33,25 +33,20 @@ import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_DATABASE_A
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_SCRIPTS_ACTION;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_SCRIPTS_CREATE_TARGET;
 import static org.hibernate.envers.configuration.EnversSettings.USE_REVISION_ENTITY_WITH_NATIVE_ID;
-import static org.hibernate.tool.schema.Action.ACTION_VALIDATE;
+import static org.hibernate.tool.schema.Action.VALIDATE;
 import static org.hibernate.tool.schema.Action.CREATE_ONLY;
-import static org.hibernate.tool.schema.Action.NONE;
 import static org.hibernate.tool.schema.SourceType.METADATA;
+import jakarta.persistence.EntityManager;
+
+import org.springframework.orm.jpa.SharedEntityManagerCreator;
 
 
 
 @EnableTransactionManagement
 @Configuration
-public class EaaJpaConfig {
+public class EaaRuntimeJpaConfig {
 
     private static final Logger log = LogManager.getLogger();
-
-    private static class KeepImports {
-        {
-            var aa = ACTION_VALIDATE;
-            var ab = USE_REVISION_ENTITY_WITH_NATIVE_ID;
-        }
-    }
 
     @Bean
     public DataSource dataSource() {
@@ -59,9 +54,6 @@ public class EaaJpaConfig {
         h2.setURL("jdbc:h2:mem:haa;DB_CLOSE_DELAY=-1");
         h2.setUser("haa");
         h2.setPassword("haa");
-        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(new ClassPathResource("haa/schema-h2.sql"));
-        populator.execute(h2);
         return h2;
     }
 
@@ -86,38 +78,13 @@ public class EaaJpaConfig {
         final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         emfFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
 
-        /*
-         * Generally on specifying JPA Properties:
-         * Whenever possible, using standardized options instead of Hibernate-specific, e.g.
-         *     jakarta.persistence.schema-generation.database.action
-         *   instead of
-         *     hibernate.hbm2ddl.auto
-         *
-         * Documentation of all options, see:
-         *   https://docs.jboss.org/hibernate/orm/7.0/userguide/html_single/Hibernate_User_Guide.html#settings-schema
-         */
         final Properties jpaProperties = new Properties();
-
         jpaProperties.put(DIALECT, "org.hibernate.dialect.H2Dialect");
-
-        /*
-         * Turns out that it's supported to use the combination of:
-         *     JAKARTA_HBM2DDL_DATABASE_ACTION : ACTION_VALIDATE
-         *   with
-         *     JAKARTA_HBM2DDL_SCRIPTS_ACTION : CREATE_ONLY
-         * That is, generate the DDL script to file and validate database schema on start.
-         * It doesn't make sense for production but may be useful for development of database schema,
-         * when we write migrations manually, but want to be guided by Hibernate-generated DDL.
-         *
-         */
         jpaProperties.put(JAKARTA_HBM2DDL_CREATE_SCHEMAS, Boolean.FALSE);
         jpaProperties.put(JAKARTA_HBM2DDL_CREATE_SOURCE, METADATA);
-        // jpaProperties.put(JAKARTA_HBM2DDL_DATABASE_ACTION, ACTION_VALIDATE);
-        jpaProperties.put(JAKARTA_HBM2DDL_DATABASE_ACTION, NONE);
-        jpaProperties.put(JAKARTA_HBM2DDL_SCRIPTS_ACTION, CREATE_ONLY);
-        jpaProperties.put(JAKARTA_HBM2DDL_SCRIPTS_CREATE_TARGET, createScriptPath(
-            "C:/dev/flowable-demo/006-hibernate-envers/eaa-create-tables-h2.sql"));
-        jpaProperties.put(HBM2DDL_SCRIPTS_CREATE_APPEND, Boolean.FALSE);
+        jpaProperties.put(JAKARTA_HBM2DDL_DATABASE_ACTION, CREATE_ONLY);
+
+
 
 
 
@@ -129,6 +96,11 @@ public class EaaJpaConfig {
         emfFactoryBean.setJpaProperties(jpaProperties);
         emfFactoryBean.afterPropertiesSet();
         return emfFactoryBean.getObject();
+    }
+
+    @Bean
+    public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
+        return SharedEntityManagerCreator.createSharedEntityManager(entityManagerFactory);
     }
 
     @Bean
