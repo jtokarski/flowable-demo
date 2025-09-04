@@ -41,6 +41,7 @@ dependencyResolutionManagement {
             version('hikariCpVersion', '6.3.0')
             version('postgresqlVersion', '42.7.5')
             version('h2Version', '2.3.232')
+            version('defendevCommonJdkVersion', '0.0.12')
 
             /*
              * Note that 'org.springframework.boot:spring-boot-dependencies:3.5.0' does include
@@ -60,6 +61,7 @@ dependencyResolutionManagement {
             library('hikariCp', 'com.zaxxer', 'HikariCP').versionRef('hikariCpVersion')
             library('postgresql', 'org.postgresql', 'postgresql').versionRef('postgresqlVersion')
             library('h2database', 'com.h2database', 'h2').versionRef('h2Version')
+            library('defendevCommonJdk', 'org.defendev', 'common-jdk').versionRef('defendevCommonJdkVersion')
 
             /*
              * The Maven Central coordinates of 'io.spring.dependency-management' are:

@@ -31,15 +31,19 @@ public class FinancialTransaction {
     @Id
     private Long id;
 
+    @Audited
     @Column(name = "recordedBy", nullable = false)
     private String recordedBy;
 
+    @Audited
     @Column(name = "memo", nullable = false)
     private String memo;
 
+    @Audited
     @Column(name = "transactionDateTimeZulu")
     private LocalDateTime transactionDateTimeZulu;
 
+    @Audited
     @Column(name = "lifecycleStatus")
     @Enumerated(EnumType.STRING)
     private LifecycleStatus lifecycleStatus;

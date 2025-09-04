@@ -1,5 +1,6 @@
 package org.defendev.hibernate.envers.demo.eaa;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,10 +10,9 @@ import org.h2.tools.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.SharedEntityManagerCreator;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -21,24 +21,17 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import static org.defendev.hibernate.ScriptPathUtil.createScriptPath;
 import static org.hibernate.cfg.JdbcSettings.DIALECT;
 import static org.hibernate.cfg.JdbcSettings.FORMAT_SQL;
 import static org.hibernate.cfg.JdbcSettings.SHOW_SQL;
 import static org.hibernate.cfg.JdbcSettings.USE_SQL_COMMENTS;
-import static org.hibernate.cfg.SchemaToolingSettings.HBM2DDL_SCRIPTS_CREATE_APPEND;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_CREATE_SCHEMAS;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_CREATE_SOURCE;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_DATABASE_ACTION;
-import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_SCRIPTS_ACTION;
-import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_SCRIPTS_CREATE_TARGET;
-import static org.hibernate.envers.configuration.EnversSettings.USE_REVISION_ENTITY_WITH_NATIVE_ID;
-import static org.hibernate.tool.schema.Action.VALIDATE;
+import static org.hibernate.envers.configuration.EnversSettings.REVISION_FIELD_NAME;
+import static org.hibernate.envers.configuration.EnversSettings.REVISION_TYPE_FIELD_NAME;
 import static org.hibernate.tool.schema.Action.CREATE_ONLY;
 import static org.hibernate.tool.schema.SourceType.METADATA;
-import jakarta.persistence.EntityManager;
-
-import org.springframework.orm.jpa.SharedEntityManagerCreator;
 
 
 
@@ -84,10 +77,8 @@ public class EaaRuntimeJpaConfig {
         jpaProperties.put(JAKARTA_HBM2DDL_CREATE_SOURCE, METADATA);
         jpaProperties.put(JAKARTA_HBM2DDL_DATABASE_ACTION, CREATE_ONLY);
 
-
-
-
-
+        jpaProperties.put(REVISION_FIELD_NAME, "idOfVersioningRevision");
+        jpaProperties.put(REVISION_TYPE_FIELD_NAME, "versioningRevisionType");
 
         jpaProperties.put(SHOW_SQL, Boolean.FALSE);
         jpaProperties.put(FORMAT_SQL, Boolean.FALSE);

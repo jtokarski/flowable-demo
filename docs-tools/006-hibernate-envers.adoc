@@ -102,22 +102,47 @@ Implementation:
 * the `@RevisionTimestamp` property have to be have to be unix epoch `Long` as specified
   in User Guide as well as `org.hibernate.envers.RevisionEntity` Javadoc. Live with it.
 
-* following settings are made irrelevant (get ignored):
+* just adding the `@ModifiedEntityNames` property with proper annotations enables
+  the __tracking entity names modified during revisions__ - no other settings needed.
+
+* following settings are made irrelevant (get ignored or redundant):
 
 ** `EnversSettings.USE_REVISION_ENTITY_WITH_NATIVE_ID`
+
+** `EnversSettings.TRACK_ENTITIES_CHANGED_IN_REVISION`
 
 
 
 == Reference of Envers fields
 
-=== `@RevisionEntity` a.k.a Revision Log table
+=== `@RevisionEntity` a.k.a Revision Log table __(mandatory)__
 
-* `@RevisionEntity` table name (mandatory), default name **REVINFO**, modified by `@Table` annotation
+* `@RevisionEntity` table name __(mandatory)__, default name **REVINFO**, modified by `@Table` annotation to **VersioningRevision**
 
-* `@RevisionNumber` property (mandatory), default name **REV**, modified by `@Column` annotation
+* `@RevisionNumber` property __(mandatory)__, default name **REV**, modified by `@Column` annotation
+  to **id**
 
-* `@RevisionTimestamp` property (mandatory), default name **REVTSTMP**, modified by `@Column` annotation
+* `@RevisionTimestamp` property __(mandatory)__, default name **REVTSTMP**, modified by `@Column` annotation to **unixEpochTimestamp**
 
-=== audit tables
+=== `@ModifiedEntityNames` table __(optional)__
 
-=== `@ModifiedEntityNames` table
+* default table name **REVCHANGES**, modified by `@JoinTable(name = ...)` annotation
+  to **VersioningRevisionChanges**
+
+* foreign key to revision id - default column name **REV**, modified by
+  `@JoinTable(joinColumns = @JoinColumn(name = ...))` annotation to **idOfVersioningRevision**
+
+* changed entity name column - default name **ENTITYNAME**, modified by
+  `@Column(name = ...)` to **entityName**
+
+=== Audit tables __(mandatory)__
+
+* foreign key to revision id __(mandatory)__ - default column name **REV**, modified by
+  JPA property `EnversSettings.REVISION_FIELD_NAME` to **idOfVersioningRevision**
+
+* revision type __(mandatory)__ - default column name **REVTYPE**, modified by
+  JPA property `EnversSettings.REVISION_TYPE_FIELD_NAME` to **versioningRevisionType**
+
+
+
+

@@ -33,6 +33,7 @@ dependencies {
     implementation libs.log4j2Api
     implementation libs.log4j2Core
     implementation libs.log4j2Slf4j2Impl
+    implementation libs.defendevCommonJdk
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
     testImplementation libs.assertj
     testImplementation group: 'org.springframework', name: 'spring-test'

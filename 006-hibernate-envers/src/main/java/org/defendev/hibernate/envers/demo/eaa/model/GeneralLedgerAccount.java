@@ -54,7 +54,8 @@ import static org.defendev.hibernate.envers.demo.eaa.model.NormalBalance.debit;
 public enum GeneralLedgerAccount {
 
     _101_cash("101", CurrentAssets, BalanceAccount, debit),
-    _128_furniture_and_fixtures("128", CurrentAssets, BalanceAccount, debit);
+    _106_accounts_receivable("106", CurrentAssets, BalanceAccount, debit),
+    _128_office_equipment("128", CurrentAssets, BalanceAccount, debit);
 
     private final String accountNumber;
 
