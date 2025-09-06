@@ -111,6 +111,34 @@ Implementation:
 
 ** `EnversSettings.TRACK_ENTITIES_CHANGED_IN_REVISION`
 
+=== Audit strategy
+
+There are two reasons for configuring `ValidityAuditStrategy` (which is not default):
+
+* improved query performance
+
+* **audit table partitioning** needs a column that exists within the audit table. As a rule,
+  it makes sense to use either the __end revision__ or the __end revision timestamp__ column.
+  So I'll need `ValidityAuditStrategy` anyway.
+
+Implementation:
+
+* set the `EnversSettings.AUDIT_STRATEGY` to `ValidityAuditStrategy.class.getName()`.
+
+* adjust **end revision** field name - set `EnversSettings.AUDIT_STRATEGY_VALIDITY_END_REV_FIELD_NAME`
+  to `idOfEndVersioningRevision`.
+
+* note that the **end revision** field is exclusive indication, so it complies to Dijkstra
+  range boundary representation - `[REV, REVEND)`
+
+=== Audit table partitioning
+
+* Not sure if partitioning really requires both: __end revision__ and the __end revision timestamp__.
+  Or is just __end revision__ sufficient?
+
+* Wondering - if __end revision__ is sufficient for **partitioning** it should probably also
+  work good for **old data destruction**
+
 
 
 == Reference of Envers fields
@@ -137,12 +165,20 @@ Implementation:
 
 === Audit tables __(mandatory)__
 
+* default table suffix **_AUD**, modified by JPA property `EnversSettings.AUDIT_TABLE_SUFFIX`
+  to **_Audit**
+
 * foreign key to revision id __(mandatory)__ - default column name **REV**, modified by
   JPA property `EnversSettings.REVISION_FIELD_NAME` to **idOfVersioningRevision**
 
 * revision type __(mandatory)__ - default column name **REVTYPE**, modified by
   JPA property `EnversSettings.REVISION_TYPE_FIELD_NAME` to **versioningRevisionType**
 
+* foreign key to end revision id __(optional)__ - default column name **REVEND**, modified by
+  JPA property `EnversSettings.AUDIT_STRATEGY_VALIDITY_END_REV_FIELD_NAME`
+  to **idOfEndVersioningRevision**
 
+* modified flags  - default column suffix **_MOD**, modified by JPA property
+  `EnversSettings.MODIFIED_FLAG_SUFFIX` to **_Modified**
 
 

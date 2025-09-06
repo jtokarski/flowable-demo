@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import org.hibernate.envers.Audited;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -23,16 +24,20 @@ public class GeneralLedgerPosting {
     @Id
     private Long id;
 
+    @Audited(withModifiedFlag = true)
     @JoinColumn(name = "idOfFinancialTransaction", nullable = false)
     @ManyToOne(optional = false)
     private FinancialTransaction financialTransaction;
 
+    @Audited(withModifiedFlag = true)
     @Column(name = "generalLedgerAccountNumber")
     private String generalLedgerAccountNumber;
 
+    @Audited(withModifiedFlag = true)
     @Column(name = "debitOrCredit")
     private String debitOrCredit;
 
+    @Audited(withModifiedFlag = true)
     @Column(name = "amount")
     private BigDecimal amount;
 

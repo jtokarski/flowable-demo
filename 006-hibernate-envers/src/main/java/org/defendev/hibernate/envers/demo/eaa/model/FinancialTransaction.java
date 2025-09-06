@@ -31,23 +31,24 @@ public class FinancialTransaction {
     @Id
     private Long id;
 
-    @Audited
+    @Audited(withModifiedFlag = true)
     @Column(name = "recordedBy", nullable = false)
     private String recordedBy;
 
-    @Audited
+    @Audited(withModifiedFlag = true)
     @Column(name = "memo", nullable = false)
     private String memo;
 
-    @Audited
+    @Audited(withModifiedFlag = true)
     @Column(name = "transactionDateTimeZulu")
     private LocalDateTime transactionDateTimeZulu;
 
-    @Audited
+    @Audited(withModifiedFlag = true)
     @Column(name = "lifecycleStatus")
     @Enumerated(EnumType.STRING)
     private LifecycleStatus lifecycleStatus;
 
+    @Audited(withModifiedFlag = true)
     @OneToMany(mappedBy = "financialTransaction", orphanRemoval = true, cascade = {CascadeType.PERSIST})
     private Set<GeneralLedgerPosting> generalLedgerPostings = new HashSet<>();
 

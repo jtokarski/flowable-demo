@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.defendev.hibernate.H2Util;
 import org.h2.jdbcx.JdbcDataSource;
 import org.h2.tools.Server;
+import org.hibernate.envers.configuration.EnversSettings;
+import org.hibernate.envers.strategy.internal.ValidityAuditStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -28,6 +30,11 @@ import static org.hibernate.cfg.JdbcSettings.USE_SQL_COMMENTS;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_CREATE_SCHEMAS;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_CREATE_SOURCE;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_DATABASE_ACTION;
+import static org.hibernate.envers.configuration.EnversSettings.AUDIT_STRATEGY;
+import static org.hibernate.envers.configuration.EnversSettings.AUDIT_STRATEGY_VALIDITY_END_REV_FIELD_NAME;
+import static org.hibernate.envers.configuration.EnversSettings.AUDIT_TABLE_SUFFIX;
+import static org.hibernate.envers.configuration.EnversSettings.MODIFIED_COLUMN_NAMING_STRATEGY;
+import static org.hibernate.envers.configuration.EnversSettings.MODIFIED_FLAG_SUFFIX;
 import static org.hibernate.envers.configuration.EnversSettings.REVISION_FIELD_NAME;
 import static org.hibernate.envers.configuration.EnversSettings.REVISION_TYPE_FIELD_NAME;
 import static org.hibernate.tool.schema.Action.CREATE_ONLY;
@@ -79,9 +86,19 @@ public class EaaRuntimeJpaConfig {
 
         jpaProperties.put(REVISION_FIELD_NAME, "idOfVersioningRevision");
         jpaProperties.put(REVISION_TYPE_FIELD_NAME, "versioningRevisionType");
+        jpaProperties.put(MODIFIED_COLUMN_NAMING_STRATEGY, "improved");
+        jpaProperties.put(AUDIT_TABLE_SUFFIX, "_Audit");
+        jpaProperties.put(MODIFIED_FLAG_SUFFIX, "_Modified");
+        jpaProperties.put(AUDIT_STRATEGY, ValidityAuditStrategy.class.getName());
+        jpaProperties.put(AUDIT_STRATEGY_VALIDITY_END_REV_FIELD_NAME, "idOfEndVersioningRevision");
 
+        /*
+         * The JdbcSettings.SHOW_SQL = true would cause Hibernate to log diractly to console, bypassing
+         * the logging framework. It's better when replaced with org.hibernate.SQL logger set to 'debug'
+         *
+         */
         jpaProperties.put(SHOW_SQL, Boolean.FALSE);
-        jpaProperties.put(FORMAT_SQL, Boolean.FALSE);
+        jpaProperties.put(FORMAT_SQL, Boolean.TRUE);
         jpaProperties.put(USE_SQL_COMMENTS, Boolean.FALSE);
 
         emfFactoryBean.setJpaProperties(jpaProperties);
