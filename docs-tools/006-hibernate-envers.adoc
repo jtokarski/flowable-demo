@@ -131,6 +131,14 @@ Implementation:
 * note that the **end revision** field is exclusive indication, so it complies to Dijkstra
   range boundary representation - `[REV, REVEND)`
 
+=== Tracking entity names modified during revisions
+
+Done already in custom `@RevisionEntity`.
+
+=== Tracking entity changes at the property level
+
+It is extension of the previous point. Done by `@Audited(withModifiedFlag = true)` on each field.
+
 === Audit table partitioning
 
 * Not sure if partitioning really requires both: __end revision__ and the __end revision timestamp__.
