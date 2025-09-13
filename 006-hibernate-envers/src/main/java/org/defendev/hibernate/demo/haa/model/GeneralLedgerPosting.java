@@ -12,6 +12,8 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import static java.util.Objects.nonNull;
+
 
 
 @Table(name = "GeneralLedgerPosting")
@@ -80,7 +82,13 @@ public class GeneralLedgerPosting {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         final GeneralLedgerPosting that = (GeneralLedgerPosting) o;
-        return Objects.equals(id, that.id);
+        /*
+         * The nonNull(id) is additional condition on top what was auto-generated. It is important
+         * and necessary in order to be able - in single database transaction - to add more than
+         * one element to the Set.
+         *
+         */
+        return nonNull(id) && Objects.equals(id, that.id);
     }
 
     @Override

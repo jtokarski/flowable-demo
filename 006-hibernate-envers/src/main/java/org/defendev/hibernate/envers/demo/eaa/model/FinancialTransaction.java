@@ -52,6 +52,10 @@ public class FinancialTransaction {
     @OneToMany(mappedBy = "financialTransaction", orphanRemoval = true, cascade = {CascadeType.PERSIST})
     private Set<GeneralLedgerPosting> generalLedgerPostings = new HashSet<>();
 
+    @Audited(withModifiedFlag = true)
+    @Column(name = "lastMarkForAuditZulu", nullable = false)
+    private LocalDateTime lastMarkForAuditZulu;
+
     public Long getId() {
         return id;
     }
@@ -98,5 +102,13 @@ public class FinancialTransaction {
 
     public void setGeneralLedgerPostings(Set<GeneralLedgerPosting> generalLedgerPostings) {
         this.generalLedgerPostings = generalLedgerPostings;
+    }
+
+    public LocalDateTime getLastMarkForAuditZulu() {
+        return lastMarkForAuditZulu;
+    }
+
+    public void setLastMarkForAuditZulu(LocalDateTime lastMarkForAuditZulu) {
+        this.lastMarkForAuditZulu = lastMarkForAuditZulu;
     }
 }

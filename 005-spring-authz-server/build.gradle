@@ -24,6 +24,7 @@ dependencies {
     implementation group: 'org.assertj', name: 'assertj-core'
     implementation group: 'org.thymeleaf', name: 'thymeleaf-spring6'
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity6'
+    implementation libs.apacheCommonsLang3
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
     modules {

@@ -1,0 +1,28 @@
+
+
+
+
+
+
+
+== Notes on using Opaque Tokens
+
+In real-world scenarios the size JWT tokens may be up to 16kB (this is the case
+with Azure Entra ID). This feels cumbersome to send them with every request.
+From this perspective, it's tempting to consider using Opaque Token. But
+Opaque Tokens come with their own drawbacks:
+
+* token introspection (consulting Authorization Server) - although standardized,
+  it's not supported (as of 2025-08) by some providers (including Azure Entra ID)
+
+* for token introspection, the Resource Server needs to have `clientId` and
+  `clientSecret` which contradicts the idea of Resource Server
+
+See:
+
+* https://datatracker.ietf.org/doc/html/rfc7662[RFC 7662: OAuth 2.0 Token Introspection]
+* https://www.oauth.com/oauth2-servers/token-introspection-endpoint/[Okta: Token Introspection Endpoint]
+* https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html[Spring: OAuth 2.0 Resource Server Opaque Token]
+
+
+

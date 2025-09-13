@@ -42,6 +42,7 @@ dependencyResolutionManagement {
             version('postgresqlVersion', '42.7.5')
             version('h2Version', '2.3.232')
             version('defendevCommonJdkVersion', '0.0.12')
+            version('auth0JavaJwtVersion', '4.5.0')
 
             /*
              * Note that 'org.springframework.boot:spring-boot-dependencies:3.5.0' does include
@@ -61,6 +62,7 @@ dependencyResolutionManagement {
             library('hikariCp', 'com.zaxxer', 'HikariCP').versionRef('hikariCpVersion')
             library('postgresql', 'org.postgresql', 'postgresql').versionRef('postgresqlVersion')
             library('h2database', 'com.h2database', 'h2').versionRef('h2Version')
+            library('auth0JavaJwt', 'com.auth0', 'java-jwt').versionRef('auth0JavaJwtVersion')
             library('defendevCommonJdk', 'org.defendev', 'common-jdk').versionRef('defendevCommonJdkVersion')
 
             /*
@@ -121,3 +123,6 @@ project(':012-microsoft-graph-msal').name = 'microsoft-graph-msal'
 
 include '013-microsoft-graph-sdk'
 project(':013-microsoft-graph-sdk').name = 'microsoft-graph-sdk'
+
+include '014-rest-assured'
+project(':014-rest-assured').name = 'rest-assured'

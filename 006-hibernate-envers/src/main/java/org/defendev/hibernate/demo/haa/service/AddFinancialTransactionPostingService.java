@@ -8,11 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import static org.defendev.common.stream.Streams.stream;
 
 
 
 @Service
 public class AddFinancialTransactionPostingService {
+
+    public record PostingDto(String generalLedgerAccountNumber, String debitOrCredit, BigDecimal amount) { }
 
     private EntityManager em;
 
@@ -22,17 +27,16 @@ public class AddFinancialTransactionPostingService {
     }
 
     @Transactional
-    public void execute(Long transactionId, String generalLedgerAccountNumber, String debitOrCredit,
-                        BigDecimal amount) {
+    public void execute(Long transactionId, List<PostingDto> postingDtos) {
         final FinancialTransaction transaction = em.find(FinancialTransaction.class, transactionId);
-
-        final GeneralLedgerPosting posting = new GeneralLedgerPosting();
-        posting.setFinancialTransaction(transaction);
-        posting.setGeneralLedgerAccountNumber(generalLedgerAccountNumber);
-        posting.setDebitOrCredit(debitOrCredit);
-        posting.setAmount(amount);
-
-        transaction.getGeneralLedgerPostings().add(posting);
+        stream(postingDtos).forEach(dto -> {
+            final GeneralLedgerPosting posting = new GeneralLedgerPosting();
+            posting.setFinancialTransaction(transaction);
+            posting.setGeneralLedgerAccountNumber(dto.generalLedgerAccountNumber());
+            posting.setDebitOrCredit(dto.debitOrCredit());
+            posting.setAmount(dto.amount());
+            transaction.getGeneralLedgerPostings().add(posting);
+        });
     }
 
 }

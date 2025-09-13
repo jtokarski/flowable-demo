@@ -11,7 +11,10 @@ import jakarta.persistence.Table;
 import org.hibernate.envers.Audited;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Objects;
+
+import static java.util.Objects.nonNull;
 
 
 
@@ -24,7 +27,7 @@ public class GeneralLedgerPosting {
     @Id
     private Long id;
 
-    @Audited(withModifiedFlag = true)
+    @Audited(withModifiedFlag = true)   // @Audited have to be on both sides of relation. Otherwise - strange errors.
     @JoinColumn(name = "idOfFinancialTransaction", nullable = false)
     @ManyToOne(optional = false)
     private FinancialTransaction financialTransaction;
@@ -40,6 +43,10 @@ public class GeneralLedgerPosting {
     @Audited(withModifiedFlag = true)
     @Column(name = "amount")
     private BigDecimal amount;
+
+    @Audited(withModifiedFlag = true)
+    @Column(name = "lastMarkForAuditZulu")
+    private LocalDateTime lastMarkForAuditZulu;
 
     public Long getId() {
         return id;
@@ -81,16 +88,23 @@ public class GeneralLedgerPosting {
         this.amount = amount;
     }
 
+    public LocalDateTime getLastMarkForAuditZulu() {
+        return lastMarkForAuditZulu;
+    }
+
+    public void setLastMarkForAuditZulu(LocalDateTime lastMarkForAuditZulu) {
+        this.lastMarkForAuditZulu = lastMarkForAuditZulu;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         final GeneralLedgerPosting that = (GeneralLedgerPosting) o;
-        return Objects.equals(id, that.id);
+        return nonNull(id) && Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
         return getClass().hashCode();
     }
-
 }

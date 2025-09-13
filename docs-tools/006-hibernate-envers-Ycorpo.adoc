@@ -3,10 +3,11 @@
 
 === Why custom `@RevisionEntity`?
 
-There was additonal field - `userId` that was filled by dedicated listener
-(implementation of `org.hibernate.envers.RevisionListener`). This listener was
-using `SecurityContextHolder` to get the value. **No other reason**
+* most likely the primary reason was the *imposed convention* of database objects naming.
 
+* also, in the `@RevisionEntity` table we've had additional columns for `user_id` and
+   `user_role` that were filled from thread-local security context by custom
+   `RevisionListener`
 
 
 == Issues with Hibernate Envers

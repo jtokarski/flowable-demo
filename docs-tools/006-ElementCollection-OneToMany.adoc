@@ -50,7 +50,7 @@ public class GeneralLedgerPosting {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         final GeneralLedgerPosting that = (GeneralLedgerPosting) o;
-        return Objects.equals(id, that.id);
+        return nonNull(id) && Objects.equals(id, that.id);
     }
 
     @Override
@@ -60,6 +60,9 @@ public class GeneralLedgerPosting {
 
 }
 ----
++
+*Note* that the `equals()` implementation is not identical to what was generated
+by IntelliJ IDEA. It has additional condition `nonNull(id)` on top of that.
 +
 See: +
 https://vladmihalcea.com/hibernate-facts-equals-and-hashcode/ +

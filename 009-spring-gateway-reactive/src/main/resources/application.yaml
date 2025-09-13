@@ -29,6 +29,16 @@ defendev:
         token-uri: "https://login.microsoftonline.com/00000000-0000-0000-0000-000000000000/oauth2/v2.0/token"
         user-info-uri: "https://graph.microsoft.com/oidc/userinfo"
         jwk-set-uri: "https://login.microsoftonline.com/00000000-0000-0000-0000-000000000000/discovery/v2.0/keys"
+        #
+        # With this custom scope I:
+        #  - have the 'groups' claim in access token (no 'wids' claim)
+        #  - can't read https://graph.microsoft.com/oidc/userinfo endpoint
+        # Without this custom scope (and exactly the same settings of App Registration in Azure) I:
+        #  - have the 'wids' claim in access token (no 'groups' claim)
+        #  - can read https://graph.microsoft.com/oidc/userinfo endpoint
+        #
+        custom-scopes: []
+#          - "api://00000000-0000-0000-0000-000000000000/qwerty2"
       spring:
         client-id: "hZ519F1t6V"
         client-secret: "Hj2acmv3a1f0P2h"

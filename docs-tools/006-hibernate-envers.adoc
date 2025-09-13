@@ -135,9 +135,25 @@ Implementation:
 
 Done already in custom `@RevisionEntity`.
 
+*(!) Note:* in maker-checker scenario, with conditional-auditing based on
+explicit *lastMarkForAuditZulu*, it seems that enabling this feature
+is pointless.
+
 === Tracking entity changes at the property level
 
 It is extension of the previous point. Done by `@Audited(withModifiedFlag = true)` on each field.
+
+*(!) Note:* Unfortunately the modified-flags don't work conditional-auditing as
+expected. *They only capture most recent change*, not all changes since last audit.
+Therefore I'm disabling this feature.
+
+=== Conditional auditing
+
+It's possible to skip revisions based on `@Basic` properties. A drawback is that for
+related collection changes - seems too tricky to think about it.
+
+Implemented as described in
+https://thorben-janssen.com/conditional-auditing-hibernate-envers/[Thorben Janssen - How to Implement Conditional Auditing with Hibernate Envers]
 
 === Audit table partitioning
 

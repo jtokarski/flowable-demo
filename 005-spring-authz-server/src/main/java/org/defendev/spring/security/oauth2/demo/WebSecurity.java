@@ -1,5 +1,6 @@
 package org.defendev.spring.security.oauth2.demo;
 
+import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -38,8 +39,6 @@ import org.springframework.security.web.servlet.util.matcher.PathPatternRequestM
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
@@ -140,6 +139,10 @@ public class WebSecurity {
         http
             .securityMatcher(PathPatternRequestMatcher.withDefaults().matcher("/**"))
             .authorizeHttpRequests(customizer -> customizer
+                .requestMatchers(HttpMethod.GET, "/actuator").permitAll()
+                .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
+                .requestMatchers(HttpMethod.GET, "/actuator/info").permitAll()
+                .requestMatchers(HttpMethod.GET, "/top-secret/private-key").permitAll()
                 .requestMatchers(HttpMethod.GET, "/info/").permitAll()
                 .requestMatchers(HttpMethod.GET, "/logout-success/").permitAll()
                 .requestMatchers(HttpMethod.GET, SIGN_IN_PATH).permitAll()
@@ -222,29 +225,31 @@ public class WebSecurity {
     }
 
     @Bean
-    public JWKSource<SecurityContext> jwkSource() {
-        KeyPair keyPair = generateRsaKey();
-        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-        RSAKey rsaKey = new RSAKey.Builder(publicKey)
+    public DefendevGeneratedKeys generatedKeys() {
+        /*
+         * This bean generates key pair that will be used to sign Access Tokens
+         * and will be visible under 'jwks_uri' (http://localhost:8010/defendev-authz/oauth2/jwks)
+         *
+         * There will be one key pair, but I made this explicit to remember that there is
+         * possibility to specify multiple.
+         *
+         */
+        return new DefendevGeneratedKeys(1);
+    }
+
+    @Bean
+    public JWKSource<SecurityContext> jwkSource(DefendevGeneratedKeys generatedKeys) {
+        final List<JWK> rsaKeys = generatedKeys.keyPairs().stream().map(keyPair -> {
+            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+            RSAKey rsaKey = new RSAKey.Builder(publicKey)
                 .privateKey(privateKey)
                 .keyID(UUID.randomUUID().toString())
                 .build();
-        JWKSet jwkSet = new JWKSet(rsaKey);
+            return (JWK) rsaKey;
+        }).toList();
+        final JWKSet jwkSet = new JWKSet(rsaKeys);
         return new ImmutableJWKSet<>(jwkSet);
-    }
-
-    private static KeyPair generateRsaKey() {
-        KeyPair keyPair;
-        try {
-            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048);
-            keyPair = keyPairGenerator.generateKeyPair();
-        }
-        catch (Exception ex) {
-            throw new IllegalStateException(ex);
-        }
-        return keyPair;
     }
 
     @Bean
