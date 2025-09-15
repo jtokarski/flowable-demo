@@ -37,6 +37,7 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
         return httpSecurity
             .authorizeExchange(customizer -> customizer
+                .pathMatchers("/confidential-spa/session-invalidate").permitAll()
                 .pathMatchers("/confidential-spa/**").authenticated()
                 .anyExchange().permitAll()
             )
