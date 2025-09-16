@@ -33,9 +33,12 @@ defendev:
         # With this custom scope I:
         #  - have the 'groups' claim in access token (no 'wids' claim)
         #  - can't read https://graph.microsoft.com/oidc/userinfo endpoint
+        #  - can use access token with my custom Resource Server (token becomes non Microsoft-Graph-specific)
+        #
         # Without this custom scope (and exactly the same settings of App Registration in Azure) I:
         #  - have the 'wids' claim in access token (no 'groups' claim)
         #  - can read https://graph.microsoft.com/oidc/userinfo endpoint
+        #  - can't use access token with my custom Resource Server (token signature verification will fail)
         #
         custom-scopes: []
 #          - "api://00000000-0000-0000-0000-000000000000/qwerty2"
