@@ -28,8 +28,14 @@ public class ServerDiscriminatorFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException
     {
-        filterChain.doFilter(request, response);
+        /*
+         * The response.setHeader() has to go first. This is because after filterChain.doFilter(),
+         * the response may be already "commited" (see org.apache.catalina.connector.ResponseFacade).
+         * In that case the header is just ignored without the notice.
+         *
+         */
         response.setHeader(X_SERVER_DISCRIMINATOR, discriminator);
+        filterChain.doFilter(request, response);
     }
 
 }

@@ -9,4 +9,14 @@ server:
   #
   max-http-request-header-size: 8KB
 
+defendev:
+  resource-server:
+    oidc:
+      azure:
+        iss: "https://sts.windows.net/d9d3ff2d-d7ca-4821-bd09-ed953ac26c13/"
+        jwks-uri: "https://login.microsoftonline.com/d9d3ff2d-d7ca-4821-bd09-ed953ac26c13/discovery/v2.0/keys"
+      sprin6authz:
+        iss: "http://localhost:8010/defendev-authz"
+        jwks-uri: "http://localhost:8010/defendev-authz/oauth2/jwks"
+
 
