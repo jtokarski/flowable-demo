@@ -66,6 +66,8 @@ public class WebSecurity {
      */
     public static final String SIGN_IN_PATH = "/sign-in";
 
+    public static final String CLIENT_CREDENTIALS_GRANT_CLIENT_ID_1 = "950f60";
+
     /*
      * How do I know the @Scope of some bean class (e.g. HttpSecurity) provided by some @Enable... annotation
      * or some @AutoConfiguration?
@@ -221,7 +223,14 @@ public class WebSecurity {
             .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
             .build();
 
-        return new InMemoryRegisteredClientRepository(easygoWeb, defendevGateway);
+        final RegisteredClient coinne = RegisteredClient.withId("7a19078e-186d-458e-87c8-9706898c7d08")
+            .clientId(CLIENT_CREDENTIALS_GRANT_CLIENT_ID_1)
+            .clientSecret("{noop}034a75a60fa9e34c17bb4c3521")
+            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+            .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+            .build();
+
+        return new InMemoryRegisteredClientRepository(easygoWeb, defendevGateway, coinne);
     }
 
     @Bean

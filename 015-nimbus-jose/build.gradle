@@ -1,0 +1,37 @@
+
+plugins {
+    id 'java'
+    alias libs.plugins.springDependencyManagementPlugin
+}
+
+group = 'org.defendev.demo'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${libs.versions.springBootVersion.get()}"
+    }
+}
+
+dependencies {
+    implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client'
+    /*
+     * Some JSON library have to be present on classpath. Otherwise the RestClient used by
+     * 'spring-security-oauth2-client' will be throwing exceptions caused by missing message converters.
+     * (see the jackson2Present in org.springframework.web.client.DefaultRestClientBuilder)
+     */
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+    testImplementation libs.assertj
+    testImplementation group: 'io.rest-assured', name: 'rest-assured'
+    testImplementation group: 'io.rest-assured', name: 'json-path'
+    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+}
+
+tasks.named('test', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+}

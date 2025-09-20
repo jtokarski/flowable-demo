@@ -28,6 +28,11 @@ public class DefendevTokenCustomizer implements OAuth2TokenCustomizer<JwtEncodin
                     .claim("given_name", imaginaryUser.getAccessTokenClaims().givenName())
                     .claim("family_name", imaginaryUser.getAccessTokenClaims().familyName())
                     .claim("groups", imaginaryUser.getAccessTokenClaims().groups());
+            } else if (WebSecurity.CLIENT_CREDENTIALS_GRANT_CLIENT_ID_1.equals(authentication.getPrincipal())) {
+                //
+                // In client credentials grant flow the authentication.getPrincipal() is the clientId
+                // as in RegisteredClient
+                //
             } else {
                 final String principalInfo = ofNullable(principal)
                     .map(p -> p.getClass().getCanonicalName())

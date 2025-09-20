@@ -126,3 +126,6 @@ project(':013-microsoft-graph-sdk').name = 'microsoft-graph-sdk'
 
 include '014-rest-assured'
 project(':014-rest-assured').name = 'rest-assured'
+
+include '015-nimbus-jose'
+project(':015-nimbus-jose').name = 'nimbus-jose'
