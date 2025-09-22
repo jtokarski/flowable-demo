@@ -1,0 +1,13 @@
+
+
+
+(here - example with -printcert)
+
+*If you are in some ZCorpo and CORPORATE PROXY is enforced,
+then the result returned by `keytool -printcert` in Git Bash
+may be DIFFERENT than the result downloaded from Edge browser!*
+
+
+(here - example with -importcert)
+
+
