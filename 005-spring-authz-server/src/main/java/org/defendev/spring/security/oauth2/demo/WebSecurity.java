@@ -145,6 +145,7 @@ public class WebSecurity {
                 .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
                 .requestMatchers(HttpMethod.GET, "/actuator/info").permitAll()
                 .requestMatchers(HttpMethod.GET, "/top-secret/private-key").permitAll()
+                .requestMatchers(HttpMethod.GET, "/top-secret/private-key-all").permitAll()
                 .requestMatchers(HttpMethod.GET, "/info/").permitAll()
                 .requestMatchers(HttpMethod.GET, "/logout-success/").permitAll()
                 .requestMatchers(HttpMethod.GET, SIGN_IN_PATH).permitAll()
@@ -248,12 +249,12 @@ public class WebSecurity {
 
     @Bean
     public JWKSource<SecurityContext> jwkSource(DefendevGeneratedKeys generatedKeys) {
-        final List<JWK> rsaKeys = generatedKeys.keyPairs().stream().map(keyPair -> {
-            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+        final List<JWK> rsaKeys = generatedKeys.getKeyData().stream().map(generatedKeyPair -> {
+            RSAPublicKey publicKey = (RSAPublicKey) generatedKeyPair.keyPair().getPublic();
+            RSAPrivateKey privateKey = (RSAPrivateKey) generatedKeyPair.keyPair().getPrivate();
             RSAKey rsaKey = new RSAKey.Builder(publicKey)
                 .privateKey(privateKey)
-                .keyID(UUID.randomUUID().toString())
+                .keyID(generatedKeyPair.keyId())
                 .build();
             return (JWK) rsaKey;
         }).toList();

@@ -34,18 +34,20 @@ public class DefendevAuthnManagerResolver implements AuthenticationManagerResolv
     public DefendevAuthnManagerResolver(
         DefendevJwsKeySelector keySelector,
         DefendevTokenIssuerValidator tokenIssuerValidator,
-        DefendevOpaqueTokenIntrospector tokenIntrospector
+        DefendevOpaqueTokenIntrospector tokenIntrospector,
+        FigureAuthenticationConverter figureAuthenticationConverter
     ) {
         final ConfigurableJWTProcessor<SecurityContext> jwtProcessor = new DefaultJWTProcessor<>();
         jwtProcessor.setJWTClaimsSetAwareJWSKeySelector(keySelector);
         final NimbusJwtDecoder jwtDecoder = new NimbusJwtDecoder(jwtProcessor);
         jwtDecoder.setJwtValidator(tokenIssuerValidator);
 
-        // JwtAuthenticationConverter - this is the default one (explicite). Not used but leaving for reference.
+        /*
+         * JwtAuthenticationConverter - this is the default one (explicite). Not used but leaving for reference.
+         * It got replaced by FigureAuthenticationConverter.
+         */
         final Converter<Jwt, ? extends AbstractAuthenticationToken> jwtAuthenticationConverter =
             new JwtAuthenticationConverter();
-        final Converter<Jwt, ? extends AbstractAuthenticationToken> figureAuthenticationConverter =
-            new FigureAuthenticationConverter();
 
         final JwtAuthenticationProvider jwtAuthenticationProvider = new JwtAuthenticationProvider(jwtDecoder);
         jwtAuthenticationProvider.setJwtAuthenticationConverter(figureAuthenticationConverter);
