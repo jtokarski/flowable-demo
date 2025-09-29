@@ -30,6 +30,7 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
@@ -41,10 +42,10 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -221,6 +222,14 @@ public class WebSecurity {
             .postLogoutRedirectUri("http://127.0.0.1:8080/")
             .scope(OidcScopes.OPENID)
             .scope(OidcScopes.PROFILE)
+            .tokenSettings(TokenSettings.builder()
+                // presumable defaults specified explicitly:
+                .accessTokenTimeToLive(Duration.ofMinutes(5))
+                .refreshTokenTimeToLive(Duration.ofMinutes(60))
+                // in some ZCorpo I had:
+                //  .accessTokenTimeToLive(Duration.ofHours(2))
+                //  .refreshTokenTimeToLive(Duration.ofHours(4))
+                .build())
             .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
             .build();
 
