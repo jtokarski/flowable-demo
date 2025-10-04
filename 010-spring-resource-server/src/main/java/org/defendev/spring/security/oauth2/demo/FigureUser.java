@@ -28,7 +28,7 @@ import java.util.Map;
  * production code with such things.
  *
  */
-public class FigureUser implements OAuth2AuthenticatedPrincipal{
+public class FigureUser implements OAuth2AuthenticatedPrincipal {
 
     private final String userId;
 

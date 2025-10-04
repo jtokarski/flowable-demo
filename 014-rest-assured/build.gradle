@@ -23,6 +23,7 @@ dependencies {
     testImplementation group: 'io.rest-assured', name: 'rest-assured'
     testImplementation group: 'io.rest-assured', name: 'json-path'
     testImplementation libs.auth0JavaJwt
+    testImplementation group: 'com.github.ben-manes.caffeine', name: 'caffeine'
     testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
 }
 

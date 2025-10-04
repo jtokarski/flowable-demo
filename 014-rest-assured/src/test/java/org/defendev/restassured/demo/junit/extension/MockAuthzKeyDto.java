@@ -1,4 +1,4 @@
-package org.defendev.restassured.demo.config;
+package org.defendev.restassured.demo.junit.extension;
 
 
 

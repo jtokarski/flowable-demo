@@ -18,6 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import java.util.List;
 
 
 
@@ -34,6 +35,7 @@ public class ExempliGratiaController {
         final Object principal = authentication.getPrincipal();
         assertThat(authentication).isInstanceOf(FigureAuthenticationToken.class);
         assertThat(principal).isInstanceOf(FigureUser.class);
+        final FigureUser figureUser = (FigureUser) principal;
 
         assertThat(httpEntity.getHeaders().get(HttpHeaders.COOKIE)).isNullOrEmpty();
         assertThat(httpEntity.getHeaders().get(HttpHeaders.AUTHORIZATION))
@@ -49,9 +51,22 @@ public class ExempliGratiaController {
         final int randomInt = ThreadLocalRandom.current().nextInt(10_000, 20_000);
         final DeepDto dto = new DeepDto(
             format("This is random number from 010 Resource Server: %d", randomInt),
-            authorizationHeaderLength
+            authorizationHeaderLength,
+            figureUser.getUserId()
         );
         return ResponseEntity.ok(dto);
+    }
+
+    @RequestMapping(method = GET, path = "animals")
+    public ResponseEntity<List<AnimalDto>> getAnimals() {
+        final List<AnimalDto> animalDtos = List.of(
+            new AnimalDto("Panthera tigris (tiger)", "Luna", 6, false),
+            new AnimalDto("Canis familiaris (dog)", "Ruby", 4, true),
+            new AnimalDto("Panthera tigris (tiger)", "Muffin", 12, false),
+            new AnimalDto("Canis lupus (wolf)", "North", 9, false),
+            new AnimalDto("Cervidae (deer)", "Frederick", 1, null)
+        );
+        return ResponseEntity.ok(animalDtos);
     }
 
     private String formatSize(int size) {
