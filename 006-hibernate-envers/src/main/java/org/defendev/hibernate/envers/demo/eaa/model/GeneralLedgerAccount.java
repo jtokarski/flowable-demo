@@ -13,7 +13,7 @@ import static org.defendev.hibernate.envers.demo.eaa.model.NormalBalance.debit;
  * But since "General ledger account" is the best name since it is universal term in Anglo-Saxon accounting
  * (as opposed to Continental European).
  *
- * GeneralLedgerAccount does not enumerate
+ * Chart Of Accounts does not enumerate
  *   Subsidiary Ledger Accounts
  *   Analytic Accounts
  *
