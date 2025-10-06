@@ -87,9 +87,26 @@ public class SetupPocTest {
             .extract().jsonPath();
 
         final List<Map> animals = animalsResponse.getList("$", Map.class);
-        assertThat(animals).hasSize(5);
+        assertThat(animals).hasSize(6);
         assertThat(animalsResponse.getBoolean("[0].isPet")).isFalse();
         assertThat((Boolean) animalsResponse.get("[4].isPet")).isNull();
+
+        /*
+         * Some more interesting GPath examples (note the find vs findAll)
+         *
+         */
+        final List<String> youngLions = animalsResponse
+            .param("species", "Panthera tigris (tiger)")
+            .param("ageLimit", 7)
+            .getList("findAll { species == it.species && ageLimit > it.age}.name", String.class);
+        assertThat(youngLions).hasSize(2).containsExactlyElementsOf(List.of("Luna", "Peugeot"));
+
+        final Map someLion = animalsResponse
+            .param("name", "Muffin")
+            .getMap("find { name == it.name }");
+        assertThat(someLion.get("species")).isEqualTo("Panthera tigris (tiger)");
+        assertThat(someLion.get("name")).isEqualTo("Muffin");
+        assertThat(someLion.get("isPet")).isEqualTo(false);
     }
 
 }

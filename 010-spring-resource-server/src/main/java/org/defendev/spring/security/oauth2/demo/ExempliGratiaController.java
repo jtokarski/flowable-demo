@@ -64,7 +64,8 @@ public class ExempliGratiaController {
             new AnimalDto("Canis familiaris (dog)", "Ruby", 4, true),
             new AnimalDto("Panthera tigris (tiger)", "Muffin", 12, false),
             new AnimalDto("Canis lupus (wolf)", "North", 9, false),
-            new AnimalDto("Cervidae (deer)", "Frederick", 1, null)
+            new AnimalDto("Cervidae (deer)", "Frederick", 1, null),
+            new AnimalDto("Panthera tigris (tiger)", "Peugeot", 2, false)
         );
         return ResponseEntity.ok(animalDtos);
     }
