@@ -1,0 +1,55 @@
+
+plugins {
+    id 'java'
+    alias libs.plugins.springDependencyManagementPlugin
+}
+
+group = 'org.defendev.demo'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${libs.versions.springBootVersion.get()}"
+    }
+}
+
+dependencies {
+
+    /*
+     * The below is sufficient to sent e-mails through SMTP (tested with Gmail)
+     */
+    implementation group: 'org.springframework', name: 'spring-context-support'
+    implementation group: 'org.eclipse.angus', name: 'jakarta.mail'
+
+    /*
+     * The below to provide "lax" SSLSocketFactory and also some time utils.
+     *
+     */
+    implementation libs.defendevCommonJdk
+
+    /*
+     * Adding the below is sufficient generate e-mail content with Thymeleaf
+     *
+     */
+
+
+    /*
+     * Below is GreenMail - a Java-based mock e-mail server.
+     *
+     *
+     */
+
+
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+    testImplementation libs.assertj
+    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+}
+
+tasks.named('test', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+}

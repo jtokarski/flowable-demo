@@ -129,3 +129,6 @@ project(':014-rest-assured').name = 'rest-assured'
 
 include '015-nimbus-jose'
 project(':015-nimbus-jose').name = 'nimbus-jose'
+
+include '016-email'
+project(':016-email').name = 'email';
