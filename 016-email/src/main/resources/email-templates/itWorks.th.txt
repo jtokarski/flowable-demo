@@ -1,0 +1,7 @@
+
+Hello [( ${recipientName} )]
+
+This is plaintext version of e-mail.
+
+
+
