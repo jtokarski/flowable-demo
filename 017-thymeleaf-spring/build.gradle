@@ -1,0 +1,31 @@
+
+plugins {
+    id 'java'
+    alias libs.plugins.springDependencyManagementPlugin
+}
+
+group = 'org.defendev.demo'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${libs.versions.springBootVersion.get()}"
+    }
+}
+
+dependencies {
+    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring6'
+    implementation group: 'org.springframework', name: 'spring-context'
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+    testImplementation libs.assertj
+    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+}
+
+tasks.named('test', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+}

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+
+  <p>Some ASCII art: <span th:text="${thymeleafCtxVariable}"></span></p>
+
+  <p>Some animal sounds: <span th:text="${@animalSoundService.getCatSound()}"></span></p>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+
+Some ASCII art: [( ${thymeleafCtxVariable} )]
+
+No animal sounds ...

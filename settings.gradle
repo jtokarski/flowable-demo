@@ -132,3 +132,6 @@ project(':015-nimbus-jose').name = 'nimbus-jose'
 
 include '016-email'
 project(':016-email').name = 'email';
+
+include '017-thymeleaf-spring'
+project(':017-thymeleaf-spring').name = 'thymeleaf-spring';

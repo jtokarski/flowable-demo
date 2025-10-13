@@ -1,0 +1,4 @@
+
+Some ASCII art: [( ${thymeleafCtxVariable} )]
+
+Some animal sounds: [( ${@animalSoundService.getCatSound()} )]

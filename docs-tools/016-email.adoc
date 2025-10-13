@@ -1,0 +1,39 @@
+
+
+== Sending e-mail with SMTP
+
+The `SmtpSendEmailTest` demonstrates working setup for sending e-mail with SMTP, based
+on (almost) minimal set of Jar dependencies. "Almost" because I'm using some utilities
+provided by Spring - `JavaMailSender`, `SimpleMailMessage`. This is because using
+pure Jakarta Mail API is too old-fashioned, inconvenient and not viable for use in practice.
+
+Interesting and confusing is name of Spring module containing those *e-mail* utilities:
+`org.springframework:spring-context-support`
+
+
+
+== Thymeleaf e-mail templates
+
+The `ThymeleafMailTemplateTest` demonstrates using pure-Thymeleaf APIs for processing templates.
+In particular, I'm not using `org.thymeleaf:thymeleaf-spring6` package. It has some consequences:
+
+* Instead of `SpringResourceTemplateResolver` which needs Spring application context, the `ClassLoaderTemplateResolver` is used. +
+  According to Javadoc of `SpringResourceTemplateResolver` - it uses application context to
+  obtain resources using Spring's Resource Resolution mechanism `ApplicationContext.getResource()`,
+  not for accessing beans from template expressions - so actually
+  it's not that bad. +
+  The `ClassLoaderTemplateResolver` needs the `ognl:ognl` Jar which is excluded for `thymeleaf-spring6`
+
+So the conclusion is that in a real project, I wouldn't go too far in minimizing dependencies.
+I would still take advantage of Spring Resource Resolution mechanism (use `SpringResourceTemplateResolver`) and use `SpringTemplateEngine`. With manual Spring setup
+and programmatic processing of templates, accessing beans from template expressions requires
+additional explicit step (see `017-thymeleaf-spring` / `ThymeleafSpringTest`), so the risk of accidental "_leak_" is small.
+
+
+
+== Mock SMTP server setup with GreenMail
+
+...
+
+
+
