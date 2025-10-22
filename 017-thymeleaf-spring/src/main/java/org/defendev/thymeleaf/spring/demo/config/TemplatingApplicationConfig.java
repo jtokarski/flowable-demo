@@ -64,7 +64,7 @@ public class TemplatingApplicationConfig {
     }
 
     @Bean
-    public SpringTemplateEngine springTemplateEngine(ApplicationContext applicationContext) {
+    public ITemplateEngine springTemplateEngine(ApplicationContext applicationContext) {
         final SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.addTemplateResolver(textTemplateResolver(applicationContext));
         engine.addTemplateResolver(htmlTemplateResolver(applicationContext));

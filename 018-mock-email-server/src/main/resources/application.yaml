@@ -1,0 +1,12 @@
+
+
+server:
+  servlet:
+    context-path: "/defendev-greenmail"
+  port: 8013
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info

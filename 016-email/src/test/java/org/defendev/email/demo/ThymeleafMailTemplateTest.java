@@ -14,6 +14,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import java.util.Set;
 
@@ -80,10 +81,10 @@ public class ThymeleafMailTemplateTest {
     }
 
     @Test
-    public void sendPlainPlusRichtextEmail() throws MessagingException {
+    public void sendPlainPlusRichtextEmail() throws MessagingException, UnsupportedEncodingException {
         final MimeMessage mimeMessage = mailSender.createMimeMessage();
         final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-        helper.setFrom(GMAIL_FROM);
+        helper.setFrom(GMAIL_FROM, "Jan Kowalski");
         helper.setTo(GMAIL_TO);
         helper.setSubject("This was sent programmatically form JUnit @Test using Thymeleaf");
 
@@ -91,6 +92,7 @@ public class ThymeleafMailTemplateTest {
 
         final Context thymeleafContext = new Context();
         thymeleafContext.setVariable("recipientName", "Giuseppe");
+        thymeleafContext.setVariable("processInstanceId", "2002002");
 
         final String plainText = templateEngine.process("itWorks.th.txt", thymeleafContext);
         final String htmlText = templateEngine.process("itWorks.th.html", thymeleafContext);

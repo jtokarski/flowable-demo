@@ -31,9 +31,6 @@ additional explicit step (see `017-thymeleaf-spring` / `ThymeleafSpringTest`), s
 
 
 
-== Mock SMTP server setup with GreenMail
-
-...
 
 
 

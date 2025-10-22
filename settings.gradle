@@ -43,6 +43,7 @@ dependencyResolutionManagement {
             version('h2Version', '2.3.232')
             version('defendevCommonJdkVersion', '0.0.12')
             version('auth0JavaJwtVersion', '4.5.0')
+            version('greenmailVersion', '2.1.7')
 
             /*
              * Note that 'org.springframework.boot:spring-boot-dependencies:3.5.0' does include
@@ -63,6 +64,7 @@ dependencyResolutionManagement {
             library('postgresql', 'org.postgresql', 'postgresql').versionRef('postgresqlVersion')
             library('h2database', 'com.h2database', 'h2').versionRef('h2Version')
             library('auth0JavaJwt', 'com.auth0', 'java-jwt').versionRef('auth0JavaJwtVersion')
+            library('greenmail', 'com.icegreen', 'greenmail').versionRef('greenmailVersion')
             library('defendevCommonJdk', 'org.defendev', 'common-jdk').versionRef('defendevCommonJdkVersion')
 
             /*
@@ -135,3 +137,6 @@ project(':016-email').name = 'email';
 
 include '017-thymeleaf-spring'
 project(':017-thymeleaf-spring').name = 'thymeleaf-spring';
+
+include '018-mock-email-server'
+project(':018-mock-email-server').name = 'mock-email-server';

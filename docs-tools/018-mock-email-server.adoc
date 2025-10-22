@@ -1,0 +1,21 @@
+
+
+== Mock SMTP/POP3/IMAP server setup with GreenMail
+
+Theoretically, for running "_standalone_" e-mail server with Greenmail, I should use the *greenmail-standalone* JAR.
+But it has some drawbacks:
+
+* `greenmail-standalone` is 10MB while `greenmail` alone is 500kB
+
+* `greenmail-standalone` has to be run as `java -jar` with command line options - not convenient
+  for controlling more complex configuration of user accounts, etc.
+
+* `greenmail-standalone` has to be run as `java -jar` so it's not convenient to be run form Gradle module
+  with IntelliJ Run configuration
+
+* the only thing that `greenmail-standalone` offers is the REST API, but its very limited for viewing
+  or managing e-mail server state
+
+So the optimal solution is to run the `greenmail` within thin Spring Boot web application. And this
+is exactly how this project is setup.
+

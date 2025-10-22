@@ -32,18 +32,19 @@ dependencies {
     implementation libs.defendevCommonJdk
 
     /*
-     * Adding the below is sufficient generate e-mail content with Thymeleaf
+     * Adding the below is sufficient generate e-mail content by processing Thymeleaf templates.
+     * I'm intentionally not using 'org.thymeleaf:thymeleaf-spring6' and therefore
+     * not excluding 'ognl:ognl'
      *
      */
-
+    implementation group: 'org.thymeleaf', name: 'thymeleaf'
 
     /*
      * Below is GreenMail - a Java-based mock e-mail server.
      *
      *
      */
-
-
+    testImplementation libs.greenmail
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
     testImplementation libs.assertj
