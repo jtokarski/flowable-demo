@@ -46,7 +46,7 @@ public class WebConfig {
             .resources((ServerRequest request) -> {
                 log.info("RouterFunctions.resources(lookupFunction) - " + request.path());
                 if ("/hidden/virtual/document.txt".equals(request.path())) {
-                    // i.e. http://localhost:8080/noflo/hidden/virtual/document.txt
+                    // i.e. http://localhost:8011/webcntx/hidden/virtual/document.txt
                     final Resource hiddenResource = new ClassPathResource("/hidden.txt");
                     return Mono.just(hiddenResource);
                 } else {
