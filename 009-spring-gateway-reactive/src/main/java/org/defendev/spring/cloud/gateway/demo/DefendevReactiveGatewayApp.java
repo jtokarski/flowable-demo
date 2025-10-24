@@ -1,5 +1,6 @@
 package org.defendev.spring.cloud.gateway.demo;
 
+import org.defendev.spring.cloud.gateway.demo.config.DefendevGatewayProperties;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

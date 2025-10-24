@@ -1,4 +1,4 @@
-package org.defendev.spring.cloud.gateway.demo;
+package org.defendev.spring.cloud.gateway.demo.config;
 
 import org.springframework.context.ApplicationContext;
 import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
