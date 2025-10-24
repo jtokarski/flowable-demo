@@ -1,4 +1,4 @@
-package org.defendev.spring.cloud.gateway.demo;
+package org.defendev.spring.cloud.gateway.demo.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +17,7 @@ import java.time.ZonedDateTime;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 import static org.apache.commons.lang3.StringUtils.appendIfMissing;
-import static org.defendev.spring.cloud.gateway.demo.ClassNameAbbreviation.abbreviatedFqcn;
+import static org.defendev.spring.cloud.gateway.demo.controller.ClassNameAbbreviation.abbreviatedFqcn;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 
@@ -53,7 +53,7 @@ public class ConfidentialSpaPageController {
     }
 
     @RequestMapping(method = GET, path = "session-invalidate")
-    public ResponseEntity<Void> assfdfas(
+    public ResponseEntity<Void> sessionInvalidate(
         WebSession session,
         @Value("${spring.webflux.base-path}") String basePath
     ) {

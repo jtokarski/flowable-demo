@@ -1,5 +1,7 @@
-package org.defendev.spring.cloud.gateway.demo;
+package org.defendev.spring.cloud.gateway.demo.controller;
 
+import org.defendev.spring.cloud.gateway.demo.dto.CurioDto;
+import org.defendev.spring.cloud.gateway.demo.dto.ShallowDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -91,6 +93,16 @@ public class ConfidentialApiController {
         final Authentication authentication = securityContext.getAuthentication();
         if (authentication instanceof OAuth2AuthenticationToken oauth2Authentication) {
             final String clientRegistrationId = oauth2Authentication.getAuthorizedClientRegistrationId();
+            /*
+             * #edit 2025-09-20:
+             * !!! The below may not be the right thing as it doesn't go through
+             *   ReactiveOAuth2AuthorizedClientManager.authorize()
+             * as a consequence it may not refresh expired token!!!
+             * Have to be verified.
+             * For possibly better approach, see the not-yet-don
+             * TokenLoopController.runAccessTokenAcquisitionLoop()
+             *
+             */
             final Mono<OAuth2AuthorizedClient> clientMono = authorizedClientRepository.loadAuthorizedClient(
                 clientRegistrationId, authentication, serverWebExchange);
             return clientMono.map(oAuth2AuthorizedClient -> {

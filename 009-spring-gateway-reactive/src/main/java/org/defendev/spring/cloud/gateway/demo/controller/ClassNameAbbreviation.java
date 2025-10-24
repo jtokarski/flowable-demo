@@ -1,4 +1,4 @@
-package org.defendev.spring.cloud.gateway.demo;
+package org.defendev.spring.cloud.gateway.demo.controller;
 
 import org.apache.logging.log4j.core.pattern.NameAbbreviator;
 
