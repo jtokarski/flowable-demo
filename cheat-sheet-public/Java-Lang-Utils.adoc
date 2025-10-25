@@ -1,0 +1,24 @@
+
+== Java "_lang utils_"
+
+By "_lang utils_" I mean utility functions that are so much general purpose,
+that they should actually be built in JDK. There are several libraries
+like that. None of them is sufficient for everything and every one is
+indispensable. Below I justify why.
+
+=== org.apache.commons : `commons-lang3`
+
+
+
+=== org.apache.commons : `commons-collections4`
+
+* `o.a.c.c.CollectionUtils.isEmpty()` - Guava equivalent is not null-safe
+
+* `o.a.c.c.MapUtils.isEmpty()` - Guava equivalent is not null-safe
+
+
+=== com.google.guava : `guava`
+
+* `ImmutableSet.Builder` - the only way in Java universe to concat 3 sets at once
+
+
