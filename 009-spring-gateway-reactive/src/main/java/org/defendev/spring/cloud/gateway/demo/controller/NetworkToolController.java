@@ -22,6 +22,10 @@ import static java.util.Objects.nonNull;
 @Controller
 public class NetworkToolController {
 
+    /*
+     * todo: investigate (and potentially prove) that this works for hosts that don't support ICMP
+     *
+     */
     @RequestMapping(path = "socket-probe/{ipAddress}/{port}")
     public Mono<ResponseEntity<SocketProbeDto>> executeSocketProbe(
         @PathVariable String ipAddress,
