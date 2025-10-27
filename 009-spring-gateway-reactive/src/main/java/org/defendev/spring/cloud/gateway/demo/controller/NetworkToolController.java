@@ -32,23 +32,25 @@ public class NetworkToolController {
         @PathVariable int port
     ) {
         if (!isInetAddress(ipAddress)) {
-            final SocketProbeDto probeDto = new SocketProbeDto(false, false, 0, "Incorrect address format");
+            final SocketProbeDto probeDto = new SocketProbeDto(false, null, false, 0, "Incorrect address format");
             return Mono.just(ResponseEntity.ok(probeDto));
         }
         if (port < 0x1 || port > 0xFFFF) {
-            final SocketProbeDto probeDto = new SocketProbeDto(false, false, 0, "Incorrect port value");
+            final SocketProbeDto probeDto = new SocketProbeDto(false, null, false, 0, "Incorrect port value");
             return Mono.just(ResponseEntity.ok(probeDto));
         }
 
         final StopWatch stopWatch = StopWatch.create();
+        String localHost = "unknown";
         try {
+            localHost = InetAddress.getLocalHost().toString();
             final InetAddress inetAddress = InetAddress.getByName(ipAddress);
             final Socket socket = new Socket();
             stopWatch.start();
             socket.connect(new InetSocketAddress(inetAddress, port), 15_000);
             stopWatch.stop();
             final long executionTime = stopWatch.getTime(TimeUnit.MILLISECONDS);
-            final SocketProbeDto probeDto = new SocketProbeDto(true, true, executionTime, null);
+            final SocketProbeDto probeDto = new SocketProbeDto(true, localHost, true, executionTime, null);
             return Mono.just(ResponseEntity.ok(probeDto));
         } catch (Throwable e) {
             stopWatch.stop();
@@ -58,7 +60,7 @@ public class NetworkToolController {
                 final Throwable cause = e.getCause();
                 errorDetail += " | " + cause.getClass().getCanonicalName() + " | " + cause.getMessage();
             }
-            final SocketProbeDto probeDto = new SocketProbeDto(true, false, executionTime, errorDetail);
+            final SocketProbeDto probeDto = new SocketProbeDto(true, localHost, false, executionTime, errorDetail);
             return Mono.just(ResponseEntity.ok(probeDto));
         }
     }
