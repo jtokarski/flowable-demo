@@ -142,3 +142,6 @@ project(':017-thymeleaf-spring').name = 'thymeleaf-spring';
 
 include '018-mock-email-server'
 project(':018-mock-email-server').name = 'mock-email-server';
+
+include '019-accounting-multipoc'
+project(':019-accounting-multipoc').name = 'accounting-multipoc';
