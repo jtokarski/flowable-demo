@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="absence-approval" name="absence-approval" isExecutable="true">
+    <startEvent id="absence-requested-event" name="absence requested"/>
+    <userTask id="approve-user-task" name="Approve or reject request"/>
+    <sequenceFlow id="sequence-flow-1" sourceRef="absence-requested-event" targetRef="approve-user-task"/>
+    <exclusiveGateway id="sid-70f42c87-89e5-4fde-8b90-7cca6e0818ac"/>
+    <sequenceFlow id="sid-deb5a0f5-545f-4b14-9bcc-096e97628e3d" sourceRef="approve-user-task" targetRef="sid-70f42c87-89e5-4fde-8b90-7cca6e0818ac"/>
+    <serviceTask id="external-system-call-service-task" flowable:exclusive="true" name="Enter holidays in external system" flowable:class="org.defendev.flowable.demo.spring.RegisterHolidaysDelegate"/>
+    <sequenceFlow id="sid-df082c9a-eb50-4d8d-96fa-b26b80fe815b" sourceRef="sid-70f42c87-89e5-4fde-8b90-7cca6e0818ac" targetRef="external-system-call-service-task" name="approved">
+      <conditionExpression xsi:type="tFormalExpression"/>
+    </sequenceFlow>
+    <serviceTask id="send-rejection-email-service-task" flowable:exclusive="true" name="Send out rejection email" flowable:class="org.defendev.flowable.demo.spring.SendRejectionEmailDelegate"/>
+    <sequenceFlow id="sid-a3a056df-c4b2-4a48-b18e-a7da53378c42" sourceRef="sid-70f42c87-89e5-4fde-8b90-7cca6e0818ac" targetRef="send-rejection-email-service-task" name="rejected">
+      <documentation><![CDATA[
+]]></documentation>
+      <conditionExpression xsi:type="tFormalExpression"/>
+    </sequenceFlow>
+    <endEvent id="rejected-end"/>
+    <sequenceFlow id="sid-d4e16a29-1c41-4d1f-9c4d-a8581ff7c94a" sourceRef="send-rejection-email-service-task" targetRef="rejected-end"/>
+    <userTask id="sid-09f19187-4480-4bab-8e87-8bc4d3f0934b"/>
+    <sequenceFlow id="sid-e09086ae-f1e3-41f6-9c5f-50fbe30ac653" sourceRef="external-system-call-service-task" targetRef="sid-09f19187-4480-4bab-8e87-8bc4d3f0934b"/>
+    <endEvent id="approved-end"/>
+    <sequenceFlow id="sid-5fb363ac-a689-40e1-8b9e-84bfc7ea1f57" sourceRef="sid-09f19187-4480-4bab-8e87-8bc4d3f0934b" targetRef="approved-end"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_absence-approval">
+    <bpmndi:BPMNPlane bpmnElement="absence-approval" id="BPMNPlane_absence-approval">
+      <bpmndi:BPMNShape id="shape-950e1526-e659-49c1-9296-bdd75d7dce3a" bpmnElement="absence-requested-event">
+        <omgdc:Bounds x="-103.0" y="-81.5" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-cd16d446-1948-48a6-821c-e797fdb85d5a" bpmnElement="approve-user-task">
+        <omgdc:Bounds x="-46.0" y="-105.75" width="108.5" height="78.5"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-fd8c4977-3a13-4603-b393-de87669defeb" bpmnElement="sequence-flow-1">
+        <omgdi:waypoint x="-73.0" y="-66.5"/>
+        <omgdi:waypoint x="-46.0" y="-66.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-0990356c-ae5c-4888-bde3-6e06b2ab83b1" bpmnElement="sid-70f42c87-89e5-4fde-8b90-7cca6e0818ac">
+        <omgdc:Bounds x="94.0" y="-86.5" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-c376792b-f434-4ef0-bf57-35803c175a7e" bpmnElement="sid-deb5a0f5-545f-4b14-9bcc-096e97628e3d">
+        <omgdi:waypoint x="62.5" y="-66.5"/>
+        <omgdi:waypoint x="94.0" y="-66.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-9bc98be0-f856-49c7-8973-1cf3586e5787" bpmnElement="external-system-call-service-task">
+        <omgdc:Bounds x="189.3" y="-106.50001" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-2da492e7-6fcf-43fb-9622-341bd2fec8c8" bpmnElement="sid-df082c9a-eb50-4d8d-96fa-b26b80fe815b">
+        <omgdi:waypoint x="134.0" y="-66.5"/>
+        <omgdi:waypoint x="189.3" y="-66.50001"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-140d7e3f-4535-4e0f-9924-8aa315ba476f" bpmnElement="send-rejection-email-service-task">
+        <omgdc:Bounds x="189.30002" y="11.643677" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-82918a90-32f6-4595-85ea-09e9a8e7ae86" bpmnElement="sid-a3a056df-c4b2-4a48-b18e-a7da53378c42">
+        <omgdi:waypoint x="114.0" y="-46.5"/>
+        <omgdi:waypoint x="113.99999" y="51.64368"/>
+        <omgdi:waypoint x="189.3" y="51.643673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-7ec63bb7-e334-4ff9-a4f6-994fadf84204" bpmnElement="rejected-end">
+        <omgdc:Bounds x="363.7973" y="36.643677" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-54988b21-208b-4974-b4db-ed642cddf0b1" bpmnElement="sid-d4e16a29-1c41-4d1f-9c4d-a8581ff7c94a">
+        <omgdi:waypoint x="289.30002" y="51.643677"/>
+        <omgdi:waypoint x="363.7973" y="51.643677"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-25bc7783-eea7-4f12-8122-35ed0e4adbfa" bpmnElement="sid-09f19187-4480-4bab-8e87-8bc4d3f0934b">
+        <omgdc:Bounds x="388.4885" y="-106.5" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-876778b3-6f25-4c5d-aa8d-cd3207607513" bpmnElement="sid-e09086ae-f1e3-41f6-9c5f-50fbe30ac653">
+        <omgdi:waypoint x="289.3" y="-66.50001"/>
+        <omgdi:waypoint x="388.4885" y="-66.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-0446919a-40d5-4809-8ba6-51b5945ec27e" bpmnElement="approved-end">
+        <omgdc:Bounds x="586.89954" y="-81.5" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-561d22f8-118d-4b62-8ac7-34c21f9c1dab" bpmnElement="sid-5fb363ac-a689-40e1-8b9e-84bfc7ea1f57">
+        <omgdi:waypoint x="488.4885" y="-66.5"/>
+        <omgdi:waypoint x="586.89954" y="-66.5"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

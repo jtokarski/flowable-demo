@@ -34,10 +34,10 @@ import static org.assertj.core.api.Assertions.entry;
 @ContextConfiguration(classes = { FlowableCoreSpringConfig.class })
 public class HrProcessTest {
 
-    @DmnDeploymentAnnotation(resources = { "decisions/dmn-meanOfTransportSelection.dmn" })
+    @DmnDeploymentAnnotation(resources = {"decisions/hr/dmn-meanOfTransportSelection.dmn"})
     @Deployment(resources = {
-        "processes/absence-approval.bpmn20.xml",
-        "processes/go-out.bpmn20.xml"
+        "processes/hr/absence-approval.bpmn20.xml",
+        "processes/hr/go-out.bpmn20.xml"
     })
     @Test
     public void shouldEvaluateDecisionAsPartOfProcess(ProcessEngine hrProcessEngine, RuntimeService runtimeService,
@@ -59,10 +59,11 @@ public class HrProcessTest {
         final Map<String, Object> variablesAfterDecision = runtimeService.getVariables(executions.get(0).getId());
 
         // then
+        assertThat(hrProcessEngine.getName()).isEqualTo("hrProcEngine");
         assertThat(variablesAfterDecision).contains(entry("meanOfTransport", "BY_FOOT"));
     }
 
-    @DmnDeploymentAnnotation(resources = { "decisions/dmn-meanOfTransportSelection.dmn" })
+    @DmnDeploymentAnnotation(resources = {"decisions/hr/dmn-meanOfTransportSelection.dmn"})
     @Test
     public void shouldEvaluateDecisionOutsideProcess(DmnEngine hrDmnEngine, DmnDecisionService dmnDecisionService) {
         // given

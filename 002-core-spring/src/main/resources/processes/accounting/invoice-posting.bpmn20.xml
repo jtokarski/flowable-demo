@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="invoice-posting" name="invoice-posting" isExecutable="true">
+    <startEvent id="invoice-received-event" name="Invoice Received"/>
+    <userTask id="post-financial-transaction-task" name="Post Financial Transaction"/>
+    <endEvent id="invoice-processed-event"/>
+    <sequenceFlow id="sid-80c152cb-6fcd-45e2-895e-b46623165ada" sourceRef="invoice-received-event" targetRef="post-financial-transaction-task"/>
+    <sequenceFlow id="sid-6c151ee6-0461-41ea-adcf-3c74e2d981b2" sourceRef="post-financial-transaction-task" targetRef="invoice-processed-event"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_invoice-posting">
+    <bpmndi:BPMNPlane bpmnElement="invoice-posting" id="BPMNPlane_invoice-posting">
+      <bpmndi:BPMNShape id="shape-f9a1a992-be20-4a7e-80a5-92f5f4afffb6" bpmnElement="invoice-received-event">
+        <omgdc:Bounds x="-168.0" y="-25.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-85bea9c1-a8f9-4cf8-afbf-4eaa5e0fd82f" bpmnElement="post-financial-transaction-task">
+        <omgdc:Bounds x="-70.0" y="-50.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-10d55a7e-3c7c-41cb-8f95-181c3b8dae4c" bpmnElement="invoice-processed-event">
+        <omgdc:Bounds x="120.0" y="-25.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-5eef7922-f738-42a0-b52c-23033e2ad000" bpmnElement="sid-80c152cb-6fcd-45e2-895e-b46623165ada">
+        <omgdi:waypoint x="-138.0" y="-10.0"/>
+        <omgdi:waypoint x="-70.0" y="-10.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-17176861-077b-4fed-9188-a2b51059dc17" bpmnElement="sid-6c151ee6-0461-41ea-adcf-3c74e2d981b2">
+        <omgdi:waypoint x="30.0" y="-10.0"/>
+        <omgdi:waypoint x="120.0" y="-10.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
