@@ -7,7 +7,7 @@
 
   <h2>Hello <span th:text="${recipientName}"></span></h2>
 
-  <p>This i <b>HTML</b> version of e-mail.</p>
+  <p>This is <b>HTML</b> version of e-mail.</p>
 
 
 
@@ -15,7 +15,13 @@
     If using Thymeleaf for e-mail template processing I'll almost always want to embed some
     debug information, not visible for the user. HTML Comments seem to be the right place.
 
-    Hidden integer: [[${processInstanceId}]]
+    Common case may be including original recipients when - for development purposes they are overridden
+    on local environment right before sending.
+
+    hidden_integer: [[${processInstanceId}]]
+    original_to: [[${originalTo}]]
+    original_cc : [[${originalCc}]]
+    original_bcc : [[${originalBcc}]]
   -->
 
 </body>

@@ -1,5 +1,6 @@
 package org.defendev.email.demo;
 
+import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,6 +16,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -22,8 +24,9 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.defendev.email.demo.Credentials.GMAIL_FROM;
 import static org.defendev.email.demo.Credentials.GMAIL_PASSWORD;
-import static org.defendev.email.demo.Credentials.GMAIL_TO;
 import static org.defendev.email.demo.Credentials.GMAIL_USERNAME;
+import static org.defendev.email.demo.Credentials.RECIPIENT_1;
+import static org.defendev.email.demo.Credentials.RECIPIENT_2;
 
 
 
@@ -85,21 +88,38 @@ public class ThymeleafMailTemplateTest {
         final MimeMessage mimeMessage = mailSender.createMimeMessage();
         final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
         helper.setFrom(GMAIL_FROM, "Jan Kowalski");
-        helper.setTo(GMAIL_TO);
-        helper.setSubject("This was sent programmatically form JUnit @Test using Thymeleaf");
+        final List<String> toRecipients = List.of("serious.person1@corpoxyz.com", "serious.person2@corpoxyz.com");
+        final List<String> ccRecipients = List.of(RECIPIENT_1);
+        final List<String> bccRecipients = List.of();
+        helper.setTo(toRecipients.toArray(new String[0]));
+        helper.setCc(ccRecipients.toArray(new String[0]));
+        helper.setBcc(bccRecipients.toArray(new String[0]));
+        helper.setSubject("Programmatically form JUnit @Test using Thymeleaf");
 
         final ITemplateEngine templateEngine = templateEngine();
 
         final Context thymeleafContext = new Context();
         thymeleafContext.setVariable("recipientName", "Giuseppe");
         thymeleafContext.setVariable("processInstanceId", "2002002");
+        thymeleafContext.setVariable("originalTo", toRecipients.toString());
+        thymeleafContext.setVariable("originalCc", ccRecipients.toString());
+        thymeleafContext.setVariable("originalBcc", bccRecipients.toString());
 
         final String plainText = templateEngine.process("itWorks.th.txt", thymeleafContext);
         final String htmlText = templateEngine.process("itWorks.th.html", thymeleafContext);
 
         helper.setText(plainText, htmlText);
 
-         mailSender.send(mimeMessage);
+        /*
+         * If needed e.g. on local development environment, it's possible to override properties of MimeMessage
+         * on late stage.
+         */
+        mimeMessage.setSubject("[non-prod] " + mimeMessage.getSubject());
+        mimeMessage.setRecipients(Message.RecipientType.TO, RECIPIENT_2);
+        mimeMessage.setRecipients(Message.RecipientType.CC, "");
+        mimeMessage.setRecipients(Message.RecipientType.BCC, "");
+
+        mailSender.send(mimeMessage);
     }
 
 }
