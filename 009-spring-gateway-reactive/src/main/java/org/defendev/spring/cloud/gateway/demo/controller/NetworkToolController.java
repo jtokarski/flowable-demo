@@ -76,7 +76,7 @@ public class NetworkToolController {
     }
 
     @RequestMapping(path = "slow-consumer")
-    public Mono<ResponseEntity<SlowConsumerDto >> simulateSlowConsumer(
+    public Mono<ResponseEntity<SlowConsumerDto>> simulateSlowConsumer(
         @RequestParam int delayStartHandshake,
         @RequestParam int delayWriteRequest,
         @RequestParam int delayByteRead

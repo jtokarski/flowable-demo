@@ -16,7 +16,7 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.defendev.email.demo.Credentials.GMAIL_FROM;
 import static org.defendev.email.demo.Credentials.GMAIL_PASSWORD;
-import static org.defendev.email.demo.Credentials.GMAIL_TO;
+import static org.defendev.email.demo.Credentials.RECIPIENT_1;
 import static org.defendev.email.demo.Credentials.GMAIL_USERNAME;
 
 
@@ -52,7 +52,7 @@ public class SmtpSendEmailTest {
 
         final SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(GMAIL_FROM);
-        message.setTo(GMAIL_TO);
+        message.setTo(RECIPIENT_1);
         message.setSubject("e-mail SSL-465 at " + now());
         message.setText("This was sent programmatically form JUnit @Test through SMPT with SSL 465");
 
@@ -81,7 +81,7 @@ public class SmtpSendEmailTest {
 
         final SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(GMAIL_FROM);
-        message.setTo(GMAIL_TO);
+        message.setTo(RECIPIENT_1);
         message.setSubject("e-mail STARTTLS-587 at " + now());
         message.setText("This was sent programmatically form JUnit @Test through SMPT with STARTTLS 587");
 
@@ -112,7 +112,7 @@ public class SmtpSendEmailTest {
 
         final SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(GMAIL_FROM);
-        message.setTo(GMAIL_TO);
+        message.setTo(RECIPIENT_1);
         message.setSubject("e-mail SSL-465 Custom-Socket-Factory at " + now());
         message.setText("This was sent programmatically form JUnit @Test through SMPT with SSL 465");
 

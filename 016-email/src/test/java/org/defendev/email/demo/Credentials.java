@@ -18,6 +18,8 @@ public class Credentials {
 
     public static final String GMAIL_FROM = "aaaaa.aaaaaaaa@gmail.com";
 
-    public static final String GMAIL_TO = "qq.aaaaaaaa@zzzz.pl";
+    public static final String RECIPIENT_1 = "qq.aaaaaaaa@zzzz.pl";
+
+    public static final String RECIPIENT_2 = "dd.cccccccc@vvvv.pl";
 
 }
