@@ -4,7 +4,7 @@
     <Appenders>
         <Appender type="Console" name="STDOUT-APP">
             <!-- https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLocation -->
-            <Layout type="PatternLayout" pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level{length=5} : %notEmpty{[%markerSimpleName]} %message%n%throwable" />
+            <Layout type="PatternLayout" pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level{length=5} %48.48logger{1.} : %notEmpty{[%markerSimpleName]} %message%n%throwable" />
         </Appender>
     </Appenders>
 
@@ -18,6 +18,10 @@
         </Logger>
 
         <Logger name="org.springframework.security" level="info" additivity="false">
+            <AppenderRef ref="STDOUT-APP" />
+        </Logger>
+
+        <Logger name="org.defendev.spring.cloud.gateway.demo.config.oed" level="debug" additivity="false">
             <AppenderRef ref="STDOUT-APP" />
         </Logger>
     </Loggers>

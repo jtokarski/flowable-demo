@@ -22,7 +22,7 @@ public class DefendevReactiveGatewayApp {
     public static void main(String[] args) {
         new SpringApplicationBuilder(DefendevReactiveGatewayApp.class)
             .web(WebApplicationType.REACTIVE)
-            .profiles(new String[] {})
+            .profiles(new String[] {"oauth2Debug"})
             .properties(Map.of())
             .run(args);
     }
