@@ -29,6 +29,9 @@ import reactor.netty.transport.logging.AdvancedByteBufFormat;
  * Why logger categories are like Oed_OAuth2AuthorizationCode, Oed_OAuth2RefreshToken, ... ?
  * So that, class name abbreviation doesn't eat any part and they are text-searchable.
  *
+ * See:
+ *   https://docs.spring.io/spring-security/reference/reactive/oauth2/index.html#oauth2-client-customize-web-client
+ *
  */
 @Profile("oauth2Debug")
 @Configuration
