@@ -1,0 +1,23 @@
+
+server:
+  servlet:
+    context-path: "/multipoc"
+  port: 8014
+  max-http-request-header-size: 8KB
+
+management:
+  endpoints:
+    web:
+      base-path: "/actuator"
+      exposure:
+        include: health, info
+    access:
+      default: "none"
+  endpoint:
+    health:
+      access: "read-only"
+      show-details: "always"
+      show-components: "always"
+    info:
+      access: "read-only"
+
