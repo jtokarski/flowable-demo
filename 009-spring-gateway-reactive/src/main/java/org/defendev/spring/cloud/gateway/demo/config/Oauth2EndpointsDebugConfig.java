@@ -31,6 +31,8 @@ import reactor.netty.transport.logging.AdvancedByteBufFormat;
  *
  * See:
  *   https://docs.spring.io/spring-security/reference/reactive/oauth2/index.html#oauth2-client-customize-web-client
+ * See also:
+ *   https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway-server-webflux/troubleshooting.html
  *
  */
 @Profile("oauth2Debug")
