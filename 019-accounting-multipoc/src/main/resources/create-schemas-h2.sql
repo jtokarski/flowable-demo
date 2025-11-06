@@ -1,0 +1,4 @@
+
+CREATE SCHEMA IF NOT EXISTS "amp_bpm";
+
+CREATE SCHEMA IF NOT EXISTS "amp_core";

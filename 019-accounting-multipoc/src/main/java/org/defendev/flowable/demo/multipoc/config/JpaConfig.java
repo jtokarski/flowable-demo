@@ -11,6 +11,8 @@ import org.hibernate.envers.strategy.internal.ValidityAuditStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.SharedEntityManagerCreator;
@@ -26,6 +28,7 @@ import static org.hibernate.cfg.JdbcSettings.DIALECT;
 import static org.hibernate.cfg.JdbcSettings.FORMAT_SQL;
 import static org.hibernate.cfg.JdbcSettings.SHOW_SQL;
 import static org.hibernate.cfg.JdbcSettings.USE_SQL_COMMENTS;
+import static org.hibernate.cfg.MappingSettings.GLOBALLY_QUOTED_IDENTIFIERS;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_CREATE_SCHEMAS;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_CREATE_SOURCE;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_DATABASE_ACTION;
@@ -54,6 +57,9 @@ public class JpaConfig {
         h2.setURL("jdbc:h2:mem:multipoc;DB_CLOSE_DELAY=-1");
         h2.setUser("sa");
         h2.setPassword("sa");
+        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScript(new ClassPathResource("create-schemas-h2.sql"));
+        populator.execute(h2);
         return h2;
     }
 
@@ -80,7 +86,8 @@ public class JpaConfig {
 
         final Properties jpaProperties = new Properties();
         jpaProperties.put(DIALECT, "org.hibernate.dialect.H2Dialect");
-        jpaProperties.put(JAKARTA_HBM2DDL_CREATE_SCHEMAS, Boolean.TRUE);
+        jpaProperties.put(GLOBALLY_QUOTED_IDENTIFIERS, Boolean.TRUE);
+        jpaProperties.put(JAKARTA_HBM2DDL_CREATE_SCHEMAS, Boolean.FALSE);
         jpaProperties.put(JAKARTA_HBM2DDL_CREATE_SOURCE, METADATA);
         jpaProperties.put(JAKARTA_HBM2DDL_DATABASE_ACTION, CREATE_ONLY);
 
