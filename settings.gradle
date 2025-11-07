@@ -6,6 +6,14 @@
  */
 import org.gradle.api.initialization.resolve.RepositoriesMode
 
+pluginManagement {
+    repositories {
+        // specifically for 020-jooq-codegen
+        mavenLocal()
+        gradlePluginPortal()
+    }
+}
+
 dependencyResolutionManagement {
 
     repositories {
@@ -145,3 +153,6 @@ project(':018-mock-email-server').name = 'mock-email-server';
 
 include '019-accounting-multipoc'
 project(':019-accounting-multipoc').name = 'accounting-multipoc';
+
+include '020-jooq-codegen'
+project(':020-jooq-codegen').name = 'jooq-codegen';

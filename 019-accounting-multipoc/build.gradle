@@ -3,6 +3,12 @@ plugins {
     id 'java'
     alias libs.plugins.springDependencyManagementPlugin
     alias libs.plugins.springBootPlugin
+    //
+    // Uncomment once you execute
+    //   ./gradlew :jooq-codegen:publishToMavenLocal
+    //
+    // id 'org.defendev.demo.multipoc-jooq-codegen-plugin' version '0.0.1'
+    // id 'org.defendev.demo.greeting-plugin' version '0.0.1'
 }
 
 group = 'org.defendev.demo'

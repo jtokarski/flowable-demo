@@ -6,9 +6,13 @@ Works fine with Gradle and Maven.
 ----
 src/main/java/.keep
 
+src/main/groovy/.keep
+
 src/main/resources/.keep
 
 src/test/java/.keep
+
+src/test/groovy/.keep
 
 src/test/resources/.keep
 

@@ -1,0 +1,42 @@
+
+plugins {
+    id 'groovy-gradle-plugin'
+    id 'maven-publish'
+}
+
+group = 'org.defendev.demo'
+
+dependencies {
+    implementation libs.jooqCore
+    implementation libs.jooqMeta
+    implementation libs.jooqCodegen
+}
+
+gradlePlugin {
+    plugins {
+        multipocJooqCodegen {
+            /*
+             *
+             * --- Why the id looks like this? ---
+             * There are two artifacts published by this project:
+             *   - Jar with the classfiles
+             *   - Plugin Marker Artifact (a.k.a. Plugin Marker Module)
+             * It would be the best if both are in the same directory or Maven repository. Therefore,
+             * my plugin 'id' corresponds with project's  'group'
+             *
+             */
+            id = 'org.defendev.demo.multipoc-jooq-codegen-plugin'
+            implementationClass = 'org.defendev.jooq.demo.codegen.MultipocJooqCodegenPlugin'
+        }
+        greeting {
+            id = 'org.defendev.demo.greeting-plugin'
+            implementationClass = 'org.defendev.jooq.demo.codegen.GreetingPlugin'
+        }
+    }
+}
+
+publishing {
+    repositories {
+        mavenLocal()
+    }
+}
