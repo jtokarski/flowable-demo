@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
   <process id="madeup-financial-transaction-posting-process" name="Madeup Financial Transaction Posting Process" isExecutable="true">
-    <startEvent id="sid-dda1c42f-bd2e-4e25-9d7e-e6c8a1b76ad4"/>
+    <startEvent id="muftp-process-initialized-event">
+        <extensionElements>
+            <flowable:executionListener delegateExpression="${muftp_CreateProcessDataContainerDelegate}" event="end"/>
+        </extensionElements>
+    </startEvent>
     <userTask id="bookkeeper-draft-transaction-task" name="Bookkeeper draft Transaction"/>
     <endEvent id="sid-9d4a3bc4-f395-4fd3-9026-a6be860cf70f"/>
-    <sequenceFlow id="sid-744b1bf5-e618-4992-80d9-a83ec143a6cd" sourceRef="sid-dda1c42f-bd2e-4e25-9d7e-e6c8a1b76ad4" targetRef="bookkeeper-draft-transaction-task"/>
+    <sequenceFlow id="sid-744b1bf5-e618-4992-80d9-a83ec143a6cd" sourceRef="muftp-process-initialized-event" targetRef="bookkeeper-draft-transaction-task"/>
     <sequenceFlow id="sid-25db305f-90ae-4370-9acf-86318cc6d9ee" sourceRef="bookkeeper-draft-transaction-task" targetRef="sid-9d4a3bc4-f395-4fd3-9026-a6be860cf70f"/>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_madeup-financial-transaction-posting-process">
     <bpmndi:BPMNPlane bpmnElement="madeup-financial-transaction-posting-process" id="BPMNPlane_madeup-financial-transaction-posting-process">
-      <bpmndi:BPMNShape id="shape-26dbb81a-425e-42f9-b411-b6619c44e240" bpmnElement="sid-dda1c42f-bd2e-4e25-9d7e-e6c8a1b76ad4">
+      <bpmndi:BPMNShape id="shape-26dbb81a-425e-42f9-b411-b6619c44e240" bpmnElement="muftp-process-initialized-event">
         <omgdc:Bounds x="-160.0" y="-10.0" width="30.0" height="30.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="shape-bd962e0b-694c-46b4-b296-823fd5407f70" bpmnElement="bookkeeper-draft-transaction-task">
