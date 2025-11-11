@@ -31,10 +31,19 @@ public class EmergencyActionController {
         if (queryResult.isSuccess()) {
             return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new MuftpProcessInsightDto());
+                .body(queryResult.getData());
         } else {
             throw new IllegalArgumentException(""); // todo: proper advice, proper errorDto!
         }
     }
+
+    /*
+     * todo: endpoint returning BPMN XML file for process definition key (the current one in use)
+     *
+     *
+     *
+     *
+     *
+     */
 
 }

@@ -20,6 +20,16 @@
             <AppenderRef ref="STDOUT-APP" />
         </Logger>
 
+        <!-- SQL execution logging is logged to the LoggerListener logger at DEBUG level -->
+        <Logger name="org.jooq.tools.LoggerListener" level="debug">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <!-- Other jOOQ related debug log output -->
+        <Logger name="org.jooq" level="warn">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+
     </Loggers>
 
 </Configuration>

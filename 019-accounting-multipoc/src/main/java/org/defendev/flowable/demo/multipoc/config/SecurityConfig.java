@@ -34,6 +34,7 @@ public class SecurityConfig {
             .securityMatcher(PathPatternRequestMatcher.withDefaults().matcher("/**"))
             .authorizeHttpRequests(customizer -> customizer
                 .requestMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/exempli-gratia/simple-jooq-query").permitAll()
                 .anyRequest().authenticated()
             )
             .csrf(AbstractHttpConfigurer::disable)

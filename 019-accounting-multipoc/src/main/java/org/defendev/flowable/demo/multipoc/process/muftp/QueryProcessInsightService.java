@@ -10,6 +10,7 @@ import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 
@@ -26,6 +27,7 @@ public class QueryProcessInsightService {
         historyService = processEngine.getHistoryService();
     }
 
+    @Transactional
     public QueryResult<MuftpProcessInsightDto> execute(MuftpProcessInsightQuery query) {
 
         final MuftpProcess muftpProcess = (MuftpProcess) runtimeService.createVariableInstanceQuery()

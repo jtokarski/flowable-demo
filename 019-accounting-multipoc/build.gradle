@@ -37,6 +37,7 @@ dependencies {
     implementation libs.defendevCommonJdk
     implementation group: 'org.flowable', name: 'flowable-engine'
     implementation group: 'org.flowable', name: 'flowable-spring'
+    implementation libs.jooqCore
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
     modules {

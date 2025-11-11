@@ -53,6 +53,7 @@ dependencyResolutionManagement {
             version('defendevCommonJdkVersion', '0.0.12')
             version('auth0JavaJwtVersion', '4.5.0')
             version('greenmailVersion', '2.1.7')
+            version('jooqVersion', '3.20.8')
 
             /*
              * Note that 'org.springframework.boot:spring-boot-dependencies:3.5.0' does include
@@ -76,6 +77,9 @@ dependencyResolutionManagement {
             library('auth0JavaJwt', 'com.auth0', 'java-jwt').versionRef('auth0JavaJwtVersion')
             library('greenmail', 'com.icegreen', 'greenmail').versionRef('greenmailVersion')
             library('defendevCommonJdk', 'org.defendev', 'common-jdk').versionRef('defendevCommonJdkVersion')
+            library('jooqCore', 'org.jooq', 'jooq').versionRef('jooqVersion')
+            library('jooqMeta', 'org.jooq', 'jooq-meta').versionRef('jooqVersion')
+            library('jooqCodegen', 'org.jooq', 'jooq-codegen').versionRef('jooqVersion')
 
             /*
              * The Maven Central coordinates of 'io.spring.dependency-management' are:
