@@ -13,4 +13,11 @@ Expand with: *Tab*
 ----
 import static java.lang.String.format;
 import static java.util.Objects.nonNull;
+import static java.util.Objects.isNull;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 ----
