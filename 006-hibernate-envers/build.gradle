@@ -24,9 +24,9 @@ application {
 }
 
 dependencies {
-    implementation group: 'org.springframework', name: 'spring-context'
-    implementation group: 'org.springframework', name: 'spring-tx'
-    implementation group: 'org.springframework', name: 'spring-orm'
+    implementation 'org.springframework:spring-context'
+    implementation 'org.springframework:spring-tx'
+    implementation 'org.springframework:spring-orm'
     implementation 'org.hibernate.orm:hibernate-core:7.0.0.Final'
     implementation 'org.hibernate.orm:hibernate-envers:7.0.0.Final'
     implementation libs.h2database
@@ -34,10 +34,10 @@ dependencies {
     implementation libs.log4j2Core
     implementation libs.log4j2Slf4j2Impl
     implementation libs.defendevCommonJdk
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation libs.assertj
-    testImplementation group: 'org.springframework', name: 'spring-test'
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+    testImplementation 'org.springframework:spring-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test', org.gradle.api.tasks.testing.Test) {

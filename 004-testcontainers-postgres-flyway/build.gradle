@@ -24,16 +24,16 @@ dependencies {
     implementation libs.hikariCp
     implementation libs.flywaydb
     implementation libs.flywaydbPostgres
-    implementation group: 'org.springframework', name: 'spring-context'
-    implementation group: 'org.springframework', name: 'spring-jdbc'
-    implementation group: 'org.springframework', name: 'spring-tx'
-    implementation group: 'org.springframework', name: 'spring-test'
-    implementation group: 'org.flowable', name: 'flowable-engine'
-    implementation group: 'org.flowable', name: 'flowable-spring'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+    implementation 'org.springframework:spring-context'
+    implementation 'org.springframework:spring-jdbc'
+    implementation 'org.springframework:spring-tx'
+    implementation 'org.flowable:flowable-engine'
+    implementation 'org.flowable:flowable-spring'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation libs.assertj
-    testImplementation group: 'org.testcontainers', name: 'testcontainers'
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+    testImplementation 'org.testcontainers:testcontainers'
+    testImplementation 'org.springframework:spring-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test', org.gradle.api.tasks.testing.Test) {

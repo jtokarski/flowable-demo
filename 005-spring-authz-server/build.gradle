@@ -8,25 +8,25 @@ plugins {
 group = 'org.defendev.demo'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 dependencies {
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     /*
      * Note, that I'm not including the OAuth2 Client library:
      *   group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client'
      */
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-authorization-server'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
-    implementation group: 'org.assertj', name: 'assertj-core'
-    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring6'
-    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity6'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'org.assertj:assertj-core'
+    implementation 'org.thymeleaf:thymeleaf-spring6'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation libs.apacheCommonsLang3
-    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     modules {
         /* See:
          *   https://docs.spring.io/spring-boot/how-to/logging.html#howto.logging.log4j

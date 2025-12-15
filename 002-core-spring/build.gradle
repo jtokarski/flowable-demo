@@ -7,8 +7,8 @@ plugins {
 group = 'org.defendev.demo'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 dependencyManagement {
@@ -24,21 +24,21 @@ application {
 }
 
 dependencies {
-    implementation group: 'org.springframework', name: 'spring-context'
-    implementation group: 'org.springframework', name: 'spring-jdbc'
-    implementation group: 'org.springframework', name: 'spring-tx'
-    implementation group: 'org.flowable', name: 'flowable-engine'
-    implementation group: 'org.flowable', name: 'flowable-spring'
-    implementation group: 'org.flowable', name: 'flowable-dmn-spring'
-    implementation group: 'org.flowable', name: 'flowable-dmn-spring-configurator'
+    implementation 'org.springframework:spring-context'
+    implementation 'org.springframework:spring-jdbc'
+    implementation 'org.springframework:spring-tx'
+    implementation 'org.flowable:flowable-engine'
+    implementation 'org.flowable:flowable-spring'
+    implementation 'org.flowable:flowable-dmn-spring'
+    implementation 'org.flowable:flowable-dmn-spring-configurator'
     implementation libs.h2database
     implementation libs.assertj
     implementation libs.log4j2Api
     implementation libs.log4j2Core
     implementation libs.log4j2Slf4j2Impl
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
-    testImplementation group: 'org.springframework', name: 'spring-test'
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.springframework:spring-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test', org.gradle.api.tasks.testing.Test) {

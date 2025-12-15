@@ -7,8 +7,8 @@ plugins {
 group = 'org.defendev.demo'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 dependencyManagement {
@@ -22,8 +22,8 @@ dependencies {
     /*
      * The below is sufficient to sent e-mails through SMTP (tested with Gmail)
      */
-    implementation group: 'org.springframework', name: 'spring-context-support'
-    implementation group: 'org.eclipse.angus', name: 'jakarta.mail'
+    implementation 'org.springframework:spring-context-support'
+    implementation 'org.eclipse.angus:jakarta.mail'
 
     /*
      * The below to provide "lax" SSLSocketFactory and also some time utils.
@@ -37,7 +37,7 @@ dependencies {
      * not excluding 'ognl:ognl'
      *
      */
-    implementation group: 'org.thymeleaf', name: 'thymeleaf'
+    implementation 'org.thymeleaf:thymeleaf'
 
     /*
      * Below is GreenMail - a Java-based mock e-mail server.
@@ -46,9 +46,9 @@ dependencies {
      */
     testImplementation libs.greenmail
 
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation libs.assertj
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test', org.gradle.api.tasks.testing.Test) {

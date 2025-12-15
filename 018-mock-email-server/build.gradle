@@ -8,19 +8,19 @@ plugins {
 group = 'org.defendev.demo'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 dependencies {
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
-    implementation group: 'org.assertj', name: 'assertj-core'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'org.assertj:assertj-core'
     implementation libs.apacheCommonsLang3
     implementation libs.greenmail
-    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     modules {
         /* See:
          *   https://docs.spring.io/spring-boot/how-to/logging.html#howto.logging.log4j

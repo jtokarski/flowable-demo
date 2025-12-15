@@ -22,14 +22,14 @@ run {
 }
 
 dependencies {
-    implementation group: 'org.flowable', name: 'flowable-engine', version: '7.1.0'
-    implementation group: 'com.h2database', name: 'h2', version: '2.3.232'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.24.3'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.24.3'
-    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j2-impl', version: '2.24.3'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+    implementation 'org.flowable:flowable-engine:7.1.0'
+    implementation 'com.h2database:h2:2.3.232'
+    implementation 'org.apache.logging.log4j:log4j-api:2.24.3'
+    implementation 'org.apache.logging.log4j:log4j-core:2.24.3'
+    implementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.24.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation libs.assertj
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test', org.gradle.api.tasks.testing.Test) {

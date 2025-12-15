@@ -17,9 +17,9 @@ dependencies {
     implementation libs.log4j2Core
     implementation libs.log4j2Slf4j2Impl
     implementation libs.apacheCommonsLang3
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation libs.assertj
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test', org.gradle.api.tasks.testing.Test) {

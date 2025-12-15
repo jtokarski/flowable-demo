@@ -25,21 +25,21 @@ dependencyManagement {
 }
 
 dependencies {
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-resource-server'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.hibernate.orm:hibernate-envers'
-    implementation group: 'org.assertj', name: 'assertj-core'
+    implementation 'org.assertj:assertj-core'
     implementation libs.h2database
     implementation libs.apacheCommonsLang3
     implementation libs.defendevCommonJdk
-    implementation group: 'org.flowable', name: 'flowable-engine'
-    implementation group: 'org.flowable', name: 'flowable-spring'
+    implementation 'org.flowable:flowable-engine'
+    implementation 'org.flowable:flowable-spring'
     implementation libs.jooqCore
-    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     modules {
         /* See:
          *   https://docs.spring.io/spring-boot/how-to/logging.html#howto.logging.log4j

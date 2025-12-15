@@ -7,8 +7,8 @@ plugins {
 group = 'org.defendev.demo'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 dependencyManagement {
@@ -21,11 +21,11 @@ dependencies {
     implementation libs.log4j2Api
     implementation libs.log4j2Core
     implementation libs.log4j2Slf4j2Impl
-    implementation group: 'com.azure', name: 'azure-identity', version: '1.16.3'
-    implementation group: 'com.microsoft.graph', name: 'microsoft-graph', version: '6.47.0'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter'
+    implementation 'com.azure:azure-identity:1.16.3'
+    implementation 'com.microsoft.graph:microsoft-graph:6.47.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation libs.assertj
-    testRuntimeOnly group: 'org.junit.platform', name: 'junit-platform-launcher'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test', org.gradle.api.tasks.testing.Test) {
