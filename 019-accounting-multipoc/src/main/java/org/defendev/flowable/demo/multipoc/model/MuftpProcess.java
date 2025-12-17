@@ -1,5 +1,6 @@
 package org.defendev.flowable.demo.multipoc.model;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,9 +11,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.EntityListeners;
 
 
 
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "MuftpProcess", schema = "amp_core")
 @Entity
 public class MuftpProcess {

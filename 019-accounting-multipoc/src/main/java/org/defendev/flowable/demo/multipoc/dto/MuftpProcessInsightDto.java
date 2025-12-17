@@ -1,7 +1,11 @@
 package org.defendev.flowable.demo.multipoc.dto;
 
+import java.time.ZonedDateTime;
+
 
 
 public record MuftpProcessInsightDto(
-    String financialTransactionId
+    ZonedDateTime processStartTime,
+    String financialTransactionId,
+    ZonedDateTime financialTransactionCreate
 ) { }

@@ -1,5 +1,6 @@
 package org.defendev.flowable.demo.multipoc.controller;
 
+import org.defendev.common.domain.exception.QueryFailedException;
 import org.defendev.common.domain.query.result.QueryResult;
 import org.defendev.flowable.demo.multipoc.dto.MuftpProcessInsightDto;
 import org.defendev.flowable.demo.multipoc.process.muftp.MuftpProcessFacade;
@@ -33,7 +34,7 @@ public class EmergencyActionController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(queryResult.getData());
         } else {
-            throw new IllegalArgumentException(""); // todo: proper advice, proper errorDto!
+            throw new QueryFailedException(queryResult);
         }
     }
 

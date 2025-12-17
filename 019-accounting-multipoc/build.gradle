@@ -14,8 +14,8 @@ plugins {
 group = 'org.defendev.demo'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 dependencyManagement {
@@ -35,6 +35,7 @@ dependencies {
     implementation libs.h2database
     implementation libs.apacheCommonsLang3
     implementation libs.defendevCommonJdk
+    implementation libs.defendevCommonSpring6Version
     implementation 'org.flowable:flowable-engine'
     implementation 'org.flowable:flowable-spring'
     implementation libs.jooqCore

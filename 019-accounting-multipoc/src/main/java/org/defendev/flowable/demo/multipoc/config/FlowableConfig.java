@@ -4,10 +4,12 @@ import jakarta.persistence.EntityManagerFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.flowable.common.engine.impl.history.HistoryLevel;
+import org.flowable.common.engine.impl.runtime.Clock;
 import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.ProcessEngineConfiguration;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.spring.SpringProcessEngineConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+
+import static java.util.Objects.nonNull;
 
 
 
@@ -29,7 +33,8 @@ public class FlowableConfig {
         ApplicationContext applicationContext,
         @Qualifier("dataSource") DataSource dataSource,
         @Qualifier("platformTransactionManager") PlatformTransactionManager platformTransactionManager,
-        @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory)
+        @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory,
+        @Autowired(required = false) Clock flowableClock)
     {
         final SpringProcessEngineConfiguration springConfig = new SpringProcessEngineConfiguration();
         springConfig.setEngineName("multipocProcEngine");
@@ -61,6 +66,10 @@ public class FlowableConfig {
          * BpmnDefinitionKey.TASK_VARIABLE_COMPLETION_TYPE
          */
         springConfig.setHistoryLevel(HistoryLevel.FULL);
+
+        if (nonNull(flowableClock)) {
+            springConfig.setClock(flowableClock);
+        }
 
         final ProcessEngineConfiguration config = springConfig;
         return config.buildProcessEngine();
