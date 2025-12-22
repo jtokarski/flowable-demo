@@ -31,7 +31,7 @@ public class SpringDataConfig {
      */
     @Bean
     public DateTimeProvider zuluDateTimeProvider(IClockManager clockManager) {
-        return () -> Optional.of(clockManager.nowLocalUtc());
+        return () -> Optional.of(clockManager.nowLocalZulu());
     }
 
 }

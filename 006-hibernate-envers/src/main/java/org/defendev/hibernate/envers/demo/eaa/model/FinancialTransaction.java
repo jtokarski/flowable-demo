@@ -10,11 +10,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.envers.Audited;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.defendev.common.lang3.FqcnPrefixToStringStyle.FQCN_PREFIX_STYLE;
 
 
 
@@ -110,5 +113,12 @@ public class FinancialTransaction {
 
     public void setLastMarkForAuditZulu(LocalDateTime lastMarkForAuditZulu) {
         this.lastMarkForAuditZulu = lastMarkForAuditZulu;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, FQCN_PREFIX_STYLE)
+            .append("id", id)
+            .toString();
     }
 }

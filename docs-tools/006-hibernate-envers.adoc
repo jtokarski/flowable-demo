@@ -27,15 +27,21 @@ is not the original purpose of Envers. This comes with some major consequences:
   They seem redundant because Envers already tracks the same information in `@RevisionEntity`
   and audit tables.
 
-
+*#edit 2025-12-20*: I admit that I've made this conclusion too soon. No, I shouldn't treat the audit tables
+as equally important as the main tables. I feels much more comfortable to treat the main tables
+as primary source of truth and the audit tables as merely a convenience. Besides the feeling, it's also
+because of my discoveries that Envers HBM2DDL generates less RDBMS constraints.
 
 === Thoughts on approach
 
 * write multiple persistence units with isolated configuration in this single Gradle subproject
 
-* I would like to risk to go without `@CreatedDate` / `@LastModifiedDate` fields on the `@Entity`
+* I would like to risk to go without `@CreatedDate`/`@LastModifiedDate` fields on the `@Entity`
   and personally experience potential consequences.
 
+*#edit 2025-12-20*: It's true that `@CreatedDate`/`@LastModifiedDate` fields is redundant if we have
+audit and revision tables. But still it feels much more natural to have them in the live entity,
+the primary source of truth that is accessible without audit readers.
 
 
 == Observed features
@@ -83,6 +89,9 @@ Whether we want to annotate **whole class** and audit all properties
 
 * the `@Id` property will always be included in audit table, even if not indicated.
 
+My preferred convention is to always put `@Audited` on entity property level, never on a class level.
+
+
 === Custom `@RevisionEntity` a.k.a Revision Log
 
 Justification:
@@ -93,7 +102,7 @@ Justification:
 * makes it possible to add `@Transient` getter for converting the `Long` unix epoch timestamp
   to `Instant` or `ZonedDateTime`
 
-* makes it possible to adjust table name and its column names
+* makes it possible to adjust *table name*, its *column names* and name of *containing schema*
 
 Implementation:
 
@@ -126,7 +135,7 @@ Implementation:
 * set the `EnversSettings.AUDIT_STRATEGY` to `ValidityAuditStrategy.class.getName()`.
 
 * adjust **end revision** field name - set `EnversSettings.AUDIT_STRATEGY_VALIDITY_END_REV_FIELD_NAME`
-  to `idOfEndVersioningRevision`.
+  to `idOfEndEnversRevision`.
 
 * note that the **end revision** field is exclusive indication, so it complies to Dijkstra
   range boundary representation - `[REV, REVEND)`
@@ -155,6 +164,19 @@ related collection changes - seems too tricky to think about it.
 Implemented as described in
 https://thorben-janssen.com/conditional-auditing-hibernate-envers/[Thorben Janssen - How to Implement Conditional Auditing with Hibernate Envers]
 
+*#edit 2025-12-20*: After some experimentation, the conclusion is that conditional auditing
+is leaky and risky concept. It brings too much uncertainty about the future accessibility of
+necessary audit data. In order to optimize the usage of persistent storage the following should
+be considered instead:
+
+* develop reliable scripts for accurate selection and deletion of irrelevant revisions
+  and audit table entries
+
+* develop reliable script for outdated data destruction
+
+* learn RDBMS-level table partitioning features
+
+
 === Audit table partitioning
 
 * Not sure if partitioning really requires both: __end revision__ and the __end revision timestamp__.
@@ -163,13 +185,15 @@ https://thorben-janssen.com/conditional-auditing-hibernate-envers/[Thorben Janss
 * Wondering - if __end revision__ is sufficient for **partitioning** it should probably also
   work good for **old data destruction**
 
+* In any case, the *Audit table partitioning* is not a feature built into Envers or Hibernate.
+  It's something you do on the RDBMS level manipulating per-table storage settings.
 
 
 == Reference of Envers fields
 
 === `@RevisionEntity` a.k.a Revision Log table __(mandatory)__
 
-* `@RevisionEntity` table name __(mandatory)__, default name **REVINFO**, modified by `@Table` annotation to **VersioningRevision**
+* `@RevisionEntity` table name __(mandatory)__, default name **REVINFO**, modified by `@Table` annotation to **EnversRevision**
 
 * `@RevisionNumber` property __(mandatory)__, default name **REV**, modified by `@Column` annotation
   to **id**
@@ -179,10 +203,10 @@ https://thorben-janssen.com/conditional-auditing-hibernate-envers/[Thorben Janss
 === `@ModifiedEntityNames` table __(optional)__
 
 * default table name **REVCHANGES**, modified by `@JoinTable(name = ...)` annotation
-  to **VersioningRevisionChanges**
+  to **EnversRevisionChanges**
 
 * foreign key to revision id - default column name **REV**, modified by
-  `@JoinTable(joinColumns = @JoinColumn(name = ...))` annotation to **idOfVersioningRevision**
+  `@JoinTable(joinColumns = @JoinColumn(name = ...))` annotation to **idOfEnversRevision**
 
 * changed entity name column - default name **ENTITYNAME**, modified by
   `@Column(name = ...)` to **entityName**
@@ -193,16 +217,40 @@ https://thorben-janssen.com/conditional-auditing-hibernate-envers/[Thorben Janss
   to **_Audit**
 
 * foreign key to revision id __(mandatory)__ - default column name **REV**, modified by
-  JPA property `EnversSettings.REVISION_FIELD_NAME` to **idOfVersioningRevision**
+  JPA property `EnversSettings.REVISION_FIELD_NAME` to **idOfEnversRevision**
 
 * revision type __(mandatory)__ - default column name **REVTYPE**, modified by
-  JPA property `EnversSettings.REVISION_TYPE_FIELD_NAME` to **versioningRevisionType**
+  JPA property `EnversSettings.REVISION_TYPE_FIELD_NAME` to **enversRevisionType**
 
 * foreign key to end revision id __(optional)__ - default column name **REVEND**, modified by
   JPA property `EnversSettings.AUDIT_STRATEGY_VALIDITY_END_REV_FIELD_NAME`
-  to **idOfEndVersioningRevision**
+  to **idOfEndEnversRevision**
 
 * modified flags  - default column suffix **_MOD**, modified by JPA property
   `EnversSettings.MODIFIED_FLAG_SUFFIX` to **_Modified**
+
+
+== For future research
+
+=== Nullable `REVTYPE`
+
+Envers HBM2DDL generates audit tables where the `REVTYPE` (`enversRevisionType`) doesn't have
+the NOT NULL constraint. I that even possible that audit table row has `NULL` in this column?
+Can I add NOT NULL myself and see if it would ever cause a problem?
+
+
+== Conclusions
+
+=== Foreign Keys trade-off
+
+When having entities related through foreign key constraints, in audit tables the foreign keys constraints
+are no longer there (not created by Envers HBM2DDL). Not sure why.
+Can I add those constraints myself and see if it would ever cause a problem?
+
+=== Schema evolution trade-off
+
+The evolution of schema can't be avoided. So, along with main tables, the audit tables
+will have to evolve as well. On the other hand, by principle, I should treat audit tables
+as unmodifiable. This conceptual conflict is unavoidable.
 
 

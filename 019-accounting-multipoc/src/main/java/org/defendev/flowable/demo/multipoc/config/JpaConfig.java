@@ -8,11 +8,13 @@ import org.h2.jdbcx.JdbcDataSource;
 import org.h2.tools.Server;
 import org.hibernate.envers.configuration.EnversSettings;
 import org.hibernate.envers.strategy.internal.ValidityAuditStrategy;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
+import org.springframework.orm.hibernate5.SpringBeanContainer;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.SharedEntityManagerCreator;
@@ -24,14 +26,19 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import static org.defendev.common.io.PathUtil.outputFilePath;
 import static org.hibernate.cfg.JdbcSettings.DIALECT;
 import static org.hibernate.cfg.JdbcSettings.FORMAT_SQL;
 import static org.hibernate.cfg.JdbcSettings.SHOW_SQL;
 import static org.hibernate.cfg.JdbcSettings.USE_SQL_COMMENTS;
+import static org.hibernate.cfg.ManagedBeanSettings.BEAN_CONTAINER;
 import static org.hibernate.cfg.MappingSettings.GLOBALLY_QUOTED_IDENTIFIERS;
+import static org.hibernate.cfg.SchemaToolingSettings.HBM2DDL_SCRIPTS_CREATE_APPEND;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_CREATE_SCHEMAS;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_CREATE_SOURCE;
 import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_DATABASE_ACTION;
+import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_SCRIPTS_ACTION;
+import static org.hibernate.cfg.SchemaToolingSettings.JAKARTA_HBM2DDL_SCRIPTS_CREATE_TARGET;
 import static org.hibernate.envers.boot.internal.EnversIntegrator.AUTO_REGISTER;
 import static org.hibernate.envers.configuration.EnversSettings.AUDIT_STRATEGY;
 import static org.hibernate.envers.configuration.EnversSettings.AUDIT_STRATEGY_VALIDITY_END_REV_FIELD_NAME;
@@ -76,7 +83,10 @@ public class JpaConfig {
     }
 
     @Bean
-    public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
+    public EntityManagerFactory entityManagerFactory(
+        DataSource dataSource,
+        ConfigurableListableBeanFactory configurableListableBeanFactory
+    ) {
         final LocalContainerEntityManagerFactoryBean emfFactoryBean = new LocalContainerEntityManagerFactoryBean();
         emfFactoryBean.setPersistenceUnitName("multipocPersistenceUnit");
         emfFactoryBean.setDataSource(dataSource);
@@ -91,20 +101,27 @@ public class JpaConfig {
         jpaProperties.put(JAKARTA_HBM2DDL_CREATE_SOURCE, METADATA);
         jpaProperties.put(JAKARTA_HBM2DDL_DATABASE_ACTION, CREATE_ONLY);
 
-        jpaProperties.put(REVISION_FIELD_NAME, "idOfVersioningRevision");
-        jpaProperties.put(REVISION_TYPE_FIELD_NAME, "versioningRevisionType");
+        /*
+         * Necessary to enable bean injection into o.d.f.d.m.c.envers.DefendevAccountingRevisionListener.
+         * Same as in org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaConfiguration
+         */
+        jpaProperties.put(BEAN_CONTAINER, new SpringBeanContainer(configurableListableBeanFactory));
+
+        jpaProperties.put(AUTO_REGISTER, Boolean.TRUE);
+        jpaProperties.put(REVISION_FIELD_NAME, "idOfEnversRevision");
+        jpaProperties.put(REVISION_TYPE_FIELD_NAME, "enversRevisionType");
         jpaProperties.put(MODIFIED_COLUMN_NAMING_STRATEGY, "improved");
         jpaProperties.put(AUDIT_TABLE_SUFFIX, "_Audit");
         jpaProperties.put(MODIFIED_FLAG_SUFFIX, "_Modified");
         jpaProperties.put(AUDIT_STRATEGY, ValidityAuditStrategy.class.getName());
-        jpaProperties.put(AUDIT_STRATEGY_VALIDITY_END_REV_FIELD_NAME, "idOfEndVersioningRevision");
-        jpaProperties.put(AUTO_REGISTER, Boolean.FALSE);
+        jpaProperties.put(AUDIT_STRATEGY_VALIDITY_END_REV_FIELD_NAME, "idOfEndEnversRevision");
 
-        /*
-         * todo: experiment and document
-         *
-         */
         jpaProperties.put(EnversSettings.STORE_DATA_AT_DELETE, Boolean.TRUE);
+
+        jpaProperties.put(JAKARTA_HBM2DDL_SCRIPTS_ACTION, CREATE_ONLY);
+        jpaProperties.put(JAKARTA_HBM2DDL_SCRIPTS_CREATE_TARGET, outputFilePath(
+            "C:/dev/flowable-demo/019-accounting-multipoc/multipoc-create-tables-h2.sql"));
+        jpaProperties.put(HBM2DDL_SCRIPTS_CREATE_APPEND, Boolean.FALSE);
 
         jpaProperties.put(SHOW_SQL, Boolean.FALSE);
         jpaProperties.put(FORMAT_SQL, Boolean.TRUE);

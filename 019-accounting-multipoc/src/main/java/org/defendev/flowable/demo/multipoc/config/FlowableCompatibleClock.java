@@ -15,12 +15,12 @@ import static org.defendev.flowable.demo.multipoc.config.DefendevAccountingProfi
 
 @Profile({timeTravel})
 @Component
-public class FlowableTimeTravelClock extends DefaultClockImpl implements Clock {
+public class FlowableCompatibleClock extends DefaultClockImpl implements Clock {
 
     private final IClockManager clockManager;
 
     @Autowired
-    public FlowableTimeTravelClock(IClockManager clockManager) {
+    public FlowableCompatibleClock(IClockManager clockManager) {
         this.clockManager = clockManager;
     }
 

@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.defendev.hibernate.H2Util;
 import org.h2.jdbcx.JdbcDataSource;
 import org.h2.tools.Server;
+import org.hibernate.envers.configuration.EnversSettings;
 import org.hibernate.envers.strategy.internal.ValidityAuditStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -91,10 +92,28 @@ public class EaaRuntimeJpaConfig {
         jpaProperties.put(MODIFIED_FLAG_SUFFIX, "_Modified");
         jpaProperties.put(AUDIT_STRATEGY, ValidityAuditStrategy.class.getName());
         jpaProperties.put(AUDIT_STRATEGY_VALIDITY_END_REV_FIELD_NAME, "idOfEndVersioningRevision");
+
+        /*
+         * When using custom Envers listeners to implement Conditional Auditing, this auto-register have
+         * to be disabled. Otherwise the application will fail to start shouting about duplicate listeners.
+         *
+         */
         jpaProperties.put(AUTO_REGISTER, Boolean.FALSE);
 
         /*
-         * The JdbcSettings.SHOW_SQL = true would cause Hibernate to log diractly to console, bypassing
+         *
+         *
+         *
+         * With Conditional Auditing (skipping of revisions) I ASSUME (although not empirically proven) that
+         * I rather need to store data at delete revision. This is because at the moment of delete we can be ahead
+         * of some skipped revisions and would better store the last state.
+         * Advantage of this is that I can have NOT NULL constraints on my audit tables.
+         *
+         */
+        jpaProperties.put(EnversSettings.STORE_DATA_AT_DELETE, Boolean.TRUE);
+
+        /*
+         * The JdbcSettings.SHOW_SQL = true would cause Hibernate to log directly to console, bypassing
          * the logging framework. It's better when replaced with org.hibernate.SQL logger set to 'debug'
          *
          */

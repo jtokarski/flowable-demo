@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.envers.Audited;
 
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static java.util.Objects.nonNull;
+import static org.defendev.common.lang3.FqcnPrefixToStringStyle.FQCN_PREFIX_STYLE;
 
 
 
@@ -106,5 +108,12 @@ public class GeneralLedgerPosting {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, FQCN_PREFIX_STYLE)
+            .append("id", id)
+            .toString();
     }
 }

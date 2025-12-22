@@ -5,26 +5,20 @@ import org.defendev.common.time.ClockManager;
 import org.defendev.common.time.IClockManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-
-import static org.defendev.flowable.demo.multipoc.config.DefendevAccountingProfile.timeTravel;
 
 
 
 @Configuration
 public class ClockConfig {
 
-    @Profile({"!" + timeTravel})
     @Bean
-    public IClockManager systemClockManager() {
-        return ClockManager.system();
-    }
-
-    @Profile({timeTravel})
-    @Bean
-    public IClockManager timeTravelClockManager() {
-        final WebTimeTravelClock timeTravelClock = new WebTimeTravelClock(true);
-        return new ClockManager(timeTravelClock);
+    public IClockManager clockManager(ProfileFlags profileFlags) {
+        if (profileFlags.timeTravel()) {
+            final WebTimeTravelClock timeTravelClock = new WebTimeTravelClock(true);
+            return new ClockManager(timeTravelClock);
+        } else {
+            return ClockManager.system();
+        }
     }
 
 }
