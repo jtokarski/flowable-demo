@@ -1,0 +1,15 @@
+services:
+  elasticsearch1:
+    image: "elasticsearch:9.2.3"
+    build:
+      context: "../"
+      dockerfile: "./docker-infra/services/run-tomcat-web/Dockerfile"
+    container_name: "fd021.elasticsearch1"
+    networks:
+      - "elastic-bridge-net"
+    ports:
+      - "0.0.0.0:9200:9200/tcp"
+networks:
+  elastic-bridge-net:
+    driver: "bridge"
+    name: "elastic-net"

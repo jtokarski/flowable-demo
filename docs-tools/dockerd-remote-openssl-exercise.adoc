@@ -1,0 +1,152 @@
+
+== Configuring Docker Daemon for remote usage
+
+=== Generating CA - key and certificate
+
+[source,bash]
+----
+#  private key:
+#  (provided passphrase - test123)
+openssl genrsa -aes256 -out ca-key.pem 4096
+
+#  public key:
+#  (no need for specific Host when asked - can be example.com)
+openssl req -new -x509 -days 365 -key ca-key.pem -sha256 -out ca-pub.pem
+----
+
+=== Generating for Server side
+
+[source,bash]
+----
+#  private key:
+openssl genrsa -out server-key.pem 4096
+
+#  the CSR:
+openssl req -subj "/CN=fedo40" -sha256 -new -key server-key.pem -out server-csr.csr
+
+#  create server-extfile.conf
+subjectAltName = DNS:fedo40, IP:192.168.32.3, IP:127.0.0.1
+extendedKeyUsage = serverAuth
+
+#  sign the server certificate:
+openssl x509 -req -days 365 -sha256 \
+  -in server-csr.csr                \
+  -CA ca-pub.pem                    \
+  -CAkey ca-key.pem                 \
+  -CAcreateserial                   \
+  -extfile server-extfile.conf      \
+  -out server-cert.pem
+----
+
+=== Generating for Client side
+
+[source,bash]
+----
+#  private key:
+openssl genrsa -out client-key.pem 4096
+
+#  the CSR:
+openssl req -subj '/CN=client' -new -key client-key.pem -out client-csr.csr
+
+#  create client-extfile.conf
+extendedKeyUsage = clientAuth
+
+# sign the client certificate
+openssl x509 -req -days 365 -sha256 \
+  -in client-csr.csr                \
+  -CA ca-pub.pem                    \
+  -CAkey ca-key.pem                 \
+  -CAcreateserial                   \
+  -out client-cert.pem              \
+  -extfile client-extfile.conf
+----
+
+=== Cleanup files not needed anymore
+
+[source,bash]
+----
+rm --verbose client-csr.csr server-csr.csr client-extfile.conf server-extfile.conf
+----
+
+=== Secure key files with `chmod`
+
+(skipping this)
+
+=== Adjust Docker systemd unit file
+
+
+
+[source,bash]
+----
+
+#  copy genrated keys and certificates:
+cp -R dockerd-tls/ /opt/
+
+#  rename daemon.json to avoid collision:
+sudo mv /etc/docker/daemon.json /etc/docker/daemon.jsonZZZ
+
+
+# edit systemd unit file:
+sudo systemctl edit docker.service
+
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd                    \
+  --tlsverify                                 \
+  --tlscacert=/opt/dockerd-tls/ca-pub.pem     \
+  --tlscert=/opt/dockerd-tls/server-cert.pem  \
+  --tlskey=/opt/dockerd-tls/server-key.pem    \
+  --host fd://                                \
+  --host tcp://0.0.0.0:2376
+
+sudo systemctl daemon-reload
+
+sudo systemctl restart docker.service
+----
+
+=== Client configuration on Windows
+
+1. Download `docker.exe` binary from https://download.docker.com/win/static/stable/x86_64/ +
+  Move to +
+  `C:/java_installs/docker/docker.exe`
+
+2. Download `docker-compose-windows-x86_64.exe` binary from +
+  https://github.com/docker/compose/releases +
+  Important: *rename* and move to +
+  `C:/java_installs/docker/cli-plugins/docker-compose.exe`
+
+3. Add `C:/java_installs/docker` to system PATH
+
+=== Configure in IntelliJ IDEA
+
+1. Certificates must have *exact file names*: +
+  `C:/java_installs/dockerd-tls/ca.pem` +
+  `C:/java_installs/dockerd-tls/cert.pem` +
+  `C:/java_installs/dockerd-tls/key.pem`
+
+2. Define Docker server for use in Run Configurations
+
+image::images/intellij-docker-server.png[]
+
+=== Summary `openssl` commands
+
+* `openssl genrsa` - generating *private keys*. If `-aes256` option is given, the
+  key will be encrypted and secured with a passphrase (AES-256 is a symmetric
+  encryption algorithm).
+
+* `openssl req` - generating *public keys* or *CSRs*
+
+* `openssl x509` - ceating signed certificates. It's interesting that the
+  CSRs (server and client) doesn't contain the full set of information
+  that will go into the signed certificate. Only some of them are in CSR,
+  the rest is provided to `openssl x509` command when signing
+  (the `-extfile` option)
+
+=== sources
+
+* followed https://docs.docker.com/engine/security/protect-access/[this] manual
+
+* https://docs.docker.com/reference/cli/dockerd/[dockerd options]
+
+* https://serverfault.com/questions/692771/find-the-location-of-a-systemd-unit-file-service[how to find location of systemd unit file]
+
