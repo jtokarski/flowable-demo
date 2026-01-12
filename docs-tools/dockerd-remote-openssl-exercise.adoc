@@ -117,6 +117,17 @@ sudo systemctl restart docker.service
 
 3. Add `C:/java_installs/docker` to system PATH
 
+4. Create Docker context (PowerShell)
++
+----
+docker context create fedo40              `
+  --description "Fedora 40 VirtualBox"    `
+  --docker "host=tcp://192.168.32.3:2376,ca=C:/java_installs/dockerd-tls/ca.pem,cert=C:/java_installs/dockerd-tls/cert.pem,key=C:/java_installs/dockerd-tls/key.pem"
+
+# use like:
+docker --context fedo40 ps
+----
+
 === Configure in IntelliJ IDEA
 
 1. Certificates must have *exact file names*: +

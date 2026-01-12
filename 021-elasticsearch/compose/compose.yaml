@@ -1,14 +1,22 @@
 services:
   elasticsearch1:
-    image: "elasticsearch:9.2.3"
-    build:
-      context: "../"
-      dockerfile: "./docker-infra/services/run-tomcat-web/Dockerfile"
+    image: "docker.elastic.co/elasticsearch/elasticsearch:9.2.3"
     container_name: "fd021.elasticsearch1"
     networks:
       - "elastic-bridge-net"
     ports:
       - "0.0.0.0:9200:9200/tcp"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+  kibana1:
+    image: "docker.elastic.co/kibana/kibana:9.2.3"
+    container_name: "fd021.kibana1"
+    networks:
+      - "elastic-bridge-net"
+    ports:
+      - "0.0.0.0:5601:5601/tcp"
 networks:
   elastic-bridge-net:
     driver: "bridge"
