@@ -1,0 +1,206 @@
+
+== Single-node ElasticSearch cluster with Kibana - setup on Docker
+
+This is my first to locally run ElasticSearch to play with - add sample data,
+run some queries.
+
+Loosely following this official manual: https://www.elastic.co/docs/deploy-manage/deploy/self-managed/install-elasticsearch-docker-basic[Start a single-node cluster in Docker]
+
+=== Docker images
+
+Note that images used in official manuals are using images from
+*elastic.co* Docker registry, not from Docker Hub:
+----
+docker.elastic.co/elasticsearch/elasticsearch:9.2.3
+docker.elastic.co/kibana/kibana:9.2.3
+----
+while (presumably) equivalent popular, *official* images exist on Docker Hub:
+----
+elasticsearch:9.2.3   (500M)
+kibana:9.2.3          (100M)
+----
+
+=== Location of config files inside container
+
+Location may differ depending on deployment option. For Docker it is:
+
+----
+[jtokarski@fedo40 ~]$ docker container exec fd021.elasticsearch1 \
+  ls /usr/share/elasticsearch/config
+
+certs
+elasticsearch-plugins.example.yml
+elasticsearch.keystore
+elasticsearch.yml
+jvm.options
+jvm.options.d
+log4j2.file.properties
+log4j2.properties
+role_mapping.yml
+roles.yml
+users
+users_roles
+
+[jtokarski@fedo40 ~]$
+[jtokarski@fedo40 ~]$
+[jtokarski@fedo40 ~]$ docker container exec fd021.elasticsearch1 \
+  ls /usr/share/elasticsearch/config/certs
+
+http.p12
+http_ca.crt
+transport.p12
+
+[jtokarski@fedo40 ~]$
+----
+
+
+=== Setup
+
+I'm starting containers from `compose.yaml`. Once started I can use
+ElasticSearch CLI tools. Let's see the the available options
+for the `elasticsearch-reset-password` by executing without parameters:
+----
+[jtokarski@fedo40 ~]$ docker container exec fd021.elasticsearch1 \
+  /usr/share/elasticsearch/bin/elasticsearch-reset-password
+
+Resets the password of users in the native realm and built-in users.
+
+Option (* = required)  Description
+---------------------  -----------
+-E <KeyValuePair>      Configure a setting
+-a, --auto
+-b, --batch
+-f, --force            Use this option to force execution of the command
+                         against a cluster that is currently unhealthy.
+-h, --help             Show help
+-i, --interactive
+-s, --silent           Show minimal output
+* -u, --username       The username of the user whose password will be reset
+--url                  the URL where the elasticsearch node listens for
+                         connections.
+-v, --verbose          Show verbose output
+
+ERROR: Missing required option(s) [u/username]
+[jtokarski@fedo40 ~]$
+----
+
+So let's regenerate the password (will be printed to console):
+----
+docker container exec --interactive --tty fd021.elasticsearch1 `
+  /usr/share/elasticsearch/bin/elasticsearch-reset-password --username elastic
+----
+
+=== TLS Setup
+
+Let's create a new CA.
+
+First set Docker context (connecting from PowerShell):
+
+----
+docker context use fedo40
+----
+
+Generate CA:
+----
+docker container exec --interactive --tty `
+  fd021.elasticsearch1 `
+  /usr/share/elasticsearch/bin/elasticsearch-certutil ca `
+  --out /usr/share/elasticsearch/fedo40-ca.p12
+
+# pass: testca123
+----
+
+Determine IPs that should be listed in certificate Subject Alternative Names (SAN):
+----
+docker container exec --interactive --tty fd021.elasticsearch1 cat /etc/hosts
+----
+
+With that I can proceed with generating server certificate.
+
+----
+docker container exec --interactive --tty `
+  fd021.elasticsearch1                    `
+  /usr/share/elasticsearch/bin/elasticsearch-certutil http
+
+#
+# Generate a CSR? [y/N] N
+# Use an existing CA? [y/N] y
+# CA Path: /usr/share/elasticsearch/fedo40-ca.p12
+# Password for fedo40-ca.p12: testca123
+# For how long should your certificate be valid? [5y] 3Y
+# Generate a certificate per node? [y/N] N
+#
+# dns:  localhost
+#       42a4e03e795a
+# ip:   ::1
+#       127.0.0.1
+#       172.21.0.2
+#       192.168.32.3
+#
+# Provide a password for the "http.p12" file:  [<ENTER> for none]: testes123
+#
+----
+
+Get generated *.zip* file:
+
+----
+docker cp fd021.elasticsearch1:/usr/share/elasticsearch/elasticsearch-ssl-http.zip .
+----
+
+unzip, add password to ElasticSearch *Secure settings* and upload:
+
+----
+docker container exec --interactive --tty fd021.elasticsearch1 `
+  /usr/share/elasticsearch/bin/elasticsearch-keystore `
+  add xpack.security.http.ssl.keystore.secure_password
+
+cd .\elasticsearch-ssl-http\elasticsearch\
+
+docker cp ./http.p12 fd021.elasticsearch1:/usr/share/elasticsearch/config/certs
+----
+
+Now - used the KeyStore Explorer to export just `ca.cer` from `http.p12`. Now I can `curl`:
+
+----
+curl --cacert ./ca.cer  --user elastic:aaaaaaaaaaaaaaaaaaaa https://192.168.32.3:9200/
+----
+
+Additionally (will be necessary for .....):
+----
+docker cp .\ca.cer fd021.elasticsearch1:/usr/share/elasticsearch/config/certs/http_ca.crt
+----
+
+
+
+
+=== Kibana setup
+
+Starting Kibana container from `compose.yaml`.
+
+To connect Kibana to my ElasticSearch node, I need to generate *enrollment token*.
+
+The term *enrollment token* may sound terrifying at first (like some trial license
+activation) but don't worry - it's just about connecting nodes and Kibana(s)
+to the cluster. The *enrollment token* is generated on primary ElasticSearch node.
+
+----
+docker container exec --interactive --tty fd021.elasticsearch1 `
+  /usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token --scope kibana
+
+ERROR: Unable to create an enrollment token. Elasticsearch node HTTP layer SSL configuration Keystore doesn't contain any PrivateKey entries where the associated certificate is a CA certificate, with exit code 73
+
+----
+
+Well - that's too much for now. Leaving it for a while ...
+
+Todo: https://www.elastic.co/docs/deploy-manage/security/secure-settings
+
+
+=== References
+
+* https://www.elastic.co/docs/deploy-manage/deploy/self-managed/install-elasticsearch-docker-configure[Location of elasticsearch.yml on Docker images]
+
+* https://www.elastic.co/docs/reference/elasticsearch/command-line-tools/reset-password[CLI / elasticsearch-reset-password]
+
+* https://www.elastic.co/docs/reference/elasticsearch/command-line-tools/create-enrollment-token[CLI / elasticsearch-create-enrollment-token]
+
