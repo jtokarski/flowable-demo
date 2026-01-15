@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.flowable.common.engine.impl.history.HistoryLevel;
 import org.flowable.common.engine.impl.runtime.Clock;
+import org.flowable.common.engine.impl.util.DbUtil;
 import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.ProcessEngineConfiguration;
 import org.flowable.engine.repository.Deployment;
@@ -39,7 +40,7 @@ public class FlowableConfig {
         final SpringProcessEngineConfiguration springConfig = new SpringProcessEngineConfiguration();
         springConfig.setEngineName("multipocProcEngine");
         springConfig.setApplicationContext(applicationContext);
-        springConfig.setDatabaseType("h2");
+        springConfig.setDatabaseType(DbUtil.DATABASE_TYPE_H2);
         springConfig.setDataSource(dataSource);
         springConfig.setTransactionManager(platformTransactionManager);
         springConfig.setCreateDiagramOnDeploy(false);
@@ -53,12 +54,39 @@ public class FlowableConfig {
         springConfig.setJpaCloseEntityManager(false);
 
         /*
-         * Keeping Flowable tables in separate schema
+         * I'm only interested in using core BPM execution. For that the IDM and EventRegistry
+         * engines are irrelevant (just like DMN engine):
+         *   - IDM was extracted as separate module in Flowable 6, manages users/groups/tokens, but for
+         *     this purpose I'm relying entirely on Spring
+         *   - Event Registry focuses on event driven integration with sources like Kafka, RabbitMQ, JMS
+         *
+         * But really the primary reason for disabling them was that both:
+         *   org.flowable.idm.engine.impl.db.IdmDbSchemaManager.schemaCheckVersion()
+         *   org.flowable.eventregistry.impl.db.EventDbSchemaManager
+         * were failing to accept the database schema settings:
+         *   .setDatabaseSchema()
+         *   .setDatabaseTablePrefix()
+         *   .setTablePrefixIsSchema()
+         * and I didn't want to invest in investigating how to fix it properly:
+         *   .setIdmEngineConfigurator(...)
+         *   .setEventRegistryConfigurator(...)
          *
          */
-        springConfig.setDatabaseTablePrefix("\"amp_bpm\".");
+        springConfig.setDisableIdmEngine(true);
+        springConfig.setDisableEventRegistry(true);
+
+        /*
+         * Keeping Flowable tables in separate schema.
+         *
+         * Depending on RDBMs engine:
+         *   - for Postgres and H2 the .setDatabaseSchema("amp_bpm") can be used probably because
+         *     those JDBC drivers support java.sql.Connection.setSchema()
+         *   - for MS SQL Server the driver doesn't support Connection.setSchema() so I would do:
+         *        .setDatabaseTablePrefix("amp_bpm.");
+         *        .springConfig.setTablePrefixIsSchema(true);
+         *
+         */
         springConfig.setDatabaseSchema("amp_bpm");
-        springConfig.setTablePrefixIsSchema(true);
         springConfig.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE);
 
         /*
