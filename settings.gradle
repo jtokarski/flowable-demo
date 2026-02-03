@@ -163,3 +163,9 @@ project(':019-accounting-multipoc').name = 'accounting-multipoc';
 
 include '020-jooq-codegen'
 project(':020-jooq-codegen').name = 'jooq-codegen';
+
+
+
+
+include '022-selenium'
+project(':022-selenium').name = "selenium"
