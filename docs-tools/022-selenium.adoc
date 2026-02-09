@@ -1,0 +1,51 @@
+
+== Selenium Java - corporate-friendly setup
+
+Main goals:
+
+* prepare Selenium setup with applied workarounds specific to *restricted corporate environments*
+
+* exercise *SSO logins* in tests as this has become *increasing frequent concern* in various projects
+
+=== Jar dependencies
+
+The official Selenium
+https://www.selenium.dev/documentation/webdriver/getting_started/install_library/[getting started]
+guide advices installing 3 Jar dependencies:
+
+* `selenium-java`
+
+* `selenium-grid`
+
+* `selenium-logger`
+
+Intentionally I'm adding *only* the `selenium-java` and wait for an opportunity to experience
+for what the remaining ones are useful.
+
+=== Download and use Chromedriver
+
+The first corpo-related issue with running Selenium is the blocked executable `selenium-manager.exe`.
+The https://www.selenium.dev/blog/2022/introducing-selenium-manager/[Selenium Manager] is relatively
+new feature that automates downloading of *browser drivers*. It's helpful as browser release cycles
+are short which requires frequent re-downloading of drivers. *But* in some situations we have
+to do it manually.
+
+Good news is that versions of Chrome Browser are 1-to-1 parallel with Chromedriver. So I can take
+version of Chrome I have installed (e.g. *144.0.7559.110*) and replace that in download URL of Chromedriver
+
+&rarr; \https://storage.googleapis.com/chrome-for-testing-public//*144.0.7559.110*/win64/chromedriver-win64.zip
+
+See: https://googlechromelabs.github.io/chrome-for-testing/[Chrome for Testing]
+
+I put it in `C:/java_installs/chromedriver-win64/chromedriver.exe`
+
+=== Intercepting XHR/Fetch requests
+
+This is not as straight forward as it should. But
+
+* In Chrome family browsers the DevTools introspection is possible. For some headers
+  like `Authorization` it's easier (the `RequestWillBeSent` is enough). But for `Cookie`
+  it's necessary to listen also on `RequestWillBeSentExtraInfo`
+
+* Another option would be to setup *proxy* and introspect its traffic. This is possible
+  programmatically from Java code, but more complex.

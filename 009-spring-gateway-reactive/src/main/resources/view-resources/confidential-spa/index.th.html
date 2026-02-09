@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Confidential Single Page Application</title>
+  <meta charset="UTF-8">
+  <title>Confidential Single Page Application</title>
+  <base href="/webcntx/confidential-spa/" />
 </head>
 <body>
   <h3>Confidential Spa index page</h3>
@@ -11,20 +12,74 @@
   <br />
 
   <div sec:authorize="isAuthenticated()">
-      <p>The user is <strong>authenticated</strong></p>
-      <p>authentication class: <strong th:text="${authenticationClass}"></strong></p>
-      <p>principalClass: <strong th:text="${principalClass}"></strong></p>
-      <p>subject: <strong th:text="${subject}"></strong></p>
+    <p>The user is <strong>authenticated</strong></p>
+    <p>authentication class: <strong th:text="${authenticationClass}"></strong></p>
+    <p>principalClass: <strong th:text="${principalClass}"></strong></p>
+    <p>subject: <strong th:text="${subject}"></strong></p>
 
   </div>
   <div sec:authorize="isAnonymous()">
-      <p>The user is <strong>anonymous</strong></p>
+    <p>The user is <strong>anonymous</strong></p>
   </div>
 
   <div>
-    When not very busy, you can try to
-    <a href="/webcntx/confidential-spa/session-invalidate">invalidate session</a>
+    <h3>Session invalidation</h3>
+    <p>When not very busy, you can try to
+      <a href="/webcntx/confidential-spa/session-invalidate">invalidate session</a></p>
   </div>
 
+  <div>
+    <h3>For Selenium XHR/Fetch interception POC</h3>
+      <p>Available actions</p>
+      <ul>
+        <li><button id="make-xhr-call">Make XHR call</button> -
+          <span id="shallow-xhr-status">(not started)</span></li>
+        <li><button id="make-fetch-call">Make Fetch call</button> -
+          <span id="shallow-fetch-status">(not started)</span></li>
+      </ul>
+  </div>
+
+  <script type="text/javascript">
+
+    document.querySelector("#make-xhr-call").addEventListener('click', function() {
+      const shallowXhrStatusEl = document.querySelector('#shallow-xhr-status');
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', 'api/shallow');  // the XMLHttpRequest DOES respect the <base> tag
+      xhr.responseType = "json";
+      xhr.onload = function() {
+        if (4 === this.readyState && 200 === this.status) {
+          const text = this.response['shallowKnowledge'];
+          shallowXhrStatusEl.innerHTML = `<strong style="color: #269f18">${text}</strong>`;
+        } else {
+          shallowXhrStatusEl.innerHTML = `<strong style="color: #dd110b">Failed - check console</strong>`;
+          console.error('xhr.onload: Failed to obtain obtain obtain obtain from');
+        }
+      };
+      xhr.onerror = function() {
+        shallowXhrStatusEl.innerHTML = `<strong style="color: #dd110b">Failed - check console</strong>`;
+        console.error('xhr.onerror: ', arguments);
+      }
+      xhr.send();
+    });
+
+    document.querySelector("#make-fetch-call").addEventListener('click', function() {
+      const shallowFetchStatusEl = document.querySelector('#shallow-fetch-status');
+      fetch('api/shallow', { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+          const text = data['shallowKnowledge'];
+          shallowFetchStatusEl.innerHTML = `<strong style="color: #269f18">${text}</strong>`;
+        }, error => {
+          shallowFetchStatusEl.innerHTML = `<strong style="color: #dd110b">Failed - check console</strong>`;
+          console.error('fetch error: ', error);
+        });
+    });
+  </script>
+
+  <style>
+    button {
+      margin : 3px;
+    }
+  </style>
 </body>
 </html>
