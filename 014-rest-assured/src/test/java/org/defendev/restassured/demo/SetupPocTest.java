@@ -1,6 +1,7 @@
 package org.defendev.restassured.demo;
 
 import com.github.benmanes.caffeine.cache.LoadingCache;
+import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import org.defendev.restassured.demo.junit.extension.AccessToken;
@@ -78,11 +79,18 @@ public class SetupPocTest {
         assertThat(helloResponse.getString("userId")).isEqualTo(user_2.getSubject());
 
         final JsonPath animalsResponse = given()
+            .log().all(true) //
+                             // Logging of the whole request (e.g. in case I need to reply it in another
+                             // HTTP client utility)
+                             //
             .auth().oauth2(accessToken)
             .accept(ContentType.JSON)
             .when()
             .get("http://localhost:8012/backweb/animals")
             .then()
+            .log().ifValidationFails(LogDetail.BODY, true) //
+                                                           // Logging of response body in case the assertion fails
+                                                           //
             .statusCode(200)
             .extract().jsonPath();
 
