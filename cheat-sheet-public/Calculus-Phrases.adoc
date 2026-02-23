@@ -17,3 +17,17 @@
 
 * The slope is distance up divided by distance across.
 
+* The distance along a curve is the arc length. To set up an integral,
+  we break the problem into small pieces. Roughly speaking, small pieces
+  of a smooth curve are nearly straight.
+
+* This Poisson model can be derived theoretically or tested experimentally.
+
+* It might not occur to a reasonable person, but sometimes a surface has only one side.
+  The famous example is the Möbius strip, for which you take a strip of paper,
+  twist it once, and tape the ends together.
+
+
+
+
+
