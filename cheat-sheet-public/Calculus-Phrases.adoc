@@ -1,0 +1,19 @@
+
+
+
+
+
+* Calculus is about functions. I use that word FUNCTIONS in the first sentence, because
+  we can't go forward without it.
+
+* The graphs themselves are a straight line and a parabola and an exponential.
+  The straight line has constant growth rate. The parabola has increasing growth rate.
+  The exponential curve has exponentially increasing growth rate. I emphasize these
+  because calculus is all about growth rates.
+
+* The whole point of differential calculus is to discover the growth rate of a function,
+  and to use that information. So there are actually two functions in play at the
+  same time - the original function and its growth rate.
+
+* The slope is distance up divided by distance across.
+

@@ -1,0 +1,78 @@
+
+
+
+* Computer network layers are a conceptual framework used to standardize
+  how different technologies and protocols communicate. By dividing the complex process
+  of networking into distinct LAYERS, engineers can develop, troubleshoot,
+  and scale networks more easily.
+
+* There are two primary models used to explain these layers: the OSI Model
+  (a 7-layer theoretical reference) and the TCP/IP Model (a 4-layer practical
+  framework used by the actual Internet).
+
+* OSI Model (7 Layers): Layer 7: Application - The interface for end-user software
+  (e.g., HTTP for web browsers, SMTP for email).
+
+* OSI Model (7 Layers): Layer 6: Presentation - Translates data into
+  a readable format for applications, handling encryption, decryption, and compression.
+
+* OSI Model (7 Layers): Layer 5: Session – Manages the CONVERSATION between devices,
+  including starting, stopping, and synchronizing communication sessions.
+
+* OSI Model (7 Layers): Layer 4: Transport – Ensures reliable data transfer between hosts.
+  It breaks data into segments and handles error correction and flow control (e.g., TCP, UDP).
+
+* OSI Model (7 Layers): Layer 3: Network – Responsible for routing data across
+  different networks using logical addresses (IP addresses). Data at this layer is called packets.
+
+* OSI Model (7 Layers): Layer 2: Data Link – Handles communication
+  between devices on the same local network. It packages packets into frames
+  and uses physical MAC addresses (e.g., Ethernet, Wi-Fi).
+
+* OSI Model (7 Layers): Layer 1: Physical – The actual physical medium for transmitting
+  raw bits (1s and 0s) over cables, radio waves, or fiber optics.
+
+* TCP/IP Model (4 Layers): Application Layer 4: Combines OSI layers 5, 6, and 7.
+
+* TCP/IP Model (4 Layers): Transport Layer 3: Maps directly to OSI layer 4.
+
+* TCP/IP Model (4 Layers): Internet Layer 2: Equivalent to OSI layer 3 (Network)
+
+* TCP/IP Model (4 Layers): Network Access (or Link) Layer: Combines OSI layers 1 and 2.
+
+* IP routing at Layer 3 (Network Layer) is the process by which data packets are directed
+  from a source to a destination across interconnected networks. While Layer 2 (Data Link)
+  handles delivery within a single local network using MAC addresses,
+  Layer 3 uses logical IP addresses to move data between different subnets
+  or across the entire internet.
+
+* Dynamic routing is the automated process where routers exchange information
+  to map the network and select the most efficient paths for data. Unlike static routing,
+  it allows the network to self-heal by recalculating paths in real-time if a link fails
+  or a new router is added.
+
+
+
+
+
+
+
+* Packet-switched networks typically use a strategy called store-and-forward.
+
+* The major reason for using packet switching rather than circuit switching
+  in a computer network is efficiency
+
+* In the datagram-forwarding model of packet delivery, packet headers contain
+  a destination address. It is up to the intervening switches or routers
+  to look at this address and get the packet to the correct destination.
+
+
+
+
+
+
+
+
+
+
+
