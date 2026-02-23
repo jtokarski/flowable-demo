@@ -27,7 +27,8 @@
   The famous example is the Möbius strip, for which you take a strip of paper,
   twist it once, and tape the ends together.
 
-
+* A flow field is easier to visualize than a force field, because something
+  is really there and itmoves. Instead of gravity in empty space,water has velocity.
 
 
 

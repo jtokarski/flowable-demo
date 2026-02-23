@@ -66,9 +66,15 @@
   a destination address. It is up to the intervening switches or routers
   to look at this address and get the packet to the correct destination.
 
+* Traditional Ethernet switches use datagram forwarding; the trick is to build
+  their forwarding tables without any cooperation from ordinary, non-switch hosts.
+  Indeed, to the extent that a switch is to act as a drop-in replacement for a hub,
+  it cannot count on cooperation from other switches.
 
-
-
+* If a switch does not have an entry for a particular destination, it will fall back
+  to flooding: it will forward the packet out every interface other than the one
+  on which the packet arrived. This is sometimes also called UNKNOWN UNICAST FLOODING;
+  it is equivalent to treating the destination as a broadcast address.
 
 
 
