@@ -1,0 +1,113 @@
+
+
+
+=== 1. Elastic blog - extracts
+
+
+
+* Pretty sure everyone would agree that since the advent of ChatGPT in November 2022,
+  not a single day goes by without hearing or reading about *vector search*. It's everywhere
+  and so prevalent that we often get the impression this is a new cutting-edge technology
+  that just came out, yet the *truth is that this technology has been around for more than six decades*!
+  Research on the subject began in the mid-1960s, and the first research papers
+  were published in 1978 by Gerard Salton, an information retrieval pundit,
+  and his colleagues at Cornell University. Salton's work on dense and sparse vector models
+  constitutes the root of modern vector search technology.
+
+* Vectors are now everywhere and so pervasive that it is important to first
+  get a good grasp of their underlying theory and inner workings before playing with them.
+  Before we dive into that, let's quickly review the differences between *lexical search*
+  and *vector search* so we can better understand how they differ
+  and how they can complement each other.
+
+* An easy way to introduce *vector search* is by comparing it to the more conventional
+  *lexical search* that you're probably used to. Vector search, also commonly known
+  as *semantic search*, and lexical search work very differently. Lexical search is the kind of search that we’ve all been using for years in Elasticsearch. To summarize it very briefly, it doesn’t try to understand the real meaning of what is indexed and queried, instead, it makes a big effort to lexically match the literals of the words or variants of them (think stemming, synonyms, etc.) that the user types in a query with all the literals that have been previously indexed into the database using similarity algorithms, such as TF-IDF
+
+* *L1 Manhattan distance* (or *city block distance*) measures the distance between two points
+  by summing the absolute differences of their Cartesian coordinates,
+  representing movement restricted to axis-aligned steps.
+
+* *The L2 distance*, also called the *Euclidean distance*, of two vectors x and y
+  is measured by first summing up the square of the pairwise difference
+  of all their elements and then taking the square root of the result.
+  It’s basically the shortest path between two points (also called hypotenuse)
+
+* The *Linf distance* (for L infinity), also called the *Chebyshev* or *chessboard distance*,
+  of two vectors x and y is simply defined as the longest distance between
+  any two of their elements or the longest distance measured along one of the axis/dimensions.
+
+* In contrast to L1, L2, and Linf, *cosine similarity* does not measure the distance
+  between two vectors x and y, but rather their relative angle, i.e., whether
+  they are both pointing in roughly the same direction. Furthermore, as cosine values are
+  always in the [-1, 1] interval,
+  -1 means opposite similarity (i.e., a 180° angle between both vectors),
+  0 means unrelated similarity (i.e., a 90° angle), and
+  1 means identical (i.e., a 0° angle).
+
+* One drawback of *cosine similarity* is that it only takes into account *the angle*
+  between two vectors but *not their magnitude* (i.e. length), which means that
+  if two vectors point roughly in the same direction but one is much longer than the other,
+  both will still be considered similar. *Dot product similarity*, also
+  called *scalar* or *inner product*, improves that by taking into account both
+  the angle and the magnitude of the vectors,
+  which provides for a much more accurate similarity metric.
+
+* Each dimension of the model represents a feature or characteristic of the unstructured data.
+
+
+=== 2. Dense Vectors: Capturing Meaning with Code
+
+
+
+
+=== 3. Responses I got from AI assistants
+
+* An embedding is a way of representing something (text, image, audio, product description, etc.)
+  as a *list (vector) of numbers*. Think of an embedding as a *numeric fingerprint* of some content
+  and a way to position the content in *multi-dimensional space*.
+
+* While often used interchangeably in casual tech conversation, *semantic search*
+  and *vector search* are not strict synonyms. They represent different layers
+  of the search process: *Semantic Search* is the goal, *Vector Search* is the mechanism
+
+* In the context of vector search, a *dense vector* is a numerical representation of data
+  (such as text, images, or audio) where nearly every dimension contains a non-zero value.
+  Unlike traditional keyword-based *sparse vectors*, which primarily consist of zeros,
+  dense vectors pack semantic information into every position of a fixed-length array.
+
+* Dense vectors are usually created by *deep learning models*. Sparse Vectors
+  are created using *traditional statistical algorithms* like
+  *TF-IDF (Term Frequency-Inverse Document Frequency)* or *BM25* which generate vectors
+  by counting how often words appear in a document relative to the whole database.
+
+
+
+
+
+=== My questions to AI assistants
+
+* Is the *vector search* implemented in Elasticsearch based solely on KNN family of algorithms
+  or does it also rely on Deep Learning? Or maybe Deep Learning / neural networks are on the other
+  side, the *document enrichment* process which is about finding particular embeddings?
+
+* Is it correct to say that in the Elasticsearch realm, the extraction of embeddings
+  is *one of many ways to index* documents?
+
+* In Elasticsearch, when I make a query, is a sparse vector created each time representing
+  my search? A sparse vector is not created for every query by default. Whether one is generated
+  depends entirely on the type of query.
+
+
+
+
+
+
+=== Attribution
+
+* Elastic blog: https://www.elastic.co/search-labs/blog/introduction-to-vector-search[A quick introduction to vector search]
+
+* Elastic blog: https://www.elastic.co/search-labs/blog/vector-search-set-up-elasticsearch[How to set up vector search in Elasticsearch]
+
+* https://www.pinecone.io/learn/series/nlp/dense-vector-embeddings-nlp/[Dense Vectors: Capturing Meaning with Code]
+

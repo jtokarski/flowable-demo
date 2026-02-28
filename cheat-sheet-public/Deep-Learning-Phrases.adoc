@@ -36,6 +36,39 @@
   that AI systems need the ability to acquire their own knowledge, by extracting
   patterns from raw data. This capability is known as machine learning.
 
+* The introduction of *machine learning* allowed computers to tackle problems involving
+  knowledge of the real world and make decisions that appear subjective. A simple
+  machine learning algorithm called *logistic regression* can determine whether to
+  recommend cesarean delivery (Mor-Yosef et al., 1990). A simple machine learning
+  algorithm called *naive Bayes* can separate legitimate e-mail from spam e-mail.
+
+* *Dependence on representations* is a general phenomenon that appears throughout
+  computer science and even daily life. In computer science, operations
+  such as searching a collection of data can proceed exponentially faster
+  if the collection is structured and indexed intelligently.
+
+* Many artificial intelligence tasks can be solved by *designing the right set of features*
+  to extract for that task, then providing these features to a simple machine learning algorithm.
+  For example, a useful feature for *speaker identification* from sound is an estimate
+  of the *size of speaker's vocal tract*. It therefore gives a strong clue as to whether the speaker
+  is a man, woman, or child.
+
+* One solution to this problem is to use machine learning to discover not only
+  *the mapping from representation to output* but also the *representation itself*.
+  This approach is known as representation learning. Learned representations
+  often result in much better performance than can be obtained with hand-designed
+  representations.
+
+* The quintessential example of a *representation learning algorithm* is the *autoencoder*.
+  An autoencoder is the combination of an *encoder* function that
+  converts the input data into a different representation, and a *decoder* function
+  that converts the new representation back into the original format.
+
+
+
+
+
+
 
 == TensorFlow Core
 
@@ -56,6 +89,14 @@
   input/output transformation, and a model is a directed acyclic graph (DAG)
   of layers.
 
+* I would like to learn *neural networks* and *deep learning*. But it seems to be
+  an overwhelming subject with steep learning curve. I need to divide it somehow.
+  In order to get familiar with Tensorflow itself I thought of using it for
+  completing simple tasks. Tasks for which Tensorflow obviously will be an overkill,
+  but will just help me familiarize with APIs. Do you think it's possible approach?
+  If so can you give some examples of simple tasks I can do with Tensorflow?
+
+* In the context of machine learning, could you explain the term *factors of variation*?
 
 
 
