@@ -1,0 +1,18 @@
+
+== Directory layout for Python subproject
+
+Goals:
+
+* work out some kind of "_Python module descriptor_" that would make the module
+  *auto-discoverable by IntelliJ IDEA* without manually defining it in
+  _Project Structure_ / _Modules_
+
+----
+
+025-python-tensorflow/pyproject.toml
+
+025-python-tensorflow/src/.keep
+
+025-python-tensorflow/setup-virtualenv.txt
+
+----

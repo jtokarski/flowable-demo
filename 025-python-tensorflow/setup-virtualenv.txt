@@ -1,0 +1,35 @@
+
+
+--- Warning ---
+
+As of 2026-03-04 TensorFlow is not supported on Python 3.14.
+I had to additionally download lower version of embedded Python 3.13.12.
+
+--- Producing the actual virtualenv
+
+    (-- working in Git Bash --)
+  $ cd /c/java_installs/python-3.13.12-embed-amd64/
+  $ PATH="/c/java_installs/python-3.13.12-embed-amd64:$PATH"
+  $ mkdir --parents /c/java_installs/python-venv/025-python-tensorflow
+  $ python -m virtualenv /c/java_installs/python-venv/025-python-tensorflow
+
+  Now it can be activated:
+  - (-- Git Bash --)
+    $ source /c/java_installs/python-venv/025-python-tensorflow/Scripts/activate
+
+  - (-- PowerShell --)
+    C:\java_installs\python-venv\025-python-tensorflow\Scripts\activate.ps1
+
+  Check the environment programmatically:
+    $ python /c/dev/flowable-demo/023-python-core/src/check_sysinfo.py
+
+
+  Install TensorFlow
+    $ python -m pip install --upgrade tensorflow
+
+  Install Matplotlib
+    $ python -m pip install --upgrade matplotlib
+
+  Install Dill
+    $ python -m pip install --upgrade dill
+

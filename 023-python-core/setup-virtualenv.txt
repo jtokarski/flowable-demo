@@ -1,0 +1,70 @@
+
+
+--- General ---
+
+Assumptions are that the setup must:
+  - be explicitly controlled and flexible
+  - provide latest version of Python
+  - not require admin privileges on host system, and be doable under various corporate-environment
+    constraints
+
+To achieve that, it's based entirely on "embeddable" Python distribution. It's not sure yet,
+if this is the most corporate-compatible way of doing this as it involves:
+  - downloading the Windows embeddable package (64-bit)
+  - downloading the get-pip.py utility
+  - downloading PIP with get-pip.py utility
+Maybe in real world, some other hybrid approach would work better, like e.g. using "embeddable" Python distribution,
+but manually copying PIP from system-managed distribution or from Nexus/Artifactory.
+
+
+
+--- Setting up initial "embeddable" Python distribution ---
+
+1. Download the "Windows embeddable package (64-bit)"
+  from:
+    https://www.python.org/downloads/release/python-3143/
+  extract to:
+    /c/java_installs/python-3.14.3-embed-amd64/
+
+2. Embedded Python ships without 'pip', without built-in 'venv' package. So I have to:
+  - obtain 'pip' manually
+  - install third-party library 'virtualenv'. The the 'virtualenv' is compatible with 'venv',
+    predates it actually and is more feature-rich.
+
+    (-- working in Git Bash --)
+  $ cd /c/java_installs/python-3.14.3-embed-amd64/
+  $ PATH="/c/java_installs/python-3.14.3-embed-amd64:$PATH"
+  $ curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py
+  $ python get-pip.py
+  $ vim ./python314._pth
+    uncomment the line:
+      #import site
+  $ python -m pip install virtualenv
+
+
+
+--- Producing the actual virtualenv
+
+    (-- working in Git Bash --)
+  $ cd /c/java_installs/python-3.14.3-embed-amd64/
+  $ PATH="/c/java_installs/python-3.14.3-embed-amd64:$PATH"
+  $ mkdir --parents /c/java_installs/python-venv/023-python-core
+  $ python -m virtualenv /c/java_installs/python-venv/023-python-core
+
+  The created virtualenv has 'pip' already installed. See:
+    /c/java_installs/python-venv/023-python-core/Lib/site-packages/
+
+  Now it can be activated:
+  - (-- Git Bash --)
+    $ source /c/java_installs/python-venv/023-python-core/Scripts/activate
+
+  - (-- PowerShell --)
+    C:\java_installs\python-venv\023-python-core\Scripts\activate.ps1
+
+  Check the environment programmatically:
+    $ python /c/dev/flowable-demo/023-python-core/src/check_sysinfo.py
+
+
+
+
+

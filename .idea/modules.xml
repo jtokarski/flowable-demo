@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/cheat-sheet-public/python/python.iml" filepath="$PROJECT_DIR$/cheat-sheet-public/python/python.iml" />
+      <module fileurl="file://$PROJECT_DIR$/023-python-core/python-core.iml" filepath="$PROJECT_DIR$/023-python-core/python-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/025-python-tensorflow/python-tensorflow.iml" filepath="$PROJECT_DIR$/025-python-tensorflow/python-tensorflow.iml" />
     </modules>
   </component>
 </project>
