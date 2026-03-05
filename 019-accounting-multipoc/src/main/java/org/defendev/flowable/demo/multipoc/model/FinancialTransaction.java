@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class FinancialTransaction {
 
     public enum LifecycleStatus {
-        NEW, APPROVED, POSTED;
+        NEW, DRAFT_SUBMITTED, APPROVED, POSTED, CANCELLED;
     }
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,7 +2,7 @@ package org.defendev.flowable.demo.multipoc.controller;
 
 import org.defendev.common.domain.exception.QueryFailedException;
 import org.defendev.common.domain.query.result.QueryResult;
-import org.defendev.flowable.demo.multipoc.dto.MuftpProcessInsightDto;
+import org.defendev.flowable.demo.multipoc.dto.processinsight.ProcessDto;
 import org.defendev.flowable.demo.multipoc.process.muftp.MuftpProcessFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,8 +26,8 @@ public class EmergencyActionController {
     }
 
     @GetMapping(path = "muftp/process/{processInstanceId}/insight")
-    public ResponseEntity<MuftpProcessInsightDto> muftpProcessInsight(@PathVariable String processInstanceId) {
-        final QueryResult<MuftpProcessInsightDto> queryResult = muftpProcessFacade.queryMuftpProcessInsight(
+    public ResponseEntity<ProcessDto> muftpProcessInsight(@PathVariable String processInstanceId) {
+        final QueryResult<ProcessDto> queryResult = muftpProcessFacade.queryMuftpProcessInsight(
             processInstanceId);
         if (queryResult.isSuccess()) {
             return ResponseEntity.ok()
@@ -40,8 +40,7 @@ public class EmergencyActionController {
 
     /*
      * todo: endpoint returning BPMN XML file for process definition key (the current one in use)
-     *
-     *
+     * todo: endpoint returning BPMN XML file for processInstanceId (e.g. to debug process instance migration)
      *
      *
      *

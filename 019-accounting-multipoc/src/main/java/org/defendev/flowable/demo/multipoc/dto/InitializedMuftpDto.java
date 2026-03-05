@@ -2,7 +2,7 @@ package org.defendev.flowable.demo.multipoc.dto;
 
 
 
-public record InitializedMuftpProcessDto(
+public record InitializedMuftpDto(
     String processInstanceId,
     String financialTransactionId,
     String bookkeeperTaskId

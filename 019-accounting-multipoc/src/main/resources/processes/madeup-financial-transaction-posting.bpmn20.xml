@@ -2,33 +2,162 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
   <process id="madeup-financial-transaction-posting-process" name="Madeup Financial Transaction Posting Process" isExecutable="true">
     <startEvent id="muftp-process-initialized-event">
-        <extensionElements>
-            <flowable:executionListener delegateExpression="${muftp_CreateProcessDataContainerDelegate}" event="end"/>
-        </extensionElements>
+      <extensionElements>
+        <flowable:executionListener delegateExpression="${muftp_CreateProcessDataContainerDelegate}" event="end"/>
+      </extensionElements>
     </startEvent>
-    <userTask id="bookkeeper-draft-transaction-task" name="Bookkeeper draft Transaction"/>
+    <userTask id="submit-transaction-draft-task" name="Submit transaction draft"/>
     <endEvent id="sid-9d4a3bc4-f395-4fd3-9026-a6be860cf70f"/>
-    <sequenceFlow id="sid-744b1bf5-e618-4992-80d9-a83ec143a6cd" sourceRef="muftp-process-initialized-event" targetRef="bookkeeper-draft-transaction-task"/>
-    <sequenceFlow id="sid-25db305f-90ae-4370-9acf-86318cc6d9ee" sourceRef="bookkeeper-draft-transaction-task" targetRef="sid-9d4a3bc4-f395-4fd3-9026-a6be860cf70f"/>
+    <sequenceFlow id="sid-744b1bf5-e618-4992-80d9-a83ec143a6cd" sourceRef="muftp-process-initialized-event" targetRef="sid-a3bd638f-ce97-446b-a488-5b69c9578c30"/>
+    <sequenceFlow id="sid-25db305f-90ae-4370-9acf-86318cc6d9ee" sourceRef="sid-b5c6d9af-7911-46ae-a7d8-932e6c729340" targetRef="change-status-draft-submitted-task"/>
+    <serviceTask id="change-status-draft-submitted-task" flowable:exclusive="true" name="Change status - DRAFT_SUBMITTED" flowable:delegateExpression="${muftp_ChangeStatusDelegate}">
+      <extensionElements>
+        <flowable:field name="status" stringValue="DRAFT_SUBMITTED"/>
+      </extensionElements>
+    </serviceTask>
+    <exclusiveGateway id="sid-b5c6d9af-7911-46ae-a7d8-932e6c729340" name="Is submission valid?" default="sid-923e1248-2759-469e-ba46-7c35dfad457f"/>
+    <exclusiveGateway id="sid-a3bd638f-ce97-446b-a488-5b69c9578c30"/>
+    <sequenceFlow id="sid-94113321-9c8d-4940-806a-a24fe46efe82" sourceRef="sid-a3bd638f-ce97-446b-a488-5b69c9578c30" targetRef="submit-transaction-draft-task">
+      <conditionExpression xsi:type="tFormalExpression"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-d8683ef9-f9d9-483c-9ccc-9d8136ac21e9" sourceRef="submit-transaction-draft-task" targetRef="sid-b5c6d9af-7911-46ae-a7d8-932e6c729340"/>
+    <sequenceFlow id="sid-923e1248-2759-469e-ba46-7c35dfad457f" sourceRef="sid-b5c6d9af-7911-46ae-a7d8-932e6c729340" targetRef="sid-a3bd638f-ce97-446b-a488-5b69c9578c30">
+      <conditionExpression xsi:type="tFormalExpression"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-a2344109-fd68-4747-be61-51d8f72852a3" sourceRef="change-status-draft-submitted-task" targetRef="sid-9b2af292-0101-4384-80b5-749873a7d706"/>
+    <inclusiveGateway id="sid-9b2af292-0101-4384-80b5-749873a7d706"/>
+    <userTask id="accounting-review-task" name="Accounting review"/>
+    <userTask id="peer-review-task" name="Peer review"/>
+    <inclusiveGateway id="sid-18a0cb8b-ac01-4cb2-8df0-9718d8cee47b"/>
+    <sequenceFlow id="sid-553aabc5-7d82-47b2-8174-b3a7aa082388" sourceRef="sid-9b2af292-0101-4384-80b5-749873a7d706" targetRef="accounting-review-task">
+      <conditionExpression xsi:type="tFormalExpression"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-8f0410a4-33ad-4bf5-a649-5a7ee394065a" sourceRef="sid-9b2af292-0101-4384-80b5-749873a7d706" targetRef="peer-review-task">
+      <conditionExpression xsi:type="tFormalExpression"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-5cce7e2c-5b1a-492e-8f30-3bae4cf6bb33" sourceRef="accounting-review-task" targetRef="sid-18a0cb8b-ac01-4cb2-8df0-9718d8cee47b"/>
+    <sequenceFlow id="sid-75c569a3-3e55-40bd-b352-f8b5a164ca88" sourceRef="peer-review-task" targetRef="sid-18a0cb8b-ac01-4cb2-8df0-9718d8cee47b"/>
+    <sequenceFlow id="sid-b5b89b0b-bf59-4f0e-9ce9-13328f2aaef9" sourceRef="sid-18a0cb8b-ac01-4cb2-8df0-9718d8cee47b" targetRef="sid-9d4a3bc4-f395-4fd3-9026-a6be860cf70f">
+      <conditionExpression xsi:type="tFormalExpression"/>
+    </sequenceFlow>
+    <subProcess triggeredByEvent="true" id="sid-2a94ef88-9440-47e1-a2a8-ed4dcc2b4615" flowable:exclusive="true">
+      <startEvent id="sid-cd883900-67ce-49b0-831c-c493c9082b11" isInterrupting="true">
+        <messageEventDefinition messageRef="muftp-cancellation-requested"/>
+      </startEvent>
+      <serviceTask id="change-status-cancelled-task" flowable:exclusive="true" name="Change status - CANCELLED" flowable:delegateExpression="${muftp_ChangeStatusDelegate}">
+        <extensionElements>
+          <flowable:field name="status" stringValue="CANCELLED"/>
+        </extensionElements>
+      </serviceTask>
+      <endEvent id="sid-654f9976-b244-43c2-a7a8-60d5ec13b4c1">
+        <terminateEventDefinition/>
+      </endEvent>
+      <sequenceFlow id="sid-26b6df2f-3696-46a2-9b7d-3de63d3fe149" sourceRef="sid-cd883900-67ce-49b0-831c-c493c9082b11" targetRef="change-status-cancelled-task"/>
+      <sequenceFlow id="sid-0611f1b8-00bb-404d-8348-c2650a0960cd" sourceRef="change-status-cancelled-task" targetRef="sid-654f9976-b244-43c2-a7a8-60d5ec13b4c1"/>
+    </subProcess>
   </process>
+  <message id="muftp-cancellation-requested" name="cancel-muftp"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_madeup-financial-transaction-posting-process">
     <bpmndi:BPMNPlane bpmnElement="madeup-financial-transaction-posting-process" id="BPMNPlane_madeup-financial-transaction-posting-process">
       <bpmndi:BPMNShape id="shape-26dbb81a-425e-42f9-b411-b6619c44e240" bpmnElement="muftp-process-initialized-event">
-        <omgdc:Bounds x="-160.0" y="-10.0" width="30.0" height="30.0"/>
+        <omgdc:Bounds x="-200.0" y="-10.0" width="30.0" height="30.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="shape-bd962e0b-694c-46b4-b296-823fd5407f70" bpmnElement="bookkeeper-draft-transaction-task">
-        <omgdc:Bounds x="-5.0" y="-35.0" width="100.0" height="80.0"/>
+      <bpmndi:BPMNShape id="shape-bd962e0b-694c-46b4-b296-823fd5407f70" bpmnElement="submit-transaction-draft-task">
+        <omgdc:Bounds x="-25.0" y="-35.0" width="100.0" height="80.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="shape-49eecc47-ff99-4875-87e5-fccc06606184" bpmnElement="sid-9d4a3bc4-f395-4fd3-9026-a6be860cf70f">
-        <omgdc:Bounds x="195.0" y="-10.0" width="30.0" height="30.0"/>
+        <omgdc:Bounds x="1225.0" y="-10.0" width="30.0" height="30.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="edge-9efdec27-7320-444c-b163-2e3a2f0e4c5c" bpmnElement="sid-744b1bf5-e618-4992-80d9-a83ec143a6cd">
-        <omgdi:waypoint x="-130.0" y="5.0"/>
-        <omgdi:waypoint x="-5.0" y="5.0"/>
+        <omgdi:waypoint x="-170.0" y="5.0"/>
+        <omgdi:waypoint x="-115.0" y="5.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="edge-6ce29bcd-b919-48ad-803a-41ae1b7f0772" bpmnElement="sid-25db305f-90ae-4370-9acf-86318cc6d9ee">
-        <omgdi:waypoint x="95.0" y="5.0"/>
-        <omgdi:waypoint x="195.0" y="5.0"/>
+        <omgdi:waypoint x="155.00002" y="5.0"/>
+        <omgdi:waypoint x="200.0" y="5.000004"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-490cb738-aab8-4f51-9791-5c9fbe1bb3bb" bpmnElement="change-status-draft-submitted-task">
+        <omgdc:Bounds x="200.0" y="-35.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-286cbab5-566b-4431-8d8e-8774e51d25d3" bpmnElement="sid-b5c6d9af-7911-46ae-a7d8-932e6c729340">
+        <omgdc:Bounds x="115.0" y="-15.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-79a5974a-96ca-4de5-b987-b5bf47e55e7e" bpmnElement="sid-a3bd638f-ce97-446b-a488-5b69c9578c30">
+        <omgdc:Bounds x="-115.0" y="-15.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-109cf061-38c7-498e-a455-93f03f8768ad" bpmnElement="sid-94113321-9c8d-4940-806a-a24fe46efe82">
+        <omgdi:waypoint x="-75.0" y="5.0"/>
+        <omgdi:waypoint x="-25.0" y="5.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-3fa13814-f750-43a4-951b-e3ca52b080d1" bpmnElement="sid-d8683ef9-f9d9-483c-9ccc-9d8136ac21e9">
+        <omgdi:waypoint x="75.0" y="5.0"/>
+        <omgdi:waypoint x="115.0" y="5.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-d492e80c-66a0-4b0e-b93d-9ada45b40c4e" bpmnElement="sid-923e1248-2759-469e-ba46-7c35dfad457f">
+        <omgdi:waypoint x="135.0" y="25.0"/>
+        <omgdi:waypoint x="135.0" y="90.0"/>
+        <omgdi:waypoint x="-95.0" y="90.00001"/>
+        <omgdi:waypoint x="-95.00001" y="25.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-52a0659f-2e77-48f5-b275-85c9790b14b3" bpmnElement="sid-a2344109-fd68-4747-be61-51d8f72852a3">
+        <omgdi:waypoint x="300.0" y="5.0"/>
+        <omgdi:waypoint x="370.0" y="5.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-a0cbb746-72f8-45e8-87f3-bdb19486ca62" bpmnElement="sid-9b2af292-0101-4384-80b5-749873a7d706">
+        <omgdc:Bounds x="370.0" y="-15.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-77680ee9-8597-4cf7-8ed2-b06dbe5182fe" bpmnElement="accounting-review-task">
+        <omgdc:Bounds x="470.0" y="-100.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-1f392955-9896-4767-abf7-0833d3f8753c" bpmnElement="peer-review-task">
+        <omgdc:Bounds x="470.00006" y="35.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-c635a932-63e4-4401-ae7c-c5e1e543f755" bpmnElement="sid-18a0cb8b-ac01-4cb2-8df0-9718d8cee47b">
+        <omgdc:Bounds x="620.0" y="-15.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-08ba530f-b107-4bbb-98c7-c4f0e5c4a480" bpmnElement="sid-553aabc5-7d82-47b2-8174-b3a7aa082388">
+        <omgdi:waypoint x="390.00003" y="-15.0"/>
+        <omgdi:waypoint x="410.0" y="-59.999996"/>
+        <omgdi:waypoint x="470.0" y="-60.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-8e1645a4-98b3-48fc-bb96-9e539155789e" bpmnElement="sid-8f0410a4-33ad-4bf5-a649-5a7ee394065a">
+        <omgdi:waypoint x="390.0" y="25.0"/>
+        <omgdi:waypoint x="409.99997" y="75.0"/>
+        <omgdi:waypoint x="470.00006" y="75.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-f7d52bb0-5364-4b79-b743-09ed17d4aaf9" bpmnElement="sid-5cce7e2c-5b1a-492e-8f30-3bae4cf6bb33">
+        <omgdi:waypoint x="570.0" y="-59.999996"/>
+        <omgdi:waypoint x="620.0" y="-59.999996"/>
+        <omgdi:waypoint x="640.00006" y="-15.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-4ea5eb60-6c31-42b2-bfa1-2064ea7273e3" bpmnElement="sid-75c569a3-3e55-40bd-b352-f8b5a164ca88">
+        <omgdi:waypoint x="570.00006" y="75.0"/>
+        <omgdi:waypoint x="627.5" y="74.99999"/>
+        <omgdi:waypoint x="640.00006" y="25.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-58a2f794-3891-4aab-b750-5309c54453d6" bpmnElement="sid-b5b89b0b-bf59-4f0e-9ce9-13328f2aaef9">
+        <omgdi:waypoint x="660.0" y="5.0"/>
+        <omgdi:waypoint x="1225.0" y="5.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-7eb942ef-8b59-44a9-a67f-c4c504700448" bpmnElement="sid-2a94ef88-9440-47e1-a2a8-ed4dcc2b4615">
+        <omgdc:Bounds x="-200.0" y="-390.0" width="385.0" height="185.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-9e9ea5c4-ad60-4b43-8b30-bfaaa8022e74" bpmnElement="sid-cd883900-67ce-49b0-831c-c493c9082b11">
+        <omgdc:Bounds x="-155.0" y="-320.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-4b0c34a8-28d5-4569-9dbb-90d52b55e671" bpmnElement="change-status-cancelled-task">
+        <omgdc:Bounds x="-72.499985" y="-345.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-e7a2945e-bae1-46e0-9a7a-30c7eda295ed" bpmnElement="sid-654f9976-b244-43c2-a7a8-60d5ec13b4c1">
+        <omgdc:Bounds x="90.0" y="-320.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-b308f828-8dbe-4338-8550-e76e0212dfc0" bpmnElement="sid-26b6df2f-3696-46a2-9b7d-3de63d3fe149">
+        <omgdi:waypoint x="-125.0" y="-305.0"/>
+        <omgdi:waypoint x="-72.499985" y="-305.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-d18c2fab-c9df-42f2-b8ca-cccbbf8c6569" bpmnElement="sid-0611f1b8-00bb-404d-8348-c2650a0960cd">
+        <omgdi:waypoint x="27.500015" y="-305.0"/>
+        <omgdi:waypoint x="90.0" y="-305.0"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

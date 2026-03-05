@@ -2,7 +2,7 @@ package org.defendev.flowable.demo.multipoc.process.muftp;
 
 import org.defendev.common.domain.command.Command;
 import org.defendev.common.domain.command.result.CommandResult;
-import org.defendev.flowable.demo.multipoc.dto.InitializedMuftpProcessDto;
+import org.defendev.flowable.demo.multipoc.dto.InitializedMuftpDto;
 import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -23,10 +23,10 @@ public class InitializeProcessService {
     }
 
     @Transactional(transactionManager = "platformTransactionManager")
-    public CommandResult<InitializedMuftpProcessDto> execute(InitializeMuftpProcessCommand command) {
+    public CommandResult<InitializedMuftpDto> execute(InitializeMuftpProcessCommand command) {
         final ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(MuftpDefinitionKey.PROCESS);
         final String processInstanceId = processInstance.getId();
-        return CommandResult.success(new InitializedMuftpProcessDto(processInstanceId, null, null));
+        return CommandResult.success(new InitializedMuftpDto(processInstanceId, null, null));
     }
 
     public static class InitializeMuftpProcessCommand extends Command {

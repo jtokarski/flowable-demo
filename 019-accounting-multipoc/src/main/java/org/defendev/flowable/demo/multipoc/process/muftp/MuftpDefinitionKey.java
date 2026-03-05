@@ -10,4 +10,8 @@ public interface MuftpDefinitionKey extends BpmnDefinitionKey {
 
     String VARIABLE_MUFTP_PROCESS = "muftpProcess";
 
+    String TASK_SUBMIT_TRANSACTION_DRAFT = "submit-transaction-draft-task";
+
+    String MESSAGE_CANCEL_MUFTP = "cancel-muftp";
+
 }
