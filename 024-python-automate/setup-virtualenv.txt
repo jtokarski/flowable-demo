@@ -1,0 +1,28 @@
+
+
+--- Producing the actual virtualenv
+
+    (-- working in Git Bash --)
+  $ cd /c/java_installs/python-3.14.3-embed-amd64/
+  $ PATH="/c/java_installs/python-3.14.3-embed-amd64:$PATH"
+  $ mkdir --parents /c/java_installs/python-venv/024-python-automate
+  $ python -m virtualenv /c/java_installs/python-venv/024-python-automate
+
+  Now it can be activated:
+  - (-- Git Bash --)
+    $ source /c/java_installs/python-venv/024-python-automate/Scripts/activate
+
+  - (-- PowerShell --)
+    C:\java_installs\python-venv\024-python-automate\Scripts\activate.ps1
+
+  Check the environment programmatically:
+    $ python /c/dev/flowable-demo/023-python-core/src/check_sysinfo.py
+
+
+  Install Pytest
+    (the recommended way of installing packages with PIP so that we don't pollute globals)
+    $ python -m pip install pytest
+
+
+
+

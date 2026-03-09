@@ -1,0 +1,9 @@
+
+== `024-python-automate` - local task automation with Python
+
+* The main place to demo *pytest* - mainly as a tool for running ad-hoc scripts from
+  IntelliJ IDEA.
+
+* Setting up a SSH tunnel
+
+

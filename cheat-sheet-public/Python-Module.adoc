@@ -13,6 +13,8 @@ Goals:
 
 025-python-tensorflow/src/.keep
 
+025-python-tensorflow/tests/.keep
+
 025-python-tensorflow/setup-virtualenv.txt
 
 ----
