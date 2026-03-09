@@ -1,0 +1,6 @@
+
+
+== `026-jupyter-server` a "shell-project" for Jupyter Server
+
+For aggregating docs, config files on running multi-kernel Jupyter Server.
+
