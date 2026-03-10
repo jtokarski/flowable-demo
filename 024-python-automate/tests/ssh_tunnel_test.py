@@ -52,9 +52,9 @@ def test_subprocess_ssh_tunnel():
     print(f"ERROR: {error}")
   finally:
     try:
+      tunnel_process.terminate()
       cursor.close()
       connection.close()
-      tunnel_process.terminate()
     except mysql.connector.Error as error:
       print(f"ERROR: {error}")
       pass
