@@ -6,4 +6,6 @@
 
 * Setting up a SSH tunnel
 
+* Connecting to SQL databases with drivers compliant to *Python Database API Specification v2.0 (PEP 249)*
+
 

@@ -23,6 +23,8 @@
     (the recommended way of installing packages with PIP so that we don't pollute globals)
     $ python -m pip install pytest
 
+  Install MySQL Connector/Python
+    $ python -m pip install mysql-connector-python
 
 
 
