@@ -1,0 +1,27 @@
+
+
+
+
+
+
+* short-circuits for hardcoded but unused conditions
+
+* the possibility of CASE syntax in ORDER BY (for now in MSSQL) saved
+  the "no-Jooq" idea. Hopefully will save for MySQL and other RDBMSs.
+
+* the CASE in ORDER BY has this limitation (unless I find workaround) that I can't
+  do a unlimited number of conditions for multi-sort. But one + default should be fine
+  (at the very most two + default)
+
+* form MSSQL the Table-Valued Functions seemed to be promising, but they are not
+  portable for other RDBMSs and finally - not necessary after rethinking it.
+
+* with number-flavor of CASE in ORDER BY do the explicit null-first/last
+
+* the advantage of "no-Jooq" idea is possible avoiding of SQL recompilation (reuse
+  of prepared statements?)
+
+
+
+
+
