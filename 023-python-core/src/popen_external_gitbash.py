@@ -17,18 +17,3 @@ ping_proc = subprocess.Popen(git_bash_cmd, shell=True)
 
 # Looks like ping_proc.wait() is not necessary
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
