@@ -1,18 +1,19 @@
 
+
 --- Producing the actual virtualenv
 
     (-- working in Git Bash --)
-  $ cd /c/java_installs/python-3.13.12-embed-amd64/
-  $ PATH="/c/java_installs/python-3.13.12-embed-amd64:$PATH"
+  $ cd /c/java_installs/python-3.14.3-embed-amd64/
+  $ PATH="/c/java_installs/python-3.14.3-embed-amd64:$PATH"
   $ mkdir --parents /c/java_installs/python-venv/024-python-automate
   $ python -m virtualenv /c/java_installs/python-venv/024-python-automate
 
   Now it can be activated:
-    (-- Git Bash --)
-  $ source /c/java_installs/python-venv/024-python-automate/Scripts/activate
+  - (-- Git Bash --)
+    $ source /c/java_installs/python-venv/024-python-automate/Scripts/activate
 
-    (-- PowerShell --)
-  C:\java_installs\python-venv\024-python-automate\Scripts\activate.ps1
+  - (-- PowerShell --)
+    C:\java_installs\python-venv\024-python-automate\Scripts\activate.ps1
 
   Check the environment programmatically:
     $ python /c/dev/flowable-demo/023-python-core/src/check_sysinfo.py
@@ -25,5 +26,10 @@
   Install MySQL Connector/Python
     $ python -m pip install mysql-connector-python
 
-  Install DATAMIMIC Community Edition
-    $ python -m pip install datamimic-ce
+
+---
+--- Note 2026-05-08:
+--- During attempt to install 'datamimic-ce', I turns out that "Python 3.14 is extremely new"
+--- and many libraries (pandas) do not provide wheel packages (.whl). Therefore, I decided to switch
+--- to Python 3.13 for this virtual environment.
+---
