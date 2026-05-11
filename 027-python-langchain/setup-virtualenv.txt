@@ -1,0 +1,12 @@
+
+--- Producing the actual virtualenv
+
+    (-- working in Git Bash --)
+  $ cd /c/java_installs/python-3.14.3-embed-amd64/
+  $ PATH="/c/java_installs/python-3.14.3-embed-amd64:$PATH"
+  $ mkdir --parents /c/java_installs/python-venv/027-python-langchain
+  $ python -m virtualenv /c/java_installs/python-venv/027-python-langchain
+
+  Now it can be activated:
+  - (-- Git Bash --)
+    $ source /c/java_installs/python-venv/027-python-langchain/Scripts/activate

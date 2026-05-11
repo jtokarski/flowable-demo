@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jupyter-server"
+version = "0.0.1"
+description = "Run configuration for Jupyter server"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
