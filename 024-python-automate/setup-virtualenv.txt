@@ -25,5 +25,3 @@
   Install MySQL Connector/Python
     $ python -m pip install mysql-connector-python
 
-  Install DATAMIMIC Community Edition
-    $ python -m pip install datamimic-ce
