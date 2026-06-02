@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Symbols</title>
+</head>
+<body>
+
+    <h2>Objectives</h2>
+    <ul>
+        <li>maintain handy set of UTF-8 symbols, convenient to copy to clipboard individually</li>
+        <li>don't collect them up front, only those that I've really used at work</li>
+        <li>be able to easily copy this whole file to my Corpo laptop/VM so that I don't have to open
+            Github each time</li>
+    </ul>
+
+    <h2>Arrows</h2>
+    <table class="modern-table">
+        <colgroup>
+            <col class="unicode-code-point">
+            <col class="raw-character">
+            <col class="html-entity-hex">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Unicode code point</th>
+                <th>Character</th>
+                <th>HTML entity (hex)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>U+21C4</td>
+                <td>&#x21C4;</td>
+                <td>&amp;#x21C4;</td>
+            </tr>
+            <tr>
+                <td>U+2192</td>
+                <td>&#x2192;</td>
+                <td>&amp;#x2192;</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Emoji</h2>
+    <p>Some emojis are represented by more than unicode character.</p>
+    <table class="modern-table">
+        <colgroup>
+            <col class="unicode-code-point">
+            <col class="raw-character">
+            <col class="html-entity-hex">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>Unicode code point</th>
+            <th>Character</th>
+            <th>HTML entity (hex)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>U+1F680</td>
+            <td>&#x1F680;</td>
+            <td>&amp;#x1F680;</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+
+    <style>
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        table.modern-table {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .modern-table td,
+        .modern-table th {
+            padding: 0.6rem;
+            text-align: left;
+        }
+
+        .modern-table td:hover {
+            background-color: #73d56f;
+        }
+
+        .unicode-code-point {
+            width: 30%;
+        }
+        .modern-table td:nth-child(1) {
+            font-weight: normal;
+        }
+
+        .raw-character {
+            width: 30%;
+        }
+        .modern-table td:nth-child(2) {
+            font-size: 2rem;
+        }
+
+        .html-entity-hex {
+            width: 40%;
+        }
+        .modern-table td:nth-child(3) {
+            font-weight: normal;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+        document.querySelectorAll('td').forEach(td => {
+            td.addEventListener('click', async () => {
+                // 1. Select the text
+                const range = document.createRange();
+                range.selectNodeContents(td);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                // 2. Copy to clipboard (requires secure context: https or localhost)
+                if (navigator.clipboard) {
+                    try {
+                        await navigator.clipboard.writeText(td.textContent.trim());
+                        console.log('Copied:', td.textContent.trim());
+                    } catch (err) {
+                        console.warn('Clipboard write failed:', err);
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
