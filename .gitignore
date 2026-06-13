@@ -8,3 +8,5 @@ build
 
 
 
+/014-rest-assured/src/test/resources/application-ephemeral.yaml
+/014-rest-assured/src/test/resources/application-test.yaml

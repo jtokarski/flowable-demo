@@ -2,6 +2,8 @@ package org.defendev.restassured.demo.multipoc;
 
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,20 +13,28 @@ import static io.restassured.RestAssured.given;
 
 
 
+@Component
 public class MuftpProcessSteps {
 
-    public static JsonPath initializeMuftpProcess(String accessToken) {
+    private final MultipocUriBuilders uriBuilders;
+
+    @Autowired
+    public MuftpProcessSteps(MultipocUriBuilders uriBuilders) {
+        this.uriBuilders = uriBuilders;
+    }
+
+    public JsonPath initializeMuftpProcess(String accessToken) {
         return given()
             .auth().oauth2(accessToken)
             .accept(ContentType.JSON)
             .when()
-            .post("http://localhost:8014/multipoc/muftp/process/_initialize")
+            .post(uriBuilders.MUFTP_PROCESS_INITIALIZE_PROCESS_UC.toUriString())
             .then()
             .statusCode(200)
             .extract().jsonPath();
     }
 
-    public static JsonPath initializeMuftpProcess(String accessToken, ZonedDateTime timeTravelTo) {
+    public JsonPath initializeMuftpProcess(String accessToken, ZonedDateTime timeTravelTo) {
         return given()
             .auth().oauth2(accessToken)
             .accept(ContentType.JSON)
@@ -41,29 +51,35 @@ public class MuftpProcessSteps {
             .headers(Map.of())  // Does not rest headers, just no effect. This is to demonstrate once again that
                                 // invocation of .headers() is additive.
             .when()
-            .post("http://localhost:8014/multipoc/muftp/process/_initialize")
+            .post(uriBuilders.MUFTP_PROCESS_INITIALIZE_PROCESS_UC.toUriString())
             .then()
             .statusCode(200)
             .extract().jsonPath();
     }
 
-    public static JsonPath submitDraft(String processInstanceId, String accessToken) {
+    public JsonPath submitDraft(String processInstanceId, String accessToken) {
+        final String uriString = uriBuilders.MUFTP_PROCESS_SUBMIT_DRAFT_UC.expand(
+            Map.of("processInstanceId", processInstanceId)
+        ).toUriString();
         return given()
             .auth().oauth2(accessToken)
             .accept(ContentType.JSON)
             .when()
-            .post("http://localhost:8014/multipoc/muftp/process/{processInstanceId}/draft/_submit", processInstanceId)
+            .post(uriString)
             .then()
             .statusCode(200)
             .extract().jsonPath();
     }
 
-    public static JsonPath cancelProcess(String processInstanceId, String accessToken) {
+    public JsonPath cancelProcess(String processInstanceId, String accessToken) {
+        final String uriString = uriBuilders.MUFTP_PROCESS_CANCEL_PROCESS_UC.expand(
+            Map.of("processInstanceId", processInstanceId)
+        ).toUriString();
         return given()
             .auth().oauth2(accessToken)
             .accept(ContentType.JSON)
             .when()
-            .post("http://localhost:8014/multipoc/muftp/process/{processInstanceId}/_cancel", processInstanceId)
+            .post(uriString)
             .then()
             .statusCode(200)
             .extract().jsonPath();

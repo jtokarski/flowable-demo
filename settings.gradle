@@ -55,8 +55,8 @@ dependencyResolutionManagement {
             version('jooqVersion', '3.20.8')
             version('seleniumVersion', '4.40.0')
             version('seleniumLoggerVersion', '2.4.0')
-            version('defendevCommonJdkVersion', '0.0.12')
-            version('defendevCommonSpring6Version', '0.0.5')
+            version('defendevCommonJdkVersion', '0.0.17')
+            version('defendevCommonSpring6Version', '0.0.9')
 
             /*
              * Note that 'org.springframework.boot:spring-boot-dependencies:3.5.0' does include

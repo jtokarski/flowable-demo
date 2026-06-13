@@ -1,0 +1,8 @@
+
+resta014:
+  label: "Local is developer's laptop"
+
+multipoc:
+  base-url: "http://localhost:8014/multipoc"
+
+
