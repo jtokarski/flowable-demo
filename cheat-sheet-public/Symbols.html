@@ -17,27 +17,31 @@
     <h2>Arrows</h2>
     <table class="modern-table">
         <colgroup>
-            <col class="unicode-code-point">
             <col class="raw-character">
+            <col class="unicode-code-point">
             <col class="html-entity-hex">
+            <col class="character-description">
         </colgroup>
         <thead>
             <tr>
-                <th>Unicode code point</th>
                 <th>Character</th>
+                <th>Unicode code point</th>
                 <th>HTML entity (hex)</th>
+                <th>Description</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>U+21C4</td>
                 <td>&#x21C4;</td>
+                <td>U+21C4</td>
                 <td>&amp;#x21C4;</td>
+                <td></td>
             </tr>
             <tr>
-                <td>U+2192</td>
                 <td>&#x2192;</td>
+                <td>U+2192</td>
                 <td>&amp;#x2192;</td>
+                <td></td>
             </tr>
         </tbody>
     </table>
@@ -46,27 +50,55 @@
     <p>Some emojis are represented by more than unicode character.</p>
     <table class="modern-table">
         <colgroup>
-            <col class="unicode-code-point">
             <col class="raw-character">
+            <col class="unicode-code-point">
             <col class="html-entity-hex">
+            <col class="character-description">
         </colgroup>
         <thead>
         <tr>
-            <th>Unicode code point</th>
             <th>Character</th>
+            <th>Unicode code point</th>
             <th>HTML entity (hex)</th>
+            <th>Description</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>U+1F680</td>
             <td>&#x1F680;</td>
+            <td>U+1F680</td>
             <td>&amp;#x1F680;</td>
+            <td></td>
         </tr>
         </tbody>
     </table>
 
-
+    <h2>Math</h2>
+    <p>But naturally, can be used in non-mathematical context.</p>
+    <table class="modern-table">
+        <colgroup>
+            <col class="raw-character">
+            <col class="unicode-code-point">
+            <col class="html-entity-hex">
+            <col class="character-description">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>Character</th>
+            <th>Unicode code point</th>
+            <th>HTML entity (hex)</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>&#x2248;</td>
+            <td>U+2248</td>
+            <td>&amp;#x2248;</td>
+            <td>approximate equality</td>
+        </tr>
+        </tbody>
+    </table>
 
 
     <style>
@@ -91,24 +123,32 @@
             background-color: #73d56f;
         }
 
-        .unicode-code-point {
-            width: 30%;
+        .raw-character {
+            width: 16%;
         }
         .modern-table td:nth-child(1) {
+            font-size: 2rem;
+            padding-left: 1.5rem;
+        }
+
+        .unicode-code-point {
+            width: 24%;
+        }
+        .modern-table td:nth-child(2) {
             font-weight: normal;
         }
 
-        .raw-character {
-            width: 30%;
-        }
-        .modern-table td:nth-child(2) {
-            font-size: 2rem;
-        }
-
         .html-entity-hex {
-            width: 40%;
+            width: 20%;
         }
         .modern-table td:nth-child(3) {
+            font-weight: normal;
+        }
+
+        .character-description {
+            width: 40%;
+        }
+        .modern-table td:nth-child(4) {
             font-weight: normal;
         }
 
