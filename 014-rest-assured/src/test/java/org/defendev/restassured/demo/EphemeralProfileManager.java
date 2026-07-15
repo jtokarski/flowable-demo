@@ -40,6 +40,17 @@ public class EphemeralProfileManager {
 
     private static final String MODULE_DIRECTORY_NAME = "014-rest-assured";
 
+    /**
+     *
+     * Modifies the (non-dist) profile file using specified new properties:
+     *   - adds new properties if missing
+     *   - updates to new property value if already exists
+     *   - leaves remaining ones as-is
+     * In this approach:
+     *   - the profile file can handle multiple "vendors" whose tokens are updated independently
+     *   - the EphemeralProfileManager class is project-wide and top-level package right place for it
+     *
+     */
     public static void save(Map<String, Map<String, String>> newProperties) {
         Validate.isTrue(nonNull(newProperties), "newProperties must not be null");
 
