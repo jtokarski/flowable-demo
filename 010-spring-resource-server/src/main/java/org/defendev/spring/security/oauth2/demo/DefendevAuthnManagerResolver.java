@@ -37,6 +37,20 @@ public class DefendevAuthnManagerResolver implements AuthenticationManagerResolv
         DefendevOpaqueTokenIntrospector tokenIntrospector,
         FigureAuthenticationConverter figureAuthenticationConverter
     ) {
+        /*
+         * The Spring Security documentation, when discussing multitenancy in OAuth2 Resource Server,
+         * describes the way to avoid parsing JWT token twice:
+         * (https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/multitenancy.html#_parsing_the_claim_only_once)
+         * This is achieved by "collapsing" the concept of AuthenticationManagerResolver by instantiating
+         * AuthenticationProvider capable of internally handling multiple tenants. Specifically,
+         * this is JwtAuthenticationProvider backed by NimbusJwtDecoder backed by JWTClaimsSetAwareJWSKeySelector.
+         *
+         * So why do I still have this AuthenticationManagerResolver then?
+         * This is because this double-parse-avoiding technique applies only
+         * to tenants using JWT (non-opaque) tokens - sprin6authz and Azure.
+         * This AuthenticationManagerResolver is to distinguish into non-opaque/opaque token tenants.
+         *
+         */
         final ConfigurableJWTProcessor<SecurityContext> jwtProcessor = new DefaultJWTProcessor<>();
         jwtProcessor.setJWTClaimsSetAwareJWSKeySelector(keySelector);
         final NimbusJwtDecoder jwtDecoder = new NimbusJwtDecoder(jwtProcessor);
