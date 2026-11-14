@@ -9,6 +9,13 @@
 # - The JAVA_HOME is required by Maven.
 # - The NODEJS_HOME in informal and uncommon convention. I use it for readability of this script.
 # - Note that this script uses Unix-style paths (/c/Users/...)
+# - The default size of new Git Bash window may be too small, to adjust it create file
+#     ~/.minttyrc
+#     --------------------------
+#     FontHeight=10
+#     Columns=140
+#     Rows=40
+#     -------------------------
 #
 
 # Load the user's normal config first (login shells skip .bashrc by default)
