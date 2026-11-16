@@ -1,6 +1,6 @@
 #
 # The shortcut target:
-#   "C:\Users\jtokarski\AppData\Local\Programs\Git\git-bash.exe" -c "bash --rcfile /c/dev/flowable-demo/cheat-sheet-public/git-bash-shortcut/custom.env.sh -i"
+#   "C:\Users\jtokarski\AppData\Local\Programs\Git\git-bash.exe" -c "bash --rcfile /c/dev/flowable-demo/cheat-sheet-public/git-bash-shortcut/custom-jdk27.env.sh -i"
 #
 #
 # - The M2_HOME id deprecated since Maven 3.5.0.
