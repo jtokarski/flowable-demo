@@ -23,6 +23,8 @@
 
 export JAVA_HOME="/c/java_installs/jdk-27.0.1.0.2+1"
 export MAVEN_HOME="/c/java_installs/apache-maven-3.10.0"
+export MAVEN_OPTS="-Djavax.net.ssl.trustStore=/c/dev/flowable-demo/cheat-sheet-public/git-bash-shortcut/custom-truststore.jks \
+                   -Djavax.net.ssl.trustStorePassword=\"changeit\""
 export NODEJS_HOME="/c/java_installs/node-v27.0.0-alpha.0.1.0-win-x64"
 
 export PATH="$JAVA_HOME/bin:$MAVEN_HOME/bin:$NODEJS_HOME:$PATH"

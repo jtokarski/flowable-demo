@@ -1,13 +1,34 @@
 
+=== Creating based on JDK-provided keystore
+
+----
+cp  $JAVA_HOME/lib/security/cacerts ./custom-truststore.jks
+
+$JAVA_HOME/bin/keytool.exe -printcert -sslserver self-signed.badssl.com:443 -rfc > ./badssl.cer
+
+$JAVA_HOME/bin/keytool.exe            \
+  -importcert                         \
+  -alias badssl-0001                  \
+  -file ./badssl.cer                  \
+  -keystore ./custom-truststore.jks   \
+  -storepass "changeit"               \
+  -noprompt
+----
 
 
-(here - example with -printcert)
+=== Creating as new keystore
 
-*If you are in some ZCorpo and CORPORATE PROXY is enforced,
-then the result returned by `keytool -printcert` in Git Bash
-may be DIFFERENT than the result downloaded from Edge browser!*
+The `keytool.exe` work in a way, that doing `-importcert` to non-existing keystore file, doesn't throw
+an error, but *creates new* keystore.
 
 
-(here - example with -importcert)
+
+=== Other considerations
+
+*If you are in some ZCorpo and CORPORATE PROXY is enforced, then the result
+returned by `keytool -printcert` in Git Bash may be DIFFERENT than the result downloaded from Edge browser.
+It can also change "dynamically" from day-to-day and between laptop location office/home.*
+
+
 
 
